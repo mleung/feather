@@ -16,6 +16,8 @@ Merb::BootLoader.load_application
 environment_config = File.join(Merb.root, 'config', 'environments', Merb.environment + '.rb')
 require environment_config if File.exist?(environment_config)
 
+use_orm :datamapper
+
 Merb::GENERATOR_SCOPE = [:data_mapper, :merb, :rspec]
 
 require 'merb_helpers'

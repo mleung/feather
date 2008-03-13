@@ -9,19 +9,8 @@ $LOAD_PATH.unshift(Merb.root / "lib")
 ### an ORM plugin.  Install one, and uncomment one of the following lines,
 ### if you need a database.
 
-### Uncomment for DataMapper ORM
-# use_orm :datamapper
+use_orm :datamapper
 
-### Uncomment for ActiveRecord ORM
-# use_orm :activerecord
-
-### Uncomment for Sequel ORM
-# use_orm :sequel
-
-
-### This defines which test framework the generators will use
-### rspec is turned on by default
-# use_test :test_unit
 use_test :rspec
 
 ### Add your other dependencies here

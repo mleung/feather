@@ -21,7 +21,7 @@
 
 # A secret key is required when using the 'cookie' session store (default), 
 # change this value to something unique to your application and keep it private
-:session_secret_key: /USERS/MICHAELLEUNG/MERB_APPS/FEATHER3627
+:session_secret_key: /USERS/MICHAELLEUNG/MERB_APPS/FEATHER6620
 
 # Uncomment to use the merb upload progress. The 'path match' will be treated as
 # a regex for any URLs that should be considered for upload monitoring.

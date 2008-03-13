@@ -1,0 +1,11 @@
+:development: &defaults
+  :adapter: sqlite3
+  :database: db/feather_development.sqlite3
+
+:test:
+  <<: *defaults
+  :database: sample_test
+
+:production:
+  <<: *defaults
+  :database: sample_production

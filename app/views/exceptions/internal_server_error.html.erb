@@ -1,7 +1,7 @@
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title><%= @exception.name.humanize %></title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title><%= @exception_name %></title>
 	<style type="text/css" media="screen">
 		body {
 			font-family:arial;
@@ -129,34 +129,34 @@
 	<div class="internalError">
 		
 		<div class="header">
-			<h1><%= @exception.name.humanize %> <sup class="error_<%= @exception.class::STATUS %>"><%= @exception.class::STATUS %></sup></h1>
+			<h1><%= @exception_name %> <sup class="error_<%= @exception.class::STATUS %>"><%= @exception.class::STATUS %></sup></h1>
 			<% if show_details = ::Merb::Config[:exception_details] -%>
-				<h2><%== @exception.message %></h2>
+				<h2><%= @exception.message %></h2>
 			<% else -%>
 				<h2>Sorry about that...</h2>
 			<% end -%>
 			<h3>Parameters</h3>
 			<ul>
-			<% controller.params[:original_params].each do |param, value| %>
+			<% params[:original_params].each do |param, value| %>
 				<li><strong><%= param %>:</strong> <%= value.inspect %></li>
 			<% end %>
-			<%= "<li>None</li>" if controller.params[:original_params].empty? %>
+			<%= "<li>None</li>" if params[:original_params].empty? %>
 			</ul>
 			
 			<h3>Session</h3>
 			<ul>
-			<% controller.params[:original_session].each do |param, value| %>
+			<% params[:original_session].each do |param, value| %>
 				<li><strong><%= param %>:</strong> <%= value.inspect %></li>
 			<% end %>
-			<%= "<li>None</li>" if controller.params[:original_session].empty? %>			
+			<%= "<li>None</li>" if params[:original_session].empty? %>			
 			</ul>
 			
 			<h3>Cookies</h3>
 			<ul>
-			<% controller.params[:original_cookies].each do |param, value| %>
+			<% params[:original_cookies].each do |param, value| %>
 				<li><strong><%= param %>:</strong> <%= value.inspect %></li>
 			<% end %>
-			<%= "<li>None</li>" if controller.params[:original_cookies].empty? %>			
+			<%= "<li>None</li>" if params[:original_cookies].empty? %>			
 			</ul>			
 		</div>
 		

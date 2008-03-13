@@ -1,3 +1,5 @@
+---
+# This is a sample database file for the DataMapper ORM
 :development: &defaults
   :adapter: sqlite3
   :database: db/feather_development.sqlite3

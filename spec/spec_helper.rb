@@ -1,15 +1,15 @@
 $TESTING=true
-require File.join(File.dirname(__FILE__), "..", 'config', 'boot')
-Merb.environment="test"
-require File.join(Merb.root, 'config', 'merb_init')
+require 'rubygems'
+require 'merb-core'
 
-require 'merb/test/helper'
-require 'merb/test/rspec'
+
+# TODO: Boot Merb, via the Test Rack adapter
+Merb.start :environment => (ENV['MERB_ENV'] || 'test'),
+           :merb_root  => File.join(File.dirname(__FILE__), ".." )
+
 
 Spec::Runner.configure do |config|
-    config.include(Merb::Test::Helper)
-    config.include(Merb::Test::RspecMatchers)
+  config.include(Merb::Test::ViewHelper)
+  config.include(Merb::Test::RouteHelper)
+  config.include(Merb::Test::ControllerHelper)
 end
-
-
-### METHODS BELOW THIS LINE SHOULD BE EXTRACTED TO MERB ITSELF

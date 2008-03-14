@@ -1,0 +1,18 @@
+<h1>Article <%= @article.id %></h1>
+<br />
+<p>
+	Title: <%= @article.title %>
+</p>
+	
+<p>
+	Published At: <%= @article.published_at %>
+</p>
+	
+<p>
+	Content:
+	<br />
+	<%= @article.content %>
+</p>
+
+<br />
+<a href="<%= url(:article) %>">Back to article list</a>

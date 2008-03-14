@@ -15,7 +15,7 @@ $RAKE_ENV = true
 init_file = File.join(File.dirname(__FILE__) / "config" / "init")
 
 Merb.load_dependencies(init_file)
-           
+
 include FileUtils
 # # # Get Merb plugins and dependencies
 Merb::Plugins.rakefiles.each {|r| require r } 

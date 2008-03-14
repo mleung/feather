@@ -1,7 +1,12 @@
 class Articles < Application
   
   def index
-    render
+    @articles = Article.all
+    display(@articles)
   end
   
+  def show
+    @article = Article[params[:id]]
+    display(@article)
+  end  
 end

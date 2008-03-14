@@ -7,7 +7,7 @@
 <% @articles.each do |article| %>
 	<p>
 		<a href="<%= url(:article, article) %>">
-			<%= article.title %> (published at <%= article.published_at %>)
+			<%= article.title %> (published at <%= article.created_at %>)
 		</a>
 	</p>
 	

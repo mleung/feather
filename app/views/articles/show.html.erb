@@ -1,18 +1,17 @@
-<h1>Article <%= @article.id %></h1>
+<% throw_content :title do %>
+	<%= @article.title %>
+<% end %>
+
+<h1><%= @article.title %></h1>
 <br />
 <p>
-	Title: <%= @article.title %>
+	<a href="<%= url(:article, @article) %>">
+		<%= @article.title %> (published at <%= @article.published_at %>)
+	</a>
 </p>
 	
 <p>
-	Published At: <%= @article.published_at %>
-</p>
-	
-<p>
-	Content:
-	<br />
 	<%= @article.content %>
 </p>
-
+	
 <br />
-<a href="<%= url(:article) %>">Back to article list</a>

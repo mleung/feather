@@ -1,0 +1,14 @@
+<% throw_content :right do %>
+  <h4>Settings</h4>
+  <p>
+    This page allows you to edit the global options for your blog.
+  </p>
+<% end %>
+
+<h1>Blog Settings</h1>
+
+<% form_tag(:action => url(:admin_settings, @settings), :method => :put) do %>
+  <%= text_field :name => "title", :label => 'Title', :value => @settings.title %>
+  <br /><br />
+  <%= submit_button 'Save Settings' %>
+<% end %>

@@ -1,9 +1,19 @@
-<h1>Articles</h1>
+<% throw_content :title do %>
+	<%= @settings.title %>
+<% end %>
+
+<h1><%= @settings.title %></h1>
 <br />
 <% @articles.each do |article| %>
 	<p>
 		<a href="<%= url(:article, article) %>">
-			<%= article.title %> (<%= article.published_at %>)
+			<%= article.title %> (published at <%= article.published_at %>)
 		</a>
 	</p>
+	
+	<p>
+		<%= article.content %>
+	</p>
+	
+	<br />
 <% end %>

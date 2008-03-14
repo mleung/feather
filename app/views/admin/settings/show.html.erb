@@ -1,0 +1,14 @@
+<% throw_content :right do %>
+  <h4>Settings</h4>
+  <p>
+    This page contains the global options for your blog.
+  </p>
+<% end %>
+
+<h1>Blog Settings</h1>
+
+<p>
+	Title: <%= @settings.title %>
+</p>
+
+<%= link_to "Edit", url(:edit_admin_settings) %>

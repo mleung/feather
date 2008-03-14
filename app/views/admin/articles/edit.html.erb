@@ -1,0 +1,14 @@
+<% throw_content :right do %>
+  <h4>Edit Article</h4>
+  <p>
+	Here you can edit an existing article.
+  </p>
+<% end %>
+
+<h1>Edit Article</h1>
+
+<% form_tag(:action => url(:admin_article, @article), :method => :put) do %>
+  <%= text_field :name => "title", :label => 'Title', :value => @article.title %>
+  <br /><br />
+  <%= submit_button 'Save Article' %>
+<% end %>

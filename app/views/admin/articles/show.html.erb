@@ -1,0 +1,25 @@
+<% throw_content :right do %>
+  <h4>View Article</h4>
+  <p>
+	Here you can view an existing article.
+  </p>
+<% end %>
+
+<h1>View Article</h1>
+
+<p>
+	Title: <%= @article.title %>
+</p>
+
+<p>
+	Published at: <%= @article.published_at %>
+</p>
+
+<p>
+	Content:
+	<br />
+	<%= @article.content %>
+</p>
+
+<%= link_to "Edit article", url(:admin_article, @article) %> |
+<%= link_to "Back to articles", url(:admin_articles) %>

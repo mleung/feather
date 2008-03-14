@@ -1,0 +1,20 @@
+<% throw_content :right do %>
+  <h4>New Article</h4>
+  <p>
+	Here you can create a new article.
+  </p>
+<% end %>
+
+<h1>New Article</h1>
+
+<% form_tag(:action => url(:admin_article, @article)) do %>
+  <%= text_field :name => "title", :label => "Title" %>
+  <br />
+  <label>Content:</label>
+  <br />
+  <%= text_area_field "", :name => "content", :label => "" %>
+  <br /><br />
+  <%= submit_button 'Save Article' %>
+<% end %>
+
+<%= link_to "Back to articles", url(:admin_articles) %>

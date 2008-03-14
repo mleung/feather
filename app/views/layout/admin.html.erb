@@ -3,20 +3,17 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Feather - Admin</title>
-  <!--
-    Why isn't this working?
-     <= css_include_tag :merb >
-  <= js_include_tag :prototype, :effects > -->
-  <link rel='stylesheet' href='stylesheets/admin.css' type='text/css' />
+  <%= css_include_tag :admin %>
+  <%= js_include_tag :prototype, :effects %>
 </head>
 <body>
   <div id="header">
     <ul id="nav">
-      <li><a href="/admin" rel="home">Dashboard</a>&nbsp;•</li>
-      <li><a href="#">Articles</a>&nbsp;•</li>
-      <li><a href="#">Categories</a>&nbsp;•</li>
-      <li><a href="#">Plugins</a>&nbsp;•</li>
-      <li><a href="#">Blog Settings</a></li>
+	  <li><%= link_to "Dashboard", url(:admin_dashboard) %>&nbsp;•</li>
+	  <li><%= link_to "Articles", url(:admin_articles) %>&nbsp;•</li>
+	  <li><%= link_to "Categories", url(:admin_categories) %>&nbsp;•</li>
+	  <li><%= link_to "Plugins", url(:admin_plugins) %>&nbsp;•</li>
+	  <li><%= link_to "Blog Settings", url(:admin_settings) %>&nbsp;•</li>
     </ul>
     <h1><a href="/">Blog Title Here</a></h1>
   </div>
@@ -33,7 +30,7 @@
   <br style="clear: both;">
   <div id="footer">
     <p>
-      <strong>Feather is a thing by <a href="http://www.bloggingmyassoff.com">Michael Leung</a> and <a href="crazycool.co.uk">Elliott Draper</a></strong>
+      <strong>Feather is a thing by <a href="http://www.bloggingmyassoff.com">Michael Leung</a> and <a href="http://crazycool.co.uk/blog">Elliott Draper</a></strong>
     </p>
     <br style="clear: both;">
   </div>

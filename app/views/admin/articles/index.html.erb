@@ -1,0 +1,25 @@
+<% throw_content :right do %>
+  <h4>View Articles</h4>
+  <p>
+	Here you can view existing articles.
+  </p>
+<% end %>
+
+<h1>View Articles</h1>
+
+<table>
+	<tr>
+		<th>Title</th>
+		<th>Published at</th>
+		<th></th>
+	</tr>		
+	<% @articles.each do |article| %>
+	<tr>
+		<td><%= article.title %></td>
+		<td><%= article.published_at %></td>
+		<td><%= link_to "View", url(:admin_article, article) %></td>
+	</tr>
+	<% end %>
+</table>
+<br />
+<%= link_to "New article", url(:new_admin_article) %>

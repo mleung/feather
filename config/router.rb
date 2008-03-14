@@ -23,7 +23,17 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   r.resources :articles
-
+  
+  # Admin namespace
+  r.namespace :admin do |admin|
+    admin.resource :settings
+    admin.resources :dashboard
+    admin.resources :categories
+    admin.resources :plugins
+    admin.resources :articles
+    admin.match("").to(:controller => "dashboard", :action => "index")
+  end
+  
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent

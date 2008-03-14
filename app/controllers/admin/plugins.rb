@@ -1,5 +1,5 @@
 module Admin
-  class Dashboard < Base
+  class Plugins < Base
     def index
       render
     end

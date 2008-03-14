@@ -1,5 +1,8 @@
 module Admin
   class Articles < Base
+
+    before :find_article, :only => %w(edit update delete)
+
     def index
       @articles = Article.all
       display @articles
@@ -18,7 +21,6 @@ module Admin
     def create
       @article = Article.new
       @article.attributes = params[:article]
-      @article.published_at = Time.now
       if @article.save
         redirect url(:admin_article, @article)
       else
@@ -27,18 +29,26 @@ module Admin
     end
     
     def edit
-      @article = Article[params[:id]]
       display @article
     end
     
     def update
-      @article = Article[params[:id]]
       if @article.update_attributes(params[:article])
         redirect url(:admin_article, @article)
       else
         render :edit
       end
     end
+    
+    def delete
+      @article.destroy!
+      redirect url(:admin_articles)
+    end
+    
+    private
+      def find_article
+        @article = Article[params[:id]]
+      end
 
   end
   

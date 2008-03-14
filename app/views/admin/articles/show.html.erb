@@ -12,13 +12,13 @@
 </p>
 
 <p>
-	Published at: <%= @article.published_at %>
+	Published at: <%= @article.created_at %>
 </p>
 
 <p>
 	Content:
 	<br />
-	<%= @article.content %>
+	<%= textile_to_html @article.content %>
 </p>
 
 <%= link_to "Edit article", url(:edit_admin_article, @article) %> |

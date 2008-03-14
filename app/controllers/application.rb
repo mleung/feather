@@ -1,3 +1,10 @@
 class Application < Merb::Controller
-    include Merb::AssetsMixin
+  include Merb::AssetsMixin
+    
+  before :get_settings
+  
+  def get_settings
+    @settings = Configuration.first
+  end  
+    
 end

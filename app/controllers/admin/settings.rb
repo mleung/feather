@@ -1,7 +1,7 @@
 module Admin
   class Settings < Base
     def show
-      @settings = Configuration.first
+      @settings = Configuration.find_or_create({:id => 1}, {:title => 'My new blog'})
       display @settings
     end
     

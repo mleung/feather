@@ -56,3 +56,8 @@ Merb::BootLoader.after_app_loads do
 
   # dependency "magic_admin" # this gem uses the app's model classes
 end
+
+begin 
+  require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
+rescue LoadError
+end

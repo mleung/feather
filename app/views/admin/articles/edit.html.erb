@@ -5,6 +5,7 @@
   </p>
 <% end %>
 
+<%= error_messages_for @article %>
 <h1>Edit <%= @article.title %></h1>
 
 <% form_for :article, :action => url(:admin_article, @article), :method => :put do %>

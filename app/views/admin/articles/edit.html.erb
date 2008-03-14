@@ -5,10 +5,9 @@
   </p>
 <% end %>
 
-<h1>Edit Article</h1>
+<h1>Edit <%= @article.title %></h1>
 
 <% form_tag(:action => url(:admin_article, @article), :method => :put) do %>
-  <%= text_field :name => "title", :label => 'Title', :value => @article.title %>
-  <br /><br />
-  <%= submit_button 'Save Article' %>
+  <%= partial 'form' %>
+  <%= submit_button 'Save Article' %> or <%= link_to 'Cancel', url(:admin_articles) %>
 <% end %>

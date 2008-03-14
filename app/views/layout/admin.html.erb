@@ -12,9 +12,10 @@
 	  <li><%= link_to "Dashboard", url(:admin_dashboard) %>&nbsp;•</li>
 	  <li><%= link_to "Articles", url(:admin_articles) %>&nbsp;•</li>
 	  <li><%= link_to "Plugins", url(:admin_plugins) %>&nbsp;•</li>
-	  <li><%= link_to "Blog Settings", url(:admin_settings) %></li>
+	  <li><%= link_to "Blog Settings", url(:admin_configurations) %></li>
     </ul>
-    <h1><a href="/"><%= @settings.nil? ? "Feather" : @settings.title %></a></h1>
+    <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard) %></a></h1>
+    <span id="link_to_blog">(<%= link_to "View your blog", "/" %>)</span>
   </div>
   <div id="wrap">
     <div id="content">

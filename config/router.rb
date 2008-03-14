@@ -26,7 +26,7 @@ Merb::Router.prepare do |r|
   
   # Admin namespace
   r.namespace :admin do |admin|
-    admin.resource :settings
+    admin.resource :configurations
     admin.resources :dashboard
     admin.resources :categories
     admin.resources :plugins

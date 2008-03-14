@@ -55,10 +55,15 @@ a {
 	text-decoration: none;
 }
 
-#tag_line {
+#link_to_blog {
   font-weight: bold;
   font-size: 0.99em;
 	float: left;
+	color: #FFFFFF;
+}
+
+#link_to_blog a {
+  color:#FFFFFF;
 }
 
 #header ul#nav {

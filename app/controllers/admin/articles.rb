@@ -17,10 +17,7 @@ module Admin
     
     def create
       @article = Article.new
-      @article.title = params[:title]
-      @article.content = params[:content]
-      @article.published_at = Time.now
-      @article.save
+      save_article
       redirect url(:admin_article, @article)
     end
     
@@ -31,11 +28,16 @@ module Admin
     
     def update
       @article = Article[params[:id]]
-      @article.title = params[:title]
-      @article.content = params[:content]
-      @article.published_at = Time.now
-      @article.save
+      save_article
       redirect url(:admin_article, @article)
     end
+
+    private
+      def save_article
+        @article.attributes = params[:article]
+        @article.published_at = Time.now
+        @article.save
+      end
   end
+  
 end

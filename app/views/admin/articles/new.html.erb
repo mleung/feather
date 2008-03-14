@@ -7,7 +7,7 @@
 
 <h1>New Article</h1>
 
-<% form_tag(:action => url(:admin_article, @article)) do %>
+<% form_for :article, :action => url(:admin_article, @article) do %>
   <%= partial 'form' %>
   <%= submit_button 'Save Article' %> or <%= link_to 'Cancel', url(:admin_articles) %>
 <% end %>

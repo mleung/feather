@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Feather - Admin</title>
+  <!--
+    Why isn't this working?
+     <= css_include_tag :merb >
+  <= js_include_tag :prototype, :effects > -->
+  <link rel='stylesheet' href='stylesheets/admin.css' type='text/css' />
+</head>
+<body>
+  <div id="header">
+    <ul id="nav">
+      <li><a href="/admin" rel="home">Dashboard</a>&nbsp;•</li>
+      <li><a href="#">Articles</a>&nbsp;•</li>
+      <li><a href="#">Categories</a>&nbsp;•</li>
+      <li><a href="#">Plugins</a>&nbsp;•</li>
+      <li><a href="#">Blog Settings</a></li>
+    </ul>
+    <h1><a href="/">Blog Title Here</a></h1>
+  </div>
+  <div id="wrap">
+    <div id="content">
+      <div class="pad">
+        <%= catch_content :for_layout %>
+      </div>  
+      <div class="bot_shadow">&nbsp;</div>
+    </div>
+  <div id="right">
+    <%= catch_content :right %>
+  </div>
+  <br style="clear: both;">
+  <div id="footer">
+    <p>
+      <strong>Feather is a thing by <a href="http://www.bloggingmyassoff.com">Michael Leung</a> and <a href="crazycool.co.uk">Elliott Draper</a></strong>
+    </p>
+    <br style="clear: both;">
+  </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #e5e5e5;
+	font-family: 'Lucida Grande', Arial, Helvetica, sans-serif;
+}
+
+a { 
+  color: #000066; 
+}
+
+#wrap {
+	width: 92%;
+	margin: 0 auto;
+	min-width: 760px;
+}
+
+#content {
+	margin: 1em 0;
+	width: 75%;
+  float: left;
+	min-width: 425px;
+	min-height: 165px;
+	font-size: 0.92em;
+}
+
+#content .pad {
+  background: #FFFFFF url(../images/right-bg.gif) repeat-y scroll right center;
+}
+
+.pad {
+  padding: 25px;
+}
+
+#content .bot_shadow  {
+  background: transparent url(../images/bottom-bg.gif) no-repeat scroll right top; 
+  font-size: 8px; 
+}
+
+#header {
+	background: #000000;
+	padding: 10px 4%;
+	border-bottom: 3px solid #999;
+	font-family: Trebuchet MS;
+	float: left;
+	width: 92%;
+}
+
+#header h1,
+#header h1 a {
+	font-weight: normal;
+	margin: 0;
+	color: #FFFF00;
+	border: 0;
+	text-decoration: none;
+}
+
+#tag_line {
+  font-weight: bold;
+  font-size: 0.99em;
+	float: left;
+}
+
+#header ul#nav {
+	float: right;
+	list-style-type: none;
+	margin: 0;
+	margin-top: 0.4em;
+}
+
+#header ul#nav li {
+	color: white;
+	font-family: 'Trebuchet MS','Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
+	font-size: 0.95em;
+	float:left;
+	margin-left: .5em;
+}
+
+#header ul#nav li a
+{
+	display:block;
+	float:left;
+	color: #FFFF00;
+	text-decoration: none;
+}
+
+#right {
+	margin-top: 1em;
+	float: left;
+	width: 19%;
+	font-family: 'Lucida Grande', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+	margin-left: 1.25em;
+	margin-left: 3%;
+	margin-right: 0;
+	font-size: 0.85em;
+}
+
+#right p {
+  font-size: 0.9em;
+}
+
+#footer {
+	margin:0 auto;
+	margin-bottom:1em;
+	font-family:'Lucida Grande', Tahoma, Arial, Helvetica, sans-serif;
+	font-size:0.75em;
+	color:#333;
+	
+	margin-left:3%;
+	width:67%;
+	min-width:545px;
+	padding:0px 15px;
+	margin-bottom:3.5em;
+}
+
+img { border-width:0; }
+
+.highlight {
+  background-color: #FFFF99;
+}
+
+.help {
+  background-color: #FFFFEC;
+  border: 1px solid #888888;
+  font-size: 90%;
+}
+
+.help p {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+  
+.form {
+  padding: 1px;
+  margin-top: 2px;
+}
+
+fieldset {
+  border: 0;
+}
+
+a.add {
+ background-image: url(../images/add.png);
+ background-repeat:no-repeat;
+ background-position: left center;
+ padding-left: 20px;
+ 
+}
+
+.hint {
+  color: #666666;
+  font-size: 0.8em;
+}
+
+label {
+  font-weight: bold;
+}
+

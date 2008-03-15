@@ -7,14 +7,16 @@
 
 <h1>Welcome to Feather <div id="feather_tagline">The simplest blog that works</div></h1>
 
-<p>
-  <strong>Quick start links</strong>
-  <ul>
-    <li><%= link_to "Write an article", url(:new_admin_article) %></li>
-    <li><a href="#">Change your theme</a></li>
-	<li><%= link_to "Change your settings", url(:admin_configurations) %></li>
-  </ul>
-</p>
+<div class="info_container">
+  <div>
+    <strong>Quick start links</strong>
+    <ul>
+      <li><%= link_to "Write an article", url(:new_admin_article) %></li>
+      <li><a href="#">Change your theme</a></li>
+  	<li><%= link_to "Change your settings", url(:admin_configurations) %></li>
+    </ul>
+  </div>
+</div>
 
 <p>
   <h4>Recent Activity</h4>

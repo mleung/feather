@@ -1,7 +1,7 @@
 module Admin
   class Configurations < Base
 
-    before :find_or_create_configuration, :except => 'update'
+    before :find_or_create_configuration
     
     def show
       display @configuration
@@ -12,10 +12,10 @@ module Admin
     end
     
     def update
-      @configuration = Configuration.first
-      @configuration.attributes = params[:configuration]
+      @configuration.title = params[:title] unless params[:title].nil?
       @configuration.save
-      redirect url(:admin_configurations)
+      # redirect url(:admin_configurations)
+      render_js
     end
     
     private

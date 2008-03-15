@@ -169,3 +169,23 @@ label {
 #feather_tagline {
   font-size: 0.5em;
 }
+
+.info_container {
+  width: 99%;
+  background-color: #FFFFCC;
+  border: 1px solid #CC9900;
+}
+
+.info_container div {
+  padding: 10px;
+}
+
+.in_place_editing {
+  font-size: 0.95em;
+  padding: 10px;
+}
+
+.field_label {
+  color: #585858 ;
+}
+

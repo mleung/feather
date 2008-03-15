@@ -5,22 +5,22 @@ var FormHelper = {
 	**/
   hideShow: function(name) {
     if ($(name).visible()) {
-	  FormHelper.showContainer(name);
+	    FormHelper.showContainer(name);
     }
     else {
-	  FormHelper.hideContainer(name);
+	    FormHelper.hideContainer(name);
       $(name).focus();
     }
   },
 
   hideContainer: function(name) {
-	$(name).show();
-	$(name + '_container').hide();
+  	$(name).show();
+  	$(name + '_container').hide();
   },
 
   showContainer: function(name) {
-	$(name).hide();
-	$(name + '_container').show();
+  	$(name).hide();
+  	$(name + '_container').show();
   },
 
   /**
@@ -33,7 +33,7 @@ var FormHelper = {
     }
     // Enter key pressed
     else if (e.keyCode == 13) {
-	  url += $F(name);
+	    url += $F(name);
       new Ajax.Request(url, {
           asynchronous:'true', 
           evalScripts:'true',
@@ -51,9 +51,9 @@ var FormHelper = {
 	* This sets up the events for the given element, to allow in place editing and saving to the specified url
 	**/
   inPlaceEditEvents: function(name, url) {
-	Event.observe(name + '_container', 'click', function() { FormHelper.hideShow(name) });
-	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
-	Event.observe(name, 'keypress', FormHelper.keyPress.bindAsEventListener(FormHelper, url, name));
+  	Event.observe(name + '_container', 'click', function() { FormHelper.hideShow(name) });
+  	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
+  	Event.observe(name, 'keypress', FormHelper.keyPress.bindAsEventListener(FormHelper, url, name));
   }
 }
 

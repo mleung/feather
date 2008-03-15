@@ -22,7 +22,7 @@ var FormHelper = {
     }
     // Enter key pressed.
     else if (e.keyCode == 13) {
-      var url = "/admin/configurations?title=" + $('configuration_title').value;
+      var url = "/admin/configurations?title=" + $F('configuration_title');
       new Ajax.Request(url, {
           asynchronous:'true', 
           evalScripts:'true',

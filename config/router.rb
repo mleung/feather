@@ -31,6 +31,8 @@ Merb::Router.prepare do |r|
     admin.resources :categories
     admin.resources :plugins
     admin.resources :articles
+    admin.resources :users
+    admin.resources :sessions
     admin.match("").to(:controller => "dashboard", :action => "index")
   end
   

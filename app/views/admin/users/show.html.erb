@@ -1,0 +1,10 @@
+<p>
+	Login: <%= @user.login %>
+</p>
+
+<p>
+	E-mail: <%= @user.email %>
+</p>
+
+<%= link_to "Edit user", url(:edit_admin_user, @user) %> |
+<%= link_to "Back to users", url(:admin_users) %>

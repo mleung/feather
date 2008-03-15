@@ -1,0 +1,16 @@
+<table>
+	<tr>
+		<th>Login</th>
+		<th>E-mail</th>
+		<th></th>
+	</tr>
+<% @users.each do |user| %>
+	<tr>
+		<td><%= user.login %></td>
+		<td><%= user.email %></td>
+		<td><%= link_to "View", url(:admin_user, user) %></td>
+	</tr>
+<% end %>
+</table>
+<br />
+<%= link_to "Create new user", url(:new_admin_user) %>

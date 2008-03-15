@@ -31,10 +31,12 @@ var FormHelper = {
             FormHelper.hideShowConfigurationTitle();
             $('configuration_title_container').innerText = "Saving..."
           },
-          // onSuccess: function(transport) {
-          //   var response = transport.responseText;
-          //   $('configuration_title_container').innerText = response;
-          // },
+          onSuccess: function(transport) {
+            var response = transport.responseText;
+            alert(response)
+            $('configuration_title_container').innerText = response;
+            FormHelper.hideShowConfigurationTitle();
+          },
           onFailure: function() { alert('Something went wrong...') },
       });
     }

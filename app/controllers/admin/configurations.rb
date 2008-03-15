@@ -1,6 +1,5 @@
 module Admin
   class Configurations < Base
-
     before :find_or_create_configuration
     
     def show
@@ -15,7 +14,11 @@ module Admin
       @configuration.title = params[:title] unless params[:title].nil?
       @configuration.save
       # redirect url(:admin_configurations)
-      render_js
+      # render_js
+      # provides :json
+      # display @configuration
+      headers['Content-Type'] = 'application/json'
+      display @configuration
     end
     
     private

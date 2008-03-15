@@ -19,6 +19,5 @@ module Merb
       return date.strftime('%A, %B %e') if days.abs < 182
       return date.strftime('%A, %B %e, %Y')
     end
-
   end
 end

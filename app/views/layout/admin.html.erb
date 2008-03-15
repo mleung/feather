@@ -15,7 +15,7 @@
 	  <li><%= link_to "Blog Settings", url(:admin_configurations) %></li>
     </ul>
     <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard) %></a></h1>
-    <span id="link_to_blog">(<%= link_to "View your blog", "/" %>)</span>
+    <span id="link_to_blog"><%= link_to "View your blog", "/" %></span>
   </div>
   <div id="wrap">
     <div id="content">

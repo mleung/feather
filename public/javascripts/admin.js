@@ -1,50 +1,65 @@
 
 var FormHelper = {
-  
-  // TODO: Make this more generic, because it 
-  // will be reused. 
-  hideShowConfigurationTitle: function() {
-    if ($('configuration_title').visible()) {
-      $('configuration_title').hide();
-      $('configuration_title_container').show();
+  /**
+	* This toggles the visibility of the specified element, and alternately toggles the *_container element
+	**/
+  hideShow: function(name) {
+    if ($(name).visible()) {
+	  FormHelper.showContainer(name);
     }
     else {
-      $('configuration_title').show();
-      $('configuration_title_container').hide();
-      $('configuration_title').focus();
+	  FormHelper.hideContainer(name);
+      $(name).focus();
     }
   },
-  
-  configurationTitleKeyPress: function(e) {
+
+  hideContainer: function(name) {
+	$(name).show();
+	$(name + '_container').hide();
+  },
+
+  showContainer: function(name) {
+	$(name).hide();
+	$(name + '_container').show();
+  },
+
+  /**
+	* This processes the keypress event for the element, and makes a request to the specified url (with the element contents), for in place editing via AJAX
+	**/
+  keyPress: function(e, url, name) {
     // Escape key press. There are probably constants for this!
     if (e.keyCode == 27) {
-      this.hideShowConfigurationTitle();
+      this.hideShow(name);
     }
-    // Enter key pressed.
+    // Enter key pressed
     else if (e.keyCode == 13) {
-      var url = "/admin/configurations?title=" + $F('configuration_title');
+	  url += $F(name);
       new Ajax.Request(url, {
           asynchronous:'true', 
           evalScripts:'true',
           method:'put',
           onLoading: function() {
-            FormHelper.hideShowConfigurationTitle();
-            $('configuration_title_container').innerText = "Saving..."
+            FormHelper.hideShow(name);
+            $(name + '_display').innerText = "Saving..."
           },
-          // onSuccess: function(transport) {
-          //   var response = transport.responseText;
-          //   $('configuration_title_container').innerText = response;
-          // },
           onFailure: function() { alert('Something went wrong...') },
       });
     }
+  },
+
+  /**
+	* This sets up the events for the given element, to allow in place editing and saving to the specified url
+	**/
+  inPlaceEditEvents: function(name, url) {
+	Event.observe(name + '_container', 'click', function() { FormHelper.hideShow(name) });
+	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
+	Event.observe(name, 'keypress', FormHelper.keyPress.bindAsEventListener(FormHelper, url, name));
   }
-  
 }
 
-
 Event.observe(window, 'load', function() {
-  Event.observe('configuration_title_container', 'click', FormHelper.hideShowConfigurationTitle);
-  Event.observe('configuration_title', 'blur', FormHelper.hideShowConfigurationTitle);
-  Event.observe('configuration_title', 'keypress', FormHelper.configurationTitleKeyPress.bindAsEventListener(FormHelper));
+	//Set up the events for the configuration page
+	FormHelper.inPlaceEditEvents("configuration_title", "/admin/configurations?title=");
+	FormHelper.inPlaceEditEvents("configuration_tag_line", "/admin/configurations?tag_line=");
+	FormHelper.inPlaceEditEvents("configuration_about", "/admin/configurations?about=");
 });

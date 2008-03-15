@@ -20,5 +20,10 @@ module Merb
       return date.strftime('%A, %B %e, %Y')
     end
 
+    def notifications
+      notifications = session[:notifications]
+      session[:notifications] = nil
+      notifications
+    end
   end
 end

@@ -32,6 +32,10 @@ a {
   padding: 25px;
 }
 
+#notifications {
+	color: green;
+}
+
 #content .bot_shadow  {
   background: transparent url(../images/bottom-bg.gif) no-repeat scroll right top; 
   font-size: 8px; 

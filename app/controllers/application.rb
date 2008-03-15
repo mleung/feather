@@ -5,6 +5,9 @@ class Application < Merb::Controller
   
   def get_settings
     @settings = Configuration.first
-  end  
-    
+  end
+  
+  def notify(text)
+    session[:notifications] = text
+  end    
 end

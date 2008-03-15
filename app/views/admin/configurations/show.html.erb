@@ -11,17 +11,23 @@
   <tr>
     <td class="field_label">Title:</td>
     <td>
-      <span id="configuration_title_container"><%= @settings.title %> <a href="#" id="edit_configuration_title">edit</a></span>
+      <span id="configuration_title_container"><span id="configuration_title_display"><%= @settings.title %></span> <a href="#" id="edit_configuration_title">edit</a></span>
       <%= text_field :name => "title", :value => @settings.title, :size => 30, :style => 'display:none', :id => 'configuration_title' %>
     </td>
   <tr>
   <tr>
     <td class="field_label">Tag Line:</td>
   	<td>
-  	  <span id="configuration_tag_line_container"><%= @settings.tag_line %> <a href="#" id="edit_configuration_tag_line">edit</a></span>
-      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => 'display:none' %>
+  	  <span id="configuration_tag_line_container"><span id="configuration_tag_line_display"><%= @settings.tag_line %></span> <a href="#" id="edit_configuration_tag_line">edit</a></span>
+      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => 'display:none', :id => 'configuration_tag_line' %>
+  	</td>
+  </tr>
+  <tr>
+    <td class="field_label">About:</td>
+  	<td>
+  	  <span id="configuration_about_container"><span id="configuration_about_display"><%= @settings.about %></span> <a href="#" id="edit_configuration_about">edit</a></span>
+      <%= text_field :name => "about", :value => @settings.about, :size => 30, :style => 'display:none', :id => 'configuration_about' %>
   	</td>
   </tr>
   </table>
 </div>
-<!-- <= link_to "Edit", url(:edit_admin_configurations) > -->

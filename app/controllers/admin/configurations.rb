@@ -1,6 +1,5 @@
 module Admin
   class Configurations < Base
-
     before :find_or_create_configuration
     
     def show

@@ -13,6 +13,9 @@
     <%= password_control :password_confirmation, :label => "Password Confirmation" %>
   </p>
   <p>
+	<%= select_control :time_zone, :label => "Timezone", :collection => get_timezones %>
+  </p>
+  <p>
     <%= submit_button "Update" %>
   </p>
 <% end %>

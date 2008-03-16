@@ -3,7 +3,12 @@ module Admin
     before :find_or_create_configuration
     
     def show
-      display @configuration
+      if @configuration.nil?
+        # This picks up a weird bug whereby when we first create default config, it'll error trying to display it - so we redirect back to this page and it works
+        redirect url(:admin_configurations)
+      else
+        display @configuration
+      end
     end
     
     def update
@@ -15,8 +20,16 @@ module Admin
     end
 
     private
+      ##
+      # This creates default config if there isn't any already, otherwise returns the first config we find
+      # Because of a weird error displaying the newly created config, we set @configuration to nil to force a reload (see "show" above)
       def find_or_create_configuration
-        @configuration = Configuration.find_or_create({:id => 1}, {:title => "My new blog", :tag_line => "My blog rocks!", :about => "I rock, and so does my blog"})
+        if Configuration.count == 0
+          Configuration.create(:title => "My new blog", :tag_line => "My blog rocks!", :about => "I rock, and so does my blog")
+          @configuration = nil
+        else
+          @configuration = Configuration.first
+        end
       end
   end
 end

@@ -25,5 +25,13 @@ module Merb
       session[:notifications] = nil
       notifications
     end
+    
+    def get_timezones
+      TZInfo::Timezone.all.collect { |tz| tz.name }
+    end
+    
+    def render_relative_published_at(article)
+      article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? self.current_user.time_zone : article.user.time_zone).utc_to_local(article.published_at))
+    end
   end
 end

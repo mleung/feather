@@ -15,6 +15,7 @@ class User < DataMapper::Base
   property :salt,                       :string
   property :remember_token_expires_at,  :datetime
   property :remember_token,             :string
+  property :time_zone,                  :string
   property :created_at,                 :datetime
   property :updated_at,                 :datetime
   

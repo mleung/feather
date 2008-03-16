@@ -53,6 +53,7 @@ dependency "RedCloth", "> 3.0"
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
 Merb::BootLoader.after_app_loads do
+  require "TZInfo"
 end
 
 begin 

@@ -2,12 +2,14 @@
 	<tr>
 		<th>Login</th>
 		<th>E-mail</th>
+		<th>Timezone</th>
 		<th></th>
 	</tr>
 <% @users.each do |user| %>
 	<tr>
 		<td><%= user.login %></td>
 		<td><%= user.email %></td>
+		<td><%= user.time_zone %></td>
 		<td><%= link_to "View", url(:admin_user, user) %></td>
 	</tr>
 <% end %>

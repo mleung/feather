@@ -12,8 +12,8 @@
 	  <li><%= link_to "Dashboard", url(:admin_dashboard) %>&nbsp;•</li>
 	  <li><%= link_to "Articles", url(:admin_articles) %>&nbsp;•</li>
 	  <li><%= link_to "Plugins", url(:admin_plugins) %>&nbsp;•</li>
-	  <li><%= link_to "Blog Settings", url(:admin_configurations) %>&nbsp;•</li>
-	  <li><%= link_to "User Management", url(:admin_users) %>&nbsp;•</li>
+	  <li><%= link_to "Settings", url(:admin_configurations) %>&nbsp;•</li>
+	  <li><%= link_to "Users", url(:admin_users) %>&nbsp;•</li>
 	  <% if self.current_user == :false %>
 	  <li><%= link_to "Login", url(:login) %></li>
 	  <% else %>

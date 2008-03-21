@@ -2,16 +2,8 @@
 	<%= @article.title %>
 <% end %>
 
-  <h1><%= @article.title %></h1>
-<br />
-<p>
-	<a href="<%= url(:article, @article) %>">
-		<%= @article.title %> (published at <%= @article.created_at %>)
-	</a>
-</p>
-	
-<p>
-	<%= @article.content %>
-</p>
-	
-<br />
+<h2><%= @article.title %></h2>
+
+<p id="article-content"><%= @article.content %></p>
+
+<p id="published-by">published <%= render_relative_published_at(@article) %> by <%= @article.user.name %></p>

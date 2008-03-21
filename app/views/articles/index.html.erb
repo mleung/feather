@@ -1,19 +1,6 @@
 <% throw_content :title do %>
-	<%= @settings.title %>
+	<%= render_title %>
 <% end %>
 
-<h1><%= @settings.title %></h1>
-<br />
-<% @articles.each do |article| %>
-	<p>
-		<a href="<%= url(:article, article) %>">
-			<%= article.title %> (published at <%= article.created_at %>)
-		</a>
-	</p>
-	
-	<p>
-		<%= article.content %>
-	</p>
-	
-	<br />
-<% end %>
+<%= partial(:article, :with => @articles) %>
+

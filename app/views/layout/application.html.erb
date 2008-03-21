@@ -3,9 +3,13 @@
   <head>
     <title><%= catch_content :title %></title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/stylesheets/screen.css" type="text/css" media="screen" charset="utf-8" />
   </head>
   <body>
+    <h1><%= link_to(render_title, "/") %></h1>
+
+    <div id="tag-line"><%= render_tag_line %></div>
     <%= catch_content :for_layout %>
+    <div id="sidebar">Sidebar here</div>
   </body>
 </html>

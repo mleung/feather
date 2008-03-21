@@ -4,7 +4,8 @@ module Merb
     def textile_to_html(content)
       RedCloth.new(content).to_html
     end
-
+    
+    # TODO: merb is supposed ot have a built in lib for this. Use it.
     def render_relative_date(date)
       date = Date.parse(date, true) unless /Date.*/ =~ date.class.to_s
       days = (date - Date.today).to_i

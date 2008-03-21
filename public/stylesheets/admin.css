@@ -9,6 +9,10 @@ a {
   color: #000066; 
 }
 
+label {
+  display: block;
+}
+
 #wrap {
 	width: 92%;
 	margin: 0 auto;
@@ -59,14 +63,14 @@ a {
 	text-decoration: none;
 }
 
-#link_to_blog {
+#link-to-blog {
   font-weight: bold;
   font-size: 0.99em;
 	float: left;
 	color: #FFFFFF;
 }
 
-#link_to_blog a {
+#link-to-blog a {
   color:#FFFFFF;
 }
 
@@ -170,7 +174,7 @@ label {
   font-size: 0.8em;
 }
 
-#feather_tagline {
+#feather-tagline {
   font-size: 0.5em;
 }
 
@@ -193,3 +197,6 @@ label {
   color: #585858 ;
 }
 
+.mock_label {
+  font-weight: bold;
+}

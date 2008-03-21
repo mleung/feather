@@ -15,12 +15,12 @@ var FormHelper = {
 
   hideContainer: function(name) {
   	$(name).show();
-  	$(name + '_container').hide();
+  	$(name + '-container').hide();
   },
 
   showContainer: function(name) {
   	$(name).hide();
-  	$(name + '_container').show();
+  	$(name + '-container').show();
   },
 
   /**
@@ -40,7 +40,7 @@ var FormHelper = {
           method:'put',
           onLoading: function() {
             FormHelper.hideShow(name);
-            $(name + '_display').innerText = "Saving..."
+            $(name + '-display').innerText = "Saving..."
           },
           onFailure: function() { alert('Something went wrong...') },
       });
@@ -51,7 +51,7 @@ var FormHelper = {
 	* This sets up the events for the given element, to allow in place editing and saving to the specified url
 	**/
   inPlaceEditEvents: function(name, url) {
-  	Event.observe(name + '_container', 'click', function() { FormHelper.hideShow(name) });
+  	Event.observe(name + '-container', 'click', function() { FormHelper.hideShow(name) });
   	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
   	Event.observe(name, 'keypress', FormHelper.keyPress.bindAsEventListener(FormHelper, url, name));
   }
@@ -59,7 +59,7 @@ var FormHelper = {
 
 Event.observe(window, 'load', function() {
 	//Set up the events for the configuration page
-	FormHelper.inPlaceEditEvents("configuration_title", "/admin/configurations?title=");
-	FormHelper.inPlaceEditEvents("configuration_tag_line", "/admin/configurations?tag_line=");
-	FormHelper.inPlaceEditEvents("configuration_about", "/admin/configurations?about=");
+	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configurations?title=");
+	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
+	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=");
 });

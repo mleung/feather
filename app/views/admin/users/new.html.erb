@@ -16,6 +16,6 @@
 	<%= select_control :time_zone, :label => "Timezone", :collection => get_timezones %>
   </p>
   <p>
-    <%= submit_button "Create" %>
+    <%= submit_button "Create" %> or <%= link_to('Cancel', url(:admin_users)) %>
   </p>
 <% end %>

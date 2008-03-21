@@ -18,13 +18,10 @@ class User < DataMapper::Base
   property :time_zone,                  :string
   property :created_at,                 :datetime
   property :updated_at,                 :datetime
+  property :name,                       :string
   
   validates_length_of         :login,                   :within => 3..40
   validates_uniqueness_of     :login
-  # validates_presence_of       :email
-  # validates_format_of         :email,                   :as => :email_address
-  # validates_length_of         :email,                   :within => 3..100
-  # validates_uniqueness_of     :email
   validates_presence_of       :password,                :if => proc {password_required?}
   validates_presence_of       :password_confirmation,   :if => proc {password_required?}
   validates_length_of         :password,                :within => 4..40, :if => proc {password_required?}
@@ -35,8 +32,5 @@ class User < DataMapper::Base
   def login=(value)
     @login = value.downcase unless value.nil?
   end
-    
-
-
   
 end

@@ -1,6 +1,9 @@
 <%= error_messages_for @user %>
 <% form_for @user, :action => url(:admin_user, @user), :method => :put do %>
   <p>
+    <%= text_control :name, :label => "Name" %>
+  </p>
+  <p>
     <%= text_control :login, :label => "Login" %>
   </p>
   <p>
@@ -13,9 +16,9 @@
     <%= password_control :password_confirmation, :label => "Password Confirmation" %>
   </p>
   <p>
-	<%= select_control :time_zone, :label => "Timezone", :collection => get_timezones %>
+	  <%= select_control :time_zone, :label => "Timezone", :collection => get_timezones, :selected => @user.time_zone %>
   </p>
   <p>
-    <%= submit_button "Update" %>
+    <%= submit_button "Update" %> or <%= link_to('Cancel', url(:admin_users)) %>
   </p>
 <% end %>

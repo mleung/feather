@@ -11,15 +11,10 @@
 	<tr>
 		<th>Title</th>
 		<th>Published</th>
+		<th>By</th>
 		<th></th>
 	</tr>		
-	<% @articles.each do |article| %>
-	<tr>
-		<td><%= link_to article.title, url(:admin_article, article) %></td>
-		<td><%= render_relative_published_at(article) %></td>
-		<td <%= link_to "Edit", url(:edit_admin_article, article) %> | <%= link_to 'Delete', url(:delete_admin_article, article), {:method => :delete, :onclick => "return confirm('Are you sure?')"} %></td>
-	</tr>
-	<% end %>
+  <%= partial('admin/articles/article', :with => @articles) %>
 </table>
 <br />
 <%= link_to "New article", url(:new_admin_article) %>

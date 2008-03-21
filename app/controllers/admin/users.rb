@@ -1,5 +1,6 @@
 module Admin
   class Users < Base
+
     def index
       @users = User.all
       display @users
@@ -34,10 +35,11 @@ module Admin
     def update
       @user = User[params[:id]]
       if @user.update_attributes(params[:user])
-        redirect_back_or_default(url(:admin_user, @user))
+        redirect_back_or_default(url(:admin_users))
       else
         render :edit
       end
     end
   end
+  
 end

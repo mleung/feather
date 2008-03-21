@@ -10,6 +10,23 @@
 
     <div id="tag-line"><%= render_tag_line %></div>
     <%= catch_content :for_layout %>
-    <div id="sidebar">Sidebar here</div>
+    <div id="sidebar">
+      <%= render_about_text %>
+      <div id="archives">
+        <h3>Archives</h3>
+        <ul id="archives">
+          <li id="archive-march">March 2008(3)</li>
+          <li id="archive-february">February 2008(6)</li>
+          <li id="archive-february">January 2008(4)</li>
+        </ul>
+      </div>
+    </div>
+    <div id="footer">
+      <span id="copy">Copywrite &copy; 2008 Michael Leung</span> 
+      <span>
+        <strong>Feather is a thing by <a href="http://www.bloggingmyassoff.com">Michael Leung</a> and <a href="http://crazycool.co.uk/blog">Elliott Draper</a></strong>
+        <strong>Theme by <a href="http://chrismatthias.com">Chris Matthias</strong>
+      </span>
+    </div>
   </body>
 </html>

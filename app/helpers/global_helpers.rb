@@ -34,5 +34,18 @@ module Merb
     def render_relative_published_at(article)
       article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? self.current_user.time_zone : article.user.time_zone).utc_to_local(article.published_at))
     end
+    
+    def render_about_text
+      unless @settings.nil? || @settings.about.nil? || @settings.about.empty?
+        markup = <<-MARKUP
+        <div id="about">
+          <h3>About</h3>
+          #{@settings.about}
+        </div>
+        MARKUP
+      end
+      markup
+    end
+    
   end
 end

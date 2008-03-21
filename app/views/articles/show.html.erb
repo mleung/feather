@@ -4,6 +4,6 @@
 
 <h2><%= @article.title %></h2>
 
-<p id="article-content"><%= @article.content %></p>
+<p id="article-content"><%= textile_to_html @article.content %></p>
 
 <p id="published-by">published <%= render_relative_published_at(@article) %> by <%= @article.user.name %></p>

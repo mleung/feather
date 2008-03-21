@@ -1,7 +1,7 @@
 class Articles < Application
   
   def index
-    @articles = Article.all(:limit => 10, :order => 'published_at DESC')
+    @articles = Article.find_recent
     display @articles
   end
   

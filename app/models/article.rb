@@ -7,4 +7,9 @@ class Article < DataMapper::Base
   validates_presence_of :title, :content, :user_id
   
   belongs_to :user
+  
+  def self.find_recent
+    self.all(:published_at.not => nil, :limit => 10, :order => 'published_at DESC')
+  end
+  
 end

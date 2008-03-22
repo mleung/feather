@@ -1,0 +1,16 @@
+<div class="hentry" id="article-<%= article.id %>">
+  <h2 class="entry-title">
+    <%= link_to(article.title, url(:article, article)) %>
+  </h2>
+  <div class="vcard">
+    Posted by <span class="fn"><%= article.user.name %></span>
+  </div>
+  <abbr class="published" title=""><%= render_relative_published_at(article) %></abbr>
+  <br class="clear" />
+  <div class="entry-content">
+    <%= textile_to_html(article.content) %>
+  </div>
+  <ul class="meta">
+    </li>
+  </ul>
+</div>

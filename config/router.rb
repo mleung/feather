@@ -21,6 +21,11 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
+  r.match("/:year").to(:controller => "articles", :action => "index").name(:year)
+  r.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
+  r.match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
+  r.match("/:year/:month/:day/:post").to(:controller => "articles", :action => "index").name(:permalink)
+  
   # RESTful routes
   r.resources :articles
   

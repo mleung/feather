@@ -54,6 +54,7 @@ dependency "RedCloth", "> 3.0"
 
 Merb::BootLoader.after_app_loads do
   require "TZInfo"
+  require File.join("lib", "padding")
 end
 
 begin 

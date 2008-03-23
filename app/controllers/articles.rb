@@ -1,9 +1,7 @@
 class Articles < Application
-  
+  # This handles the index (recent articles), or the year/month/day views
   def index
-    if params[:post]
-      @articles = Article.find_by_year_month_day_post(params[:year], params[:month], params[:day], params[:post])
-    elsif params[:day]
+    if params[:day]
       @articles = Article.find_by_year_month_day(params[:year], params[:month], params[:day])
     elsif params[:month]
       @articles = Article.find_by_year_month(params[:year], params[:month])
@@ -15,8 +13,15 @@ class Articles < Application
     display @articles
   end
   
+  # This handles the permalink for articles, and is executed using the special permalink Rack handler
   def show
-    @article = Article[params[:id]]
-    display @article
+    @article = Article.find_by_permalink(request.uri.to_s)
+    if @article
+      # This will render the article and the request will not process any further
+      display @article
+    else
+      # This will force Rack to pass the request off to the main Merb app, as we didn't find a post for the url
+      self.status = 404
+    end
   end
 end

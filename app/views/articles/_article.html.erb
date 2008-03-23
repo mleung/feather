@@ -1,6 +1,6 @@
 <div class="hentry" id="article-<%= article.id %>">
   <h2 class="entry-title">
-    <%= link_to(article.title, permalink_url(article)) %>
+    <%= link_to(article.title, article.permalink) %>
   </h2>
   <div class="vcard">
     Posted by <span class="fn"><%= article.user.name %></span>

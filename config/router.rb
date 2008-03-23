@@ -21,14 +21,6 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
-  r.match("/:year").to(:controller => "articles", :action => "index").name(:year)
-  r.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
-  r.match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
-  r.match("/:year/:month/:day/:post").to(:controller => "articles", :action => "index").name(:permalink)
-  
-  # RESTful routes
-  r.resources :articles
-  
   # Admin namespace
   r.namespace :admin do |admin|
     admin.resource :configurations
@@ -41,13 +33,14 @@ Merb::Router.prepare do |r|
     admin.match("").to(:controller => "dashboard", :action => "index")
   end
   
-  # This is the default route for /:controller/:action/:id
-  # This is fine for most cases.  If you're heavily using resource-based
-  # routes, you may want to comment/remove this line to prevent
-  # clients from calling your create or destroy actions with a GET
+  # Year/month/day routes
+  r.match("/:year").to(:controller => "articles", :action => "index").name(:year)
+  r.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
+  r.match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
+  # Permalinks are handled with a Rack hook
+  
   r.default_routes
   
-  # Change this for your home page to be available at /
   r.match('/').to(:controller => 'articles', :action =>'index')
 end
 

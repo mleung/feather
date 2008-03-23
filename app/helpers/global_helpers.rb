@@ -58,9 +58,5 @@ module Merb
     def day_url(year, month, day)
       url(:day, {:year => year, :month => Padding::pad_single_digit(month), :day => Padding::pad_single_digit(day)})
     end
-    
-    def permalink_url(post)
-      url(:permalink, {:year => post.published_at.year, :month => Padding::pad_single_digit(post.published_at.month), :day => Padding::pad_single_digit(post.published_at.day), :post => post.title})
-    end
   end
 end

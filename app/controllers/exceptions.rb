@@ -1,5 +1,4 @@
 class Exceptions < Application
-  
   # handle NotFound exceptions (404)
   def not_found
     render :format => :html

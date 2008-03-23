@@ -36,7 +36,7 @@ module Merb
     end
     
     def render_about_text
-      unless @settings.nil? || @settings.blank?
+      unless @settings.nil? || @settings.about.blank?
         markup = <<-MARKUP
         <div class="sidebar-node">
           <h3>About</h3>

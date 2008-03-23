@@ -21,14 +21,14 @@
 
     <div id="sidebar">
       <%= render_about_text %>
-      <div id="archives">
-        <h3>Archives</h3>
-        <ul id="archives">
-          <li id="archive-march"><%= link_to "March 2008 (3)", month_url(2008, 3) %></li>
-          <li id="archive-february"><%= link_to "February 2008 (6)", month_url(2008, 2) %></li>
-          <li id="archive-january"><%= link_to "January 2008 (4)", month_url(2008, 1) %></li>
-        </ul>
-      </div>
+      <% unless @articles.empty? %>
+        <div id="archives">
+          <h3>Archives</h3>
+          <ul id="archives">
+            <%= partial('shared/archive', :with => @archives) %>
+          </ul>
+        </div>
+      <% end %>
     </div>
     <br style="clear:both;" />
   </div>

@@ -1,6 +1,7 @@
 class Articles < Application
   # This handles the index (recent articles), or the year/month/day views
   def index
+    get_archive_hash
     if params[:day]
       @articles = Article.find_by_year_month_day(params[:year], params[:month], params[:day])
     elsif params[:month]
@@ -15,8 +16,7 @@ class Articles < Application
   
   # This handles the permalink for articles, and is executed using the special permalink Rack handler
   def show
-    @article = Article.find_by_permalink(request.uri.to_s)
-    if @article
+    if @article = Article.find_by_permalink(request.uri.to_s)
       # This will render the article and the request will not process any further
       display @article
     else

@@ -3,8 +3,10 @@
   <p>
     This page contains the global options for your blog.
   </p>
-
-  <%= partial "admin/articles/textile_help" %>
+  <p>
+    <strong>To add a new line to your about, hold shift and hit enter.</strong> Add links and formatting with textile:
+  </p>
+  <%= partial "shared/textile_help" %>
 <% end %>
 
 <h1>Blog Settings</h1>
@@ -25,10 +27,10 @@
   	</td>
   </tr>
   <tr>
-    <td class="field_label">About:</td>
+    <td class="field_label" valign="top">About:</td>
   	<td>
   	  <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
-	  <%= text_area_field @settings.about, :name => "about", :rows => 20, :cols => 100, :style => "display: none", :id => "configuration-about" %>
+	  <%= text_area_field @settings.about, :name => "about", :rows => 15, :cols => 50, :style => "display: none", :id => "configuration-about" %>
   	</td>
   </tr>
   </table>

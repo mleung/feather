@@ -19,9 +19,8 @@ module Admin
     end
     
     def create
-      @article = Article.new
-      @article.attributes = params[:article]
-      @article.published_at = params[:publish] == "0" ? nil : Time.now
+      @article = Article.new(params[:article])
+      @article.published_at = params[:published] == "0" ? nil : Time.now
       @article.user_id = self.current_user.id
       if @article.save
         redirect url(:admin_article, @article)
@@ -35,7 +34,6 @@ module Admin
     end
     
     def update
-      @article.published_at = params[:publish] == "0" ? nil : Time.now
       if @article.update_attributes(params[:article])
         redirect url(:admin_article, @article)
       else

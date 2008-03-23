@@ -1,6 +1,6 @@
 <%= text_control :title, :size => 50, :label => 'Title:' %>
 <%= text_area_control :content, :rows => 20, :cols => 100, :label => 'Content:' %>
 <p>
-  <span class="mock_label">Publish?</span>
-  <%= checkbox_field :name => "publish" %>
+  <span class="mock_label">Published?</span>
+  <%= checkbox_control :published, :value => "1" %>
 </p>

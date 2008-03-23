@@ -5,6 +5,7 @@ class Article < DataMapper::Base
   property :published_at, :datetime
   property :user_id, :integer, :nullable => false
   property :permalink, :string, :nullable => false
+  property :published, :boolean, :default => false
   validates_presence_of :title, :content, :user_id
   
   belongs_to :user
@@ -31,22 +32,22 @@ class Article < DataMapper::Base
   
   class << self
     def find_recent
-      self.all(:published_at.not => nil, :limit => 10, :order => "published_at DESC")
+      self.all(:published => true, :limit => 10, :order => "published_at DESC")
     end
   
     def find_by_year(year)
-      self.all(:published_at.like => "#{year}%", :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}%", :published => true, :order => "published_at DESC")
     end
   
     def find_by_year_month(year, month)
       month = Padding::pad_single_digit(month)
-      self.all(:published_at.like => "#{year}-#{month}%", :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}-#{month}%", :published => true, :order => "published_at DESC")
     end
   
     def find_by_year_month_day(year, month, day)
       month = Padding::pad_single_digit(month)
       day = Padding::pad_single_digit(day)
-      self.all(:published_at.like => "#{year}-#{month}-#{day}%", :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}-#{month}-#{day}%", :published => true, :order => "published_at DESC")
     end
   
     def find_by_permalink(permalink)
@@ -54,7 +55,7 @@ class Article < DataMapper::Base
     end
     
     def get_archive_hash
-      counts = self.find_by_sql("SELECT COUNT(*) as count, #{specific_date_function} FROM articles WHERE published_at IS NOT NULL GROUP BY year, month ORDER BY year DESC, month DESC")
+      counts = self.find_by_sql("SELECT COUNT(*) as count, #{specific_date_function} FROM articles WHERE published_at IS NOT NULL AND published = 1 GROUP BY year, month ORDER BY year DESC, month DESC")
       archives = counts.map do |entry|
         {
           :name => "#{Date::MONTHNAMES[entry.month.to_i]} #{entry.year}",

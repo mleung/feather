@@ -3,6 +3,8 @@
   <p>
     This page contains the global options for your blog.
   </p>
+
+  <%= partial "admin/articles/textile_help" %>
 <% end %>
 
 <h1>Blog Settings</h1>
@@ -12,21 +14,21 @@
     <td class="field_label">Title:</td>
     <td>
       <span id="configuration-title-container"><span id="configuration-title-display"><%= @settings.title %></span> <a href="#" id="edit-configuration-title">edit</a></span>
-      <%= text_field :name => "title", :value => @settings.title, :size => 30, :style => 'display:none', :id => 'configuration-title' %>
+      <%= text_field :name => "title", :value => @settings.title, :size => 30, :style => "display: none", :id => "configuration-title" %>
     </td>
   <tr>
   <tr>
     <td class="field_label">Tag Line:</td>
   	<td>
   	  <span id="configuration-tag-line-container"><span id="configuration-tag-line-display"><%= @settings.tag_line %></span> <a href="#" id="edit_configuration-tag-line">edit</a></span>
-      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => 'display:none', :id => 'configuration-tag-line' %>
+      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => "display: none", :id => "configuration-tag-line" %>
   	</td>
   </tr>
   <tr>
     <td class="field_label">About:</td>
   	<td>
-  	  <span id="configuration-about-container"><span id="configuration-about_display"><%= @settings.about %></span> <a href="#" id="edit-configuration-about">edit</a></span>
-      <%= text_field :name => "about", :value => @settings.about, :size => 30, :style => 'display:none', :id => 'configuration-about' %>
+  	  <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
+	  <%= text_area_field @settings.about, :name => "about", :rows => 20, :cols => 100, :style => "display: none", :id => "configuration-about" %>
   	</td>
   </tr>
   </table>

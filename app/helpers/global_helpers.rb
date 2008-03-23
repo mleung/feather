@@ -40,7 +40,7 @@ module Merb
         markup = <<-MARKUP
         <div class="sidebar-node">
           <h3>About</h3>
-          <p>#{@settings.about}</p>
+          <p>#{textile_to_html(@settings.about)}</p>
         </div>
         MARKUP
       end

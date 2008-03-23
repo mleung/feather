@@ -20,5 +20,7 @@
 
 <p>
   <h4>Recent Activity</h4>
-  It appears this is a brand new blog!
+  <% @activity.each do |activity| %>
+	<%= activity.message %>, <%= render_relative_date(activity.created_at) %><br />
+  <% end %>
 </p>

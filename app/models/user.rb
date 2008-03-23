@@ -29,8 +29,22 @@ class User < DataMapper::Base
     
   before_save :encrypt_password
   
+  after_create :set_create_activity
+  after_update :set_update_activity
+  
+  def set_create_activity
+    a = Activity.new
+    a.message = "User \"#{self.login}\" created"
+    a.save
+  end
+  
+  def set_update_activity
+    a = Activity.new
+    a.message = "User \"#{self.login}\" updated"
+    a.save
+  end
+  
   def login=(value)
     @login = value.downcase unless value.nil?
   end
-  
 end

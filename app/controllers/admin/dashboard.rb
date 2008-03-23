@@ -4,7 +4,8 @@ module Admin
     before :check_for_user
     
     def index
-      render
+      @activity = Activity.all(:order => "created_at DESC", :limit => 5)
+      display @activity
     end
     
     private

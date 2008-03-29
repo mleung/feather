@@ -9,8 +9,8 @@
 <body>
   <div id="header">
     <ul id="nav">
-	<% menu_items.each do |item| %>
-		<li><%= link_to item[:text], item[:url] %></li>
+	<% menu_items.each_with_index do |item, index| %>
+		<li><%= link_to item[:text], item[:url] %> <%= "&nbsp;•" unless index == menu_items.size - 1 %> </li>
 	<% end %>
     </ul>
     <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></a></h1>

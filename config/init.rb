@@ -14,7 +14,8 @@ Merb::Config.use do |c|
   
   c[:session_secret_key]  = '95bf50e5bb36b2a455611792c271f2581e6b21db'
   c[:session_store] = 'cookie'
-end  
+  c[:use_mutex] = false
+end
 
 ### Merb doesn't come with database support by default.  You need
 ### an ORM plugin.  Install one, and uncomment one of the following lines,
@@ -54,7 +55,23 @@ dependency "RedCloth", "> 3.0"
 
 Merb::BootLoader.after_app_loads do
   require "TZInfo"
+  require "net/http"
+  require "URI"
   require File.join("lib", "padding")
+  require File.join("lib", "datamapper")
+  require File.join("lib", "hooks")
+
+  Merb::Orms::DataMapper.after_connect do
+    require File.join(File.join("app", "models"), "plugin")
+    Plugin.all.each do |p|
+      begin
+        p.load
+        Merb.logger.info("\"#{p.name}\" loaded")
+      rescue Exception => e
+        Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
+      end
+    end
+  end
 end
 
 begin 

@@ -1,0 +1,12 @@
+<% throw_content :right do %>
+	Here you can choose to make a plugin active or inactive.
+<% end %>
+
+<%= error_messages_for @plugin %>
+<h1>Edit <%= @plugin.name %></h1>
+
+<% form_for :plugin, :action => url(:admin_plugin, @plugin), :method => :put do %>
+  <%= select_control :active, :collection => %w(true false), :label => "Active?" %>
+  <br /><br />
+  <%= submit_button 'Save Plugin' %> or <%= link_to 'Cancel', url(:admin_plugins) %>
+<% end %>

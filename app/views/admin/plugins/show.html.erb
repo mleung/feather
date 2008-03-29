@@ -1,0 +1,27 @@
+<% throw_content :right do %>
+  <h4>About This Plugin</h4>
+  <p>
+	<%= @plugin.about %>
+  </p>
+<% end %>
+
+<h1><%= @plugin.name %></h1>
+
+<p>
+	v<%= @plugin.version %> by <%= @plugin.author %>
+</p>
+
+<p>
+	<%= link_to @plugin.homepage, @plugin.homepage %>
+</p>
+
+<p>
+	<% if @plugin.active %>
+		Activated
+	<% else %>
+		Isn't activated
+	<% end %>
+</p>
+
+<%= link_to "Edit plugin", url(:edit_admin_plugin, @plugin) %> |
+<%= link_to "Back to plugins", url(:admin_plugins) %>

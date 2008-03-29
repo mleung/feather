@@ -1,0 +1,22 @@
+<% throw_content :right do %>
+  <h4>View Plugins</h4>
+  <p>
+	Here you can view the plugins you have installed, and see which ones are active.
+  </p>
+<% end %>
+
+<h1>View Plugins</h1>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Author</th>
+		<th>Version</th>
+		<th>Homepage</th>
+		<th>Active</th>
+		<th></th>
+	</tr>
+  <%= partial("plugin", :with => @plugins) %>
+</table>
+<br />
+<%= link_to "Install plugin", url(:new_admin_plugin) %>

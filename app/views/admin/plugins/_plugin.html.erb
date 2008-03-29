@@ -1,0 +1,8 @@
+<tr>
+	<td><%= plugin.name %></td>
+	<td><%= plugin.author %></td>
+	<td><%= plugin.version %></td>
+	<td><%= link_to plugin.homepage, plugin.homepage %></td>
+	<td><%= plugin.active %></td>
+	<td <%= link_to "Edit", url(:edit_admin_plugin, plugin) %> | <%= link_to 'Delete', url(:delete_admin_plugin, plugin), {:method => :delete, :onclick => "return confirm('Are you sure?')"} %></td>
+</tr>

@@ -9,16 +9,9 @@
 <body>
   <div id="header">
     <ul id="nav">
-	  <li><%= link_to "Dashboard", url(:admin_dashboard) %>&nbsp;•</li>
-	  <li><%= link_to "Articles", url(:admin_articles) %>&nbsp;•</li>
-	  <li><%= link_to "Plugins", url(:admin_plugins) %>&nbsp;•</li>
-	  <li><%= link_to "Settings", url(:admin_configurations) %>&nbsp;•</li>
-	  <li><%= link_to "Users", url(:admin_users) %>&nbsp;•</li>
-	  <% if self.current_user == :false %>
-	  <li><%= link_to "Login", url(:login) %></li>
-	  <% else %>
-  	  <li><%= link_to "Logout", url(:logout) %></li>
-	  <% end %>
+	<% menu_items.each do |item| %>
+		<li><%= link_to item[:text], item[:url] %></li>
+	<% end %>
     </ul>
     <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></a></h1>
     <span id="link-to-blog"><%= link_to "View your blog", "/" %></span>

@@ -58,5 +58,23 @@ module Merb
     def day_url(year, month, day)
       url(:day, {:year => year, :month => Padding::pad_single_digit(month), :day => Padding::pad_single_digit(day)})
     end
+
+    ##
+    # This returns all items, including those provided by plugins
+    def menu_items
+      items = []
+      Hooks::Menu.menu_items.each { |item| items << item }
+      items << {:text => "Dashboard", :url => url(:admin_dashboard)}
+      items << {:text => "Articles", :url => url(:admin_articles)}
+      items << {:text => "Plugins", :url => url(:admin_plugins)}
+      items << {:text => "Settings", :url => url(:admin_configurations)}
+      items << {:text => "Users", :url => url(:admin_users)}
+      if self.current_user == :false
+        items << {:text => "Login", :url => url(:login)}
+      else
+        items << {:text => "Logout", :url => url(:logout)}
+      end
+      items
+    end
   end
 end

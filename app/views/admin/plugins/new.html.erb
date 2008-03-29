@@ -1,0 +1,12 @@
+<% throw_content :right do %>
+	Add a new plugin here - just enter the url to the plugin, and we'll do the rest!
+<% end %>
+
+<%= error_messages_for @plugin %>
+<h1>Install Plugin</h1>
+
+<% form_for :plugin, :action => url(:admin_plugin, @plugin) do %>
+  <%= text_control :url, :size => 65, :label => 'URL:' %>
+  <br /><br />
+  <%= submit_button 'Install Plugin' %> or <%= link_to 'Cancel', url(:admin_plugins) %>
+<% end %>

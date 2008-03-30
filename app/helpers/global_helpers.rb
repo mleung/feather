@@ -76,5 +76,10 @@ module Merb
       end
       items
     end
+    
+    def render_link_dot(index, collection_size)
+      "&nbsp;•" unless index == collection_size
+    end
+    
   end
 end

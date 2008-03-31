@@ -62,6 +62,7 @@ Merb::BootLoader.after_app_loads do
   require File.join("lib", "hooks")
 
   Merb::Orms::DataMapper.after_connect do
+    # This is needed as the attributes of the model do not load otherwise.
     require File.join(File.join("app", "models"), "plugin")
     Plugin.all.each do |p|
       begin

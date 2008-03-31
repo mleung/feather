@@ -1,5 +1,6 @@
 require File.join(File.join(File.dirname(__FILE__), "hooks"), "menu")
 require File.join(File.join(File.dirname(__FILE__), "hooks"), "routing")
+require File.join(File.join(File.dirname(__FILE__), "hooks"), "view")
 
 module Hooks
   class << self

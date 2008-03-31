@@ -6,7 +6,9 @@ class Article < DataMapper::Base
   property :user_id, :integer, :nullable => false
   property :permalink, :string, :nullable => false
   property :published, :boolean, :default => false
-  validates_presence_of :title, :content, :user_id
+  validates_presence_of :title, :key => "uniq_title"
+  validates_presence_of :content, :key => "uniq_content"
+  validates_presence_of :user_id, :key => "uniq_user_id"
   
   belongs_to :user
   

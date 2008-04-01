@@ -20,7 +20,6 @@ module Admin
     
     def create
       @article = Article.new(params[:article])
-      @article.published_at = params[:published] == "0" ? nil : Time.now
       @article.user_id = self.current_user.id
       if @article.save
         redirect url(:admin_article, @article)

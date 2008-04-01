@@ -4,7 +4,7 @@ class Article < DataMapper::Base
   property :created_at, :datetime
   property :published_at, :datetime
   property :user_id, :integer, :nullable => false
-  property :permalink, :string, :nullable => false
+  property :permalink, :string
   property :published, :boolean, :default => false
   validates_presence_of :title, :key => "uniq_title"
   validates_presence_of :content, :key => "uniq_content"
@@ -12,12 +12,18 @@ class Article < DataMapper::Base
   
   belongs_to :user
   
-  before_create :set_permalink
+  before_save :set_published_permalink
   after_create :set_create_activity
   after_update :set_update_activity
-  
-  def set_permalink
-    self.permalink = "/#{self.published_at.year}/#{Padding::pad_single_digit(self.published_at.month)}/#{Padding::pad_single_digit(self.published_at.day)}/#{self.title.downcase.gsub(/[^a-z0-9]+/i, '-')}"
+
+  def set_published_permalink
+    # Check to see if we are publishing
+    if self.published
+      # Set the date, only if we haven't already
+      self.published_at = Time.now if self.published_at.nil?
+      # Set the permalink, only if we haven't already
+      self.permalink = "/#{self.published_at.year}/#{Padding::pad_single_digit(self.published_at.month)}/#{Padding::pad_single_digit(self.published_at.day)}/#{self.title.downcase.gsub(/[^a-z0-9]+/i, '-')}" if self.permalink.nil?
+    end
   end
   
   def set_create_activity

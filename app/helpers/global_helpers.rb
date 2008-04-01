@@ -81,5 +81,17 @@ module Merb
       "&nbsp;•" unless index == collection_size
     end
     
+    ##
+    # This renders all plugin views for the specified hook
+    def render_plugin_views(name)
+      output = ""
+      Hooks::View.plugin_views.each do |view|
+        _template_root = File.join(view[:plugin].path, "views")
+        template_location = _template_root / _template_location("_#{view[:partial]}", content_type, view[:name])
+        template_method = Merb::Template.template_for(template_location)
+        output << send(template_method)
+      end
+      output
+    end
   end
 end

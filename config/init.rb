@@ -58,19 +58,15 @@ Merb::BootLoader.after_app_loads do
   require "net/http"
   require "URI"
   require File.join("lib", "padding")
-  require File.join("lib", "datamapper")
   require File.join("lib", "hooks")
 
-  Merb::Orms::DataMapper.after_connect do
-    # This is needed as the attributes of the model do not load otherwise.
-    require File.join(File.join("app", "models"), "plugin")
-    Plugin.all.each do |p|
-      begin
-        p.load
-        Merb.logger.info("\"#{p.name}\" loaded")
-      rescue Exception => e
-        Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
-      end
+  # This loads the plugins
+  Plugin.all.each do |p|
+    begin
+      p.load
+      Merb.logger.info("\"#{p.name}\" loaded")
+    rescue Exception => e
+      Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
     end
   end
 end

@@ -1,3 +1,4 @@
+<%= render_plugin_views "before_post" %>
 <div class="hentry" id="article-<%= article.id %>">
   <h2 class="entry-title">
     <%= link_to(article.title, article.permalink) %>
@@ -14,3 +15,4 @@
     </li>
   </ul>
 </div>
+<%= render_plugin_views "after_post" %>

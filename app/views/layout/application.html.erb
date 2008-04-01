@@ -12,12 +12,14 @@
   <div id="header">
     <h1><span><%= link_to(render_title, "/") %></span></h1>
     <h2><%= render_tag_line %></h2>
+    <%= render_plugin_views "header" %>
   </div>
 
   <div id="page">
     <div id="content">
+      <%= render_plugin_views "before_layout" %>
       <%= catch_content :for_layout %>
-      <%= render_plugin_views "after_post" %>
+      <%= render_plugin_views "after_layout" %>
     </div>
 
     <div id="sidebar">
@@ -30,6 +32,7 @@
           </ul>
         </div>
       <% end %>
+	  <%= render_plugin_views "sidebar" %>
     </div>
     <br style="clear:both;" />
   </div>
@@ -41,6 +44,7 @@
       <li>powered by <%= link_to 'feather', 'http://featherblog.org' %> /
           styled with <%= link_to 'scribbish', 'http://quotedprintable.com/pages/scribbish' %></li>
     </ul>
+    <%= render_plugin_views "footer" %>
   </div>
 </div>
 </body>

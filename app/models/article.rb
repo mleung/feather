@@ -12,13 +12,41 @@ class Article < DataMapper::Base
   
   belongs_to :user
   
+  before_create :fire_before_create_event
+  after_create :fire_after_create_event
+  before_update :fire_before_update_event
+  after_update :fire_after_update_event
   before_save :set_published_permalink
   after_create :set_create_activity
   after_update :set_update_activity
+  
+  def fire_before_create_event
+    Hooks::Events.before_create_post(self)
+  end
+  
+  def fire_after_create_event
+    if self.published == "1"
+      Hooks::Events.after_publish_post(self)
+    else
+      Hooks::Events.after_create_post(self)
+    end
+  end
+  
+  def fire_before_update_event
+    Hooks::Events.before_update_post(self)
+  end
+  
+  def fire_after_update_event
+    if self.published == "1"
+      Hooks::Events.after_publish_post(self)
+    else
+      Hooks::Events.after_update_post(self)
+    end
+  end
 
   def set_published_permalink
     # Check to see if we are publishing
-    if self.published
+    if self.published == "1"
       # Set the date, only if we haven't already
       self.published_at = Time.now if self.published_at.nil?
       # Set the permalink, only if we haven't already

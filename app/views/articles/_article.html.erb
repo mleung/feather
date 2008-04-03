@@ -12,7 +12,7 @@
     <%= textile_to_html(article.content) %>
   </div>
   <ul class="meta">
-    </li>
+    <li><%= render_plugin_views "meta_section", :with => article %></li>
   </ul>
 </div>
 <%= render_plugin_views @articles.nil? ? "after_post" : "after_post_in_list" %>

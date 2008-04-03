@@ -1,36 +1,37 @@
-<h3>Comments</h3>
-<% Comment.all_for_post(@article.id).each do |comment| %>
-	<b>Re: <%= @article.title %></b> by <i><%= link_to comment.name, comment.website %></i>
-	<p><%= comment.comment %></p>
-	<p><i>Created <%= render_relative_date(comment.created_at) %></i></p>
-<% end %>
-<div>
-  <h3>Leave Comment</h3>
-  <% if session[:comment_error] %>
-  	There were errors that prohibited your comment from being saved!
-  	<br /><br />
-  	<% session[:comment_error].each do |err| %>
-  		<%= err[1].first %><br />
-  	<% end %>
-  	<br />
-  	<% session[:comment_error] = nil %>
-  <% end %>
-  <% form_for :comment, :action => "/comments/create" do %>
-    <%= hidden_field :name => :article_id, :value => @article.id %>
-    <p>
-      <label>Name:<label>
-      <%= text_field :name => 'name', :size => 30 %>
-    </p>
-    <p>
-    	<label>Website:</label>
-      <%= text_field :name => 'website', :size => 30 %>
-    </p>
-    <p>
-    	<label>Comment:</label>
-    	<%= text_area_field "", :name => 'comment', :rows => 10, :cols => 30 %>
-    </p>
-    <p>
-    	<%= submit_button "Leave comment" %>
-    </p>
-  <% end %>
+<% throw_content :right do %>
+  <h4>Settings</h4>
+   <p>
+     This page contains the global options for your blog.
+   </p>
+   <p>
+    <strong>To add a new line to your about, hold shift and hit enter.</strong> Add links and formatting with textile:
+  </p>
+  <%= partial "shared/textile_help" %>
+ <% end %>
+   
+<h1>Blog Settings</h1>
+<div class="info_container">
+  <table class="in_place_editing">
+  <tr>
+    <td class="field_label">Title:</td>
+    <td>
+      <span id="configuration-title-container"><span id="configuration-title-display"><%= @settings.title %></span> <a href="#" id="edit-configuration-title">edit</a></span>
+      <%= text_field :name => "title", :value => @settings.title, :size => 30, :style => "display: none", :id => "configuration-title" %>
+    </td>
+  <tr>
+  <tr>
+    <td class="field_label">Tag Line:</td>
+    <td>
+      <span id="configuration-tag-line-container"><span id="configuration-tag-line-display"><%= @settings.tag_line %></span> <a href="#" id="edit_configuration-tag-line">edit</a></span>
+      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => "display: none", :id => "configuration-tag-line" %>
+    </td>
+  </tr>
+  <tr>
+    <td class="field_label">About:</td>
+    <td>
+      <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
+    <%= text_area_field @settings.about, :name => "about", :rows => 20, :cols => 100, :style => "display: none", :id => "configuration-about" %>
+    </td>
+  </tr>
+  </table>
 </div>

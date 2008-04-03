@@ -49,6 +49,7 @@ use_test :rspec
 dependencies "merb_helpers"
 dependencies "merb-assets"
 dependency "RedCloth", "> 3.0"
+dependency "merb-action-args"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"

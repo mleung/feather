@@ -17,8 +17,8 @@ module Admin
       display @article
     end
     
-    def create
-      @article = Article.new(params[:article])
+    def create(article)
+      @article = Article.new(article)
       @article.user_id = self.current_user.id
       if @article.save
         redirect url(:admin_articles)
@@ -31,8 +31,8 @@ module Admin
       display @article
     end
     
-    def update
-      if @article.update_attributes(params[:article])
+    def update(article)
+      if @article.update_attributes(article)
         redirect url(:admin_article, @article)
       else
         render :edit

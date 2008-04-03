@@ -5,8 +5,8 @@ module Admin
       display @plugins
     end
     
-    def show
-      @plugin = Plugin[params[:id]]
+    def show(id)
+      @plugin = Plugin[id]
       display @plugin
     end
     
@@ -25,13 +25,13 @@ module Admin
       end
     end
     
-    def edit
-      @plugin = Plugin[params[:id]]
+    def edit(id)
+      @plugin = Plugin[id]
       display @plugin
     end
     
-    def update
-      @plugin = Plugin[params[:id]]
+    def update(id)
+      @plugin = Plugin[id]
       @plugin.active = (params[:plugin][:active] == "true" ? true : false) if params[:plugin] && params[:plugin][:active]
       if @plugin.save
         redirect url(:admin_plugin, @plugin)
@@ -40,8 +40,8 @@ module Admin
       end
     end
     
-    def delete
-      @plugin = Plugin[params[:id]]
+    def delete(id)
+      @plugin = Plugin[id]
       @plugin.destroy!
       redirect url(:admin_plugins)
     end

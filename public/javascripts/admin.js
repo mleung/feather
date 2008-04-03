@@ -52,21 +52,21 @@ var FormHelper = {
 	* This processes the key down event for an element, adding the key to an array that keeps track of keys held down
 	**/
   keyDown: function(e) {
-	if (this.keys == null) {
-		this.keys = [];
-	}
-	if (e.keyCode != null && this.keys.indexOf(e.keyCode) == -1) {
-		this.keys[this.keys.length] = e.keyCode;
-	}
+  	if (this.keys == null) {
+  		this.keys = [];
+  	}
+  	if (e.keyCode != null && this.keys.indexOf(e.keyCode) == -1) {
+  		this.keys[this.keys.length] = e.keyCode;
+  	}
   },
 
   /**
 	* This processes the key up event for the element, removing the key from the array that keeps track of keys held down
 	*/
   keyUp: function(e) {
-	if (this.keys != null && e.keyCode != null && this.keys.indexOf(e.keyCode) != -1) {
-		this.keys.splice(this.keys.indexOf(e.keyCode), 1);
-	}
+  	if (this.keys != null && e.keyCode != null && this.keys.indexOf(e.keyCode) != -1) {
+  		this.keys.splice(this.keys.indexOf(e.keyCode), 1);
+  	}
   },
 
   /**
@@ -76,10 +76,10 @@ var FormHelper = {
   	Event.observe(name + '-container', 'click', function() { FormHelper.hideShow(name) });
   	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
   	Event.observe(name, 'keypress', FormHelper.keyPress.bindAsEventListener(FormHelper, url, name));
-	if (multiline) {
+	  if (multiline) {
 	  	Event.observe(name, 'keydown', FormHelper.keyDown.bindAsEventListener(FormHelper));
 	  	Event.observe(name, 'keyup', FormHelper.keyUp.bindAsEventListener(FormHelper));
-	}
+	  }
   }
 }
 

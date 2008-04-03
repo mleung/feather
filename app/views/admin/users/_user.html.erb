@@ -1,5 +1,5 @@
 <tr>
-	<td><%= link_to user.login %></td>
+	<td><%= link_to user.login, url(:admin_user, user) %></td>
 	<td><%= user.name %></td>
 	<td><%= user.email %></td>
 	<td><%= user.time_zone %></td>

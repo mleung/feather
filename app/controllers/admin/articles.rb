@@ -1,7 +1,7 @@
 module Admin
   class Articles < Base
 
-    before :find_article, :only => %w(edit update delete)
+    before :find_article, :only => %w(edit update delete show)
 
     def index
       @articles = Article.all(:order => 'published_at DESC')
@@ -9,7 +9,6 @@ module Admin
     end
     
     def show
-      @article = Article[params[:id]]
       display @article
     end
     
@@ -22,7 +21,7 @@ module Admin
       @article = Article.new(params[:article])
       @article.user_id = self.current_user.id
       if @article.save
-        redirect url(:admin_article, @article)
+        redirect url(:admin_articles)
       else
         render :new
       end

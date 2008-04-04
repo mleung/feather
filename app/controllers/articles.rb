@@ -1,6 +1,7 @@
 class Articles < Application
   # This handles the index (recent articles), or the year/month/day views
   def index
+    # Unfortunately, we can't use merb-action-args here because we're using the custom rack handler. Booo.
     @archives = Article.get_archive_hash
     if params[:day]
       @articles = Article.find_by_year_month_day(params[:year], params[:month], params[:day])

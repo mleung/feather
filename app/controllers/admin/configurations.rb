@@ -12,6 +12,8 @@ module Admin
     end
     
     def update
+      # The merb-action-args stuff doesn't seem to be working with an ajax call. So we're using 
+      # the nasty dirty params hash here.
       @configuration.title = params[:title] unless params[:title].nil?
       @configuration.tag_line = params[:tag_line] unless params[:tag_line].nil?
       @configuration.about = params[:about] unless params[:about].nil?

@@ -33,7 +33,7 @@ var FormHelper = {
     }
     // Enter key pressed (and shift key not held down)
     else if (e.keyCode == 13 && this.keys.indexOf(16) == -1) {
-	  url += escape($F(name));
+	    url += escape($F(name));
       new Ajax.Request(url, {
           asynchronous:'true', 
           evalScripts:'true',
@@ -44,7 +44,7 @@ var FormHelper = {
           },
           onFailure: function() { alert('Something went wrong...') },
       });
-	  this.keys = [];
+	    this.keys = [];
     }
   },
 

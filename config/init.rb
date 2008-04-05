@@ -48,27 +48,32 @@ use_test :rspec
 # 
 dependencies "merb_helpers"
 dependencies "merb-assets"
-dependency "RedCloth", "> 3.0"
+gem "RedCloth"
+require "redcloth"
 dependency "merb-action-args"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
 Merb::BootLoader.after_app_loads do
-  require "TZInfo"
+  require "tzinfo"
   require "net/http"
-  require "URI"
+  require "uri"
   require File.join("lib", "padding")
   require File.join("lib", "hooks")
 
   # This loads the plugins
-  Plugin.all.each do |p|
-    begin
-      p.load
-      Merb.logger.info("\"#{p.name}\" loaded")
-    rescue Exception => e
-      Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
+  begin
+    Plugin.all.each do |p|
+      begin
+        p.load
+        Merb.logger.info("\"#{p.name}\" loaded")
+      rescue Exception => e
+        Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
+      end
     end
+  rescue Exception => e
+    Merb.logger.info("Error loading plugins: #{e.message}")
   end
 end
 

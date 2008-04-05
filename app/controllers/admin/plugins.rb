@@ -15,9 +15,9 @@ module Admin
       display @plugin
     end
     
-    def create
+    def create(plugin)
       @plugin = Plugin.new
-      @plugin.url = params[:plugin][:url]
+      @plugin.url = plugin[:url]
       if @plugin.save
         redirect url(:admin_plugin, @plugin)
       else
@@ -30,9 +30,9 @@ module Admin
       display @plugin
     end
     
-    def update(id)
+    def update(id, plugin)
       @plugin = Plugin[id]
-      @plugin.active = (params[:plugin][:active] == "true" ? true : false) if params[:plugin] && params[:plugin][:active]
+      @plugin.active = (plugin[:active] == "true" ? true : false) if plugin && plugin[:active]
       if @plugin.save
         redirect url(:admin_plugin, @plugin)
       else

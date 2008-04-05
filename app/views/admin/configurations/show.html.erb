@@ -30,7 +30,7 @@
     <td class="field_label">About:</td>
     <td>
       <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
-    <%= text_area_field @settings.about, :name => "about", :rows => 20, :cols => 100, :style => "display: none", :id => "configuration-about" %>
+      <%= text_area_field @settings.about, :name => "about", :rows => 10, :cols => 50, :style => "display: none", :id => "configuration-about" %>
     </td>
   </tr>
   </table>

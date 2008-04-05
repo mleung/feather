@@ -1,0 +1,7 @@
+<% if @plugin.active %>
+	$('plugin_activated').show();
+	$('plugin_deactivated').hide();
+<% else %>
+	$('plugin_activated').hide();
+	$('plugin_deactivated').show();
+<% end %>

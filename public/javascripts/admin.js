@@ -32,7 +32,7 @@ var FormHelper = {
       this.hideShow(name);
     }
     // Enter key pressed (and shift key not held down)
-    else if (e.keyCode == 13 && this.keys.indexOf(16) == -1) {
+    else if (e.keyCode == 13 && (this.keys == null ? true : this.keys.indexOf(16) == -1)) {
 	    url += escape($F(name));
       new Ajax.Request(url, {
           asynchronous:'true', 
@@ -89,3 +89,31 @@ Event.observe(window, 'load', function() {
 	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
 	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=", true);
 });
+
+var Plugins = {
+	activate: function(id) {
+		new Ajax.Request("/admin/plugins/" + id + "?active=true", {
+          asynchronous:'true', 
+          evalScripts:'true',
+          method:'put',
+          onLoading: function() {
+			$('plugin-activate').hide();
+			$('plugin-display').innerText = "Saving..."
+          },
+          onFailure: function() { alert('Something went wrong...') },
+      });
+	},
+
+	deactivate: function(id) {
+		new Ajax.Request("/admin/plugins/" + id + "?active=false", {
+          asynchronous:'true', 
+          evalScripts:'true',
+          method:'put',
+          onLoading: function() {
+			$('plugin-deactivate').hide();
+			$('plugin-display').innerText = "Saving..."
+          },
+          onFailure: function() { alert('Something went wrong...') },
+      });
+	}
+}

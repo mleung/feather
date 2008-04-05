@@ -25,19 +25,12 @@ module Admin
       end
     end
     
-    def edit(id)
+    def update(id)
+      #merb-action-args doesn't appear to play nice with ajax calls, so we're using params for the plugin active flag
       @plugin = Plugin[id]
-      display @plugin
-    end
-    
-    def update(id, plugin)
-      @plugin = Plugin[id]
-      @plugin.active = (plugin[:active] == "true" ? true : false) if plugin && plugin[:active]
-      if @plugin.save
-        redirect url(:admin_plugin, @plugin)
-      else
-        redirect :edit
-      end
+      @plugin.active = (params[:active] == "true" ? true : false) if params[:active]
+      @plugin.save
+      render_js
     end
     
     def delete(id)

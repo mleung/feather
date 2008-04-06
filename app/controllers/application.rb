@@ -9,6 +9,9 @@ class Application < Merb::Controller
   
   def notify(text)
     session[:notifications] = text
-  end    
+  end
   
+  def self.include_plugin_views(plugin)
+    self._template_roots << [File.join(File.join(File.dirname(plugin), ".."), "views"), :_template_location]
+  end
 end

@@ -25,6 +25,13 @@ class Plugin < DataMapper::Base
     self.path = File.join(File.join(File.join(Merb.root, "app"), "plugins"), URI.parse(url).path.split("/").last.split(".").first)
     FileUtils.rm_rf(self.path)
     recurse(manifest["plugin"]["contents"])
+    # Copy in any images from the plugin
+    # plugin_images = File.join(self.path, "images")
+    # if File.exists? plugin_images
+    #   Dir.foreach(plugin_images) do |f|
+    #     puts f
+    #   end
+    # end
     self.load
   end
   

@@ -127,12 +127,13 @@
 
 #content .hentry .entry-title a:link,
 #content .hentry .entry-title a:visited { 
-  color: #111;
+  color: #993300;
   text-decoration: none;
 }
 
 #content .hentry .entry-title a:hover,
 #content .hentry .entry-title a:active { 
+  color: #111;
   background: transparent;
   text-decoration: underline;
 }

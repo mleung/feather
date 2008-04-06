@@ -25,7 +25,7 @@ class Article < DataMapper::Base
   end
   
   def fire_after_create_event
-    if self.published == "1"
+    if self.is_published?
       Hooks::Events.after_publish_post(self)
     else
       Hooks::Events.after_create_post(self)
@@ -37,7 +37,7 @@ class Article < DataMapper::Base
   end
   
   def fire_after_update_event
-    if self.published == "1"
+    if self.is_published?
       Hooks::Events.after_publish_post(self)
     else
       Hooks::Events.after_update_post(self)
@@ -46,7 +46,7 @@ class Article < DataMapper::Base
 
   def set_published_permalink
     # Check to see if we are publishing
-    if self.published == "1"
+    if self.is_published?
       # Set the date, only if we haven't already
       self.published_at = Time.now if self.published_at.nil?
       # Set the permalink, only if we haven't already
@@ -64,6 +64,11 @@ class Article < DataMapper::Base
     a = Activity.new
     a.message = "Article \"#{self.title}\" updated"
     a.save
+  end
+  
+  def is_published?
+    # We need this beacuse the values get populated from the params.
+    self.published == "1"
   end
   
   class << self

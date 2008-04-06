@@ -63,7 +63,6 @@ module Merb
     # This returns all items, including those provided by plugins
     def menu_items
       items = []
-      Hooks::Menu.menu_items.each { |item| items << item }
       items << {:text => "Dashboard", :url => url(:admin_dashboard)}
       items << {:text => "Articles", :url => url(:admin_articles)}
       items << {:text => "Plugins", :url => url(:admin_plugins)}
@@ -74,6 +73,7 @@ module Merb
       else
         items << {:text => "Logout", :url => url(:logout)}
       end
+      Hooks::Menu.menu_items.each { |item| items << item }
       items
     end
     

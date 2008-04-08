@@ -95,5 +95,12 @@ module Merb
       end
       output
     end
+    
+    ##
+    # This returns true if the specified plugin is active, false if it isn't, or is unavailable
+    def is_plugin_active(name)
+      plugin = Plugin.first(:name => name)
+      plugin && plugin.active
+    end
   end
 end

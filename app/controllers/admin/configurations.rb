@@ -17,6 +17,7 @@ module Admin
       @configuration.title = params[:title] unless params[:title].nil?
       @configuration.tag_line = params[:tag_line] unless params[:tag_line].nil?
       @configuration.about = params[:about] unless params[:about].nil?
+      @configuration.about_formatter = params[:about_formatter] unless params[:about_formatter].nil?
       @configuration.save
       render_js
     end
@@ -27,7 +28,7 @@ module Admin
       # Because of a weird error displaying the newly created config, we set @configuration to nil to force a reload (see "show" above)
       def find_or_create_configuration
         if Configuration.count == 0
-          Configuration.create(:title => "My new blog", :tag_line => "My blog rocks!", :about => "I rock, and so does my blog")
+          Configuration.create(:title => "My new blog", :tag_line => "My blog rocks!", :about => "I rock, and so does my blog", :about_formatter => "default")
           @configuration = nil
         else
           @configuration = Configuration.first

@@ -52,7 +52,7 @@ module Merb
         markup = <<-MARKUP
         <div class="sidebar-node">
           <h3>About</h3>
-          <p>#{render_text("default", @settings.about)}</p>
+          <p>#{render_text(@settings.about_formatter, @settings.about)}</p>
         </div>
         MARKUP
       end

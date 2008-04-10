@@ -2,6 +2,7 @@ class Configuration < DataMapper::Base
   property :title, :string
   property :tag_line, :string
   property :about, :string
+  property :about_formatter, :string
   
   after_save :set_activity
   

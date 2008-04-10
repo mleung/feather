@@ -12,9 +12,13 @@ module Hooks
         plugin_views = []
         unless @view_hooks.nil?
           @view_hooks.each do |hook|
-            begin
-              plugin_views << hook.call.merge({:plugin => Hooks::get_plugin(hook)}) if Hooks::is_hook_valid?(hook)
-            rescue
+            if Hooks::is_hook_valid?(hook)
+              begin
+                result = hook.call
+                result = [result] if result.is_a?(Hash)
+                result.each { |r| plugin_views << r.merge({:plugin => Hooks::get_plugin(hook)}) }
+              rescue
+              end
             end
           end
         end

@@ -16,15 +16,23 @@ class Plugin < DataMapper::Base
   ##
   # This grabs the plugin using its url, and loads the metadata for it
   def download
+    # Load the manifest yaml
     manifest = YAML::load(Net::HTTP.get(URI.parse(url + "/manifest.yml")))
+    # Grab metadata from manifest
     self.name = manifest["plugin"]["name"]
     self.author = manifest["plugin"]["author"]
     self.version = manifest["plugin"]["version"]
     self.homepage = manifest["plugin"]["homepage"]
     self.about = manifest["plugin"]["about"]
+    # Build the path
     self.path = File.join(File.join(File.join(Merb.root, "app"), "plugins"), URI.parse(url).path.split("/").last.split(".").first)
+    # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
+    # Download all of the plugin contents
     recurse(manifest["plugin"]["contents"])
+    # Unpack any gems downloaded
+    unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
+    # Load the plugin
     self.load
   end
   
@@ -54,8 +62,12 @@ class Plugin < DataMapper::Base
   end
   
   ##
-  # This loads the plugin
+  # This loads the plugin, first loading any gems it may have
   def load
+    # Add the plugin path to the gem path, and refresh the gem spec index
+    Gem.path << self.path
+    Gem.source_index.refresh!
+    # Load the plugin init script
     require File.join(self.path, "init.rb")
   end
   
@@ -78,6 +90,17 @@ class Plugin < DataMapper::Base
         when "Hash":
           recurse(yaml[dir], path, url)
         end
+      end
+    end
+    
+    ##
+    # This recursively unpacks the gems used by the plugin
+    def unpack_gems(gems)
+      gems.each do |gem|
+        # Unpack the gem
+        `gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
+        # We can't seem to use --target on the gem command above to actually specify the output folder - so it's in Merb.root; lets move it
+        FileUtils.mv gem.gsub(".gem", ""), File.join(File.join(self.path, "gems"), gem.gsub(".gem", ""))
       end
     end
 end

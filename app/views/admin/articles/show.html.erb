@@ -16,9 +16,13 @@
 </p>
 
 <p>
+	Formatter: <%= @article.formatter %>
+</p>
+
+<p>
 	Content:
 	<br />
-	<%= textile_to_html @article.content %>
+	<%= render_article(@article) %>
 </p>
 
 <%= link_to "Edit article", url(:edit_admin_article, @article) %> |

@@ -19,6 +19,9 @@
 	  <%= select_control :time_zone, :label => "Timezone", :collection => get_timezones, :selected => @user.time_zone %>
   </p>
   <p>
+    <%= select_control :default_formatter, :label => "Default Formatter", :collection => Hooks::Formatters.available_formatters, :selected => @user.default_formatter %>
+  </p>
+  <p>
     <%= submit_button "Update" %> or <%= link_to('Cancel', url(:admin_users)) %>
   </p>
 <% end %>

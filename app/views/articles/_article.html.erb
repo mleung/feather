@@ -9,7 +9,7 @@
   <abbr class="published" title=""><%= render_relative_published_at(article) %></abbr>
   <br class="clear" />
   <div class="entry-content">
-    <%= textile_to_html(article.content) %>
+    <%= render_article(article) %>
   </div>
   <ul class="meta">
     <li><%= render_plugin_views "meta_section", :with => article %></li>

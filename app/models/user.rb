@@ -19,6 +19,7 @@ class User < DataMapper::Base
   property :created_at,                 :datetime
   property :updated_at,                 :datetime
   property :name,                       :string
+  property :default_formatter,          :string
   
   validates_length_of         :login,                   :within => 3..40
   validates_uniqueness_of     :login

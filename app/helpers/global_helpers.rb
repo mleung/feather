@@ -1,8 +1,20 @@
 module Merb
   module GlobalHelpers
+        
+    def render_text(formatter, text)
+      Hooks::Formatters.format_text(formatter, text)
+    end
     
-    def textile_to_html(content)
-      RedCloth.new(content).to_html
+    def render_article(article)
+      Hooks::Formatters.format_article(article)
+    end
+    
+    def render_menu
+      menu = ""
+      menu_items.each_with_index do |item, index|
+      	menu += "<li>#{link_to item[:text], item[:url]} #{render_link_dot(index, menu_items.size - 1)}</li>"
+      end
+      menu
     end
     
     # TODO: merb is supposed ot have a built in lib for this. Use it.
@@ -40,7 +52,7 @@ module Merb
         markup = <<-MARKUP
         <div class="sidebar-node">
           <h3>About</h3>
-          <p>#{textile_to_html(@settings.about)}</p>
+          <p>#{render_text("default", @settings.about)}</p>
         </div>
         MARKUP
       end

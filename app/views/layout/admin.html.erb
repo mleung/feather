@@ -9,10 +9,7 @@
 <body>
   <div id="header">
     <ul id="nav">
-    <!-- TODO: Put this in a partial. No looping in views if we can help it! -->
-  	<% menu_items.each_with_index do |item, index| %>
-  		<li><%= link_to item[:text], item[:url] %> <%= render_link_dot(index, menu_items.size - 1) %> </li>
-  	<% end %>
+	<%= render_menu %>
     </ul>
     <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></a></h1>
     <span id="link-to-blog"><%= link_to "View your blog", "/" %></span>

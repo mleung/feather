@@ -16,7 +16,9 @@ module Hooks
           @menu_item_hooks.each do |hook|
             if Hooks::is_hook_valid?(hook)
               begin
-                menu_items << hook.call
+                result = hook.call
+                result = [result] if result.is_a?(Hash)
+                result.each { |r| menu_items << r }
               rescue
               end
             end

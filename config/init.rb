@@ -48,8 +48,6 @@ use_test :rspec
 # 
 dependencies "merb_helpers"
 dependencies "merb-assets"
-gem "RedCloth"
-require "redcloth"
 dependency "merb-action-args"
 # OR
 # OR

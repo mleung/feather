@@ -12,6 +12,10 @@ class Plugin < DataMapper::Base
   after_create :set_create_activity
   after_update :set_update_activity
   after_destroy :remove
+  
+  class << self
+    @@loaded = []
+  end
 
   ##
   # This grabs the plugin using its url, and loads the metadata for it
@@ -68,6 +72,14 @@ class Plugin < DataMapper::Base
     Gem.use_paths(Gem.dir, ((Gem.path - [Gem.dir]) + [self.path]))
     # Load the plugin init script
     require File.join(self.path, "init.rb")
+    # Add the plugin to the array of loaded plugins
+    @@loaded << self.name
+  end
+  
+  ##
+  # This returns true if the plugin has been loaded, false otherwise
+  def loaded?
+    @@loaded.include?(self.name)
   end
   
   private

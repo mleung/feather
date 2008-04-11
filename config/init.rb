@@ -59,6 +59,7 @@ Merb::BootLoader.after_app_loads do
   require "uri"
   require File.join("lib", "padding")
   require File.join("lib", "hooks")
+  require File.join("lib", "database")
 
   # This loads the plugins
   begin

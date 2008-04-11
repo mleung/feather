@@ -38,6 +38,8 @@ class Plugin < DataMapper::Base
     unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
     # Load the plugin
     self.load
+    # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
+    require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
   end
   
   ##

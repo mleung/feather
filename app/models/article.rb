@@ -14,37 +14,28 @@ class Article < DataMapper::Base
   belongs_to :user
   
   before_create :fire_before_create_event
-  after_create :fire_after_create_event
   before_update :fire_before_update_event
-  after_update :fire_after_update_event
+  before_save :fire_before_save_event
   before_save :set_published_permalink
+  after_create :fire_after_create_event
   after_create :set_create_activity
+  after_update :fire_after_update_event
   after_update :set_update_activity
+  after_save :fire_after_save_event
   
   def fire_before_create_event
     Hooks::Events.before_create_article(self)
-  end
-  
-  def fire_after_create_event
-    if self.is_published?
-      Hooks::Events.after_publish_article(self)
-    else
-      Hooks::Events.after_create_article(self)
-    end
   end
   
   def fire_before_update_event
     Hooks::Events.before_update_article(self)
   end
   
-  def fire_after_update_event
-    if self.is_published?
-      Hooks::Events.after_publish_article(self)
-    else
-      Hooks::Events.after_update_article(self)
-    end
+  def fire_before_save_event
+    Hooks::Events.before_save_article(self)
+    Hooks::Events.before_publish_article(self) if self.is_published?
   end
-
+  
   def set_published_permalink
     # Check to see if we are publishing
     if self.is_published?
@@ -55,16 +46,29 @@ class Article < DataMapper::Base
     end
   end
   
+  def fire_after_create_event
+    Hooks::Events.after_create_article(self)
+  end
+  
   def set_create_activity
     a = Activity.new
     a.message = "Article \"#{self.title}\" created"
     a.save
   end
   
+  def fire_after_update_event
+    Hooks::Events.after_update_article(self)
+  end
+  
   def set_update_activity
     a = Activity.new
     a.message = "Article \"#{self.title}\" updated"
     a.save
+  end
+  
+  def fire_after_save_event
+    Hooks::Events.after_save_article(self)
+    Hooks::Events.after_publish_article(self) if self.is_published?
   end
   
   def is_published?

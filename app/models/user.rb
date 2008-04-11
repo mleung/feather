@@ -10,7 +10,7 @@ class User < DataMapper::Base
   attr_accessor :password, :password_confirmation
   
   property :login,                      :string
-  property :email,                      :string
+  property :email,                      :string, :length => 255
   property :crypted_password,           :string
   property :salt,                       :string
   property :remember_token_expires_at,  :datetime

@@ -1,11 +1,11 @@
 class Plugin < DataMapper::Base
-  property :url, :string
-  property :path, :string
+  property :url, :string, :length => 255
+  property :path, :string, :length => 255
   property :name, :string
   property :author, :string
   property :version, :string
-  property :homepage, :string
-  property :about, :string
+  property :homepage, :string, :length => 255
+  property :about, :string, :length => 255
   property :active, :boolean
   
   before_create :download
@@ -64,9 +64,8 @@ class Plugin < DataMapper::Base
   ##
   # This loads the plugin, first loading any gems it may have
   def load
-    # Add the plugin path to the gem path, and refresh the gem spec index
-    Gem.path << self.path
-    Gem.source_index.refresh!
+    # Setup the Gem path to the plugin
+    Gem.use_paths(Gem.dir, ((Gem.path - [Gem.dir]) + [self.path]))
     # Load the plugin init script
     require File.join(self.path, "init.rb")
   end

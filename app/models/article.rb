@@ -1,10 +1,10 @@
 class Article < DataMapper::Base  
-  property :title, :string, :nullable => false
+  property :title, :string, :nullable => false, :length => 255
   property :content, :string, :nullable => false
   property :created_at, :datetime
   property :published_at, :datetime
   property :user_id, :integer, :nullable => false
-  property :permalink, :string
+  property :permalink, :string, :length => 255
   property :published, :boolean, :default => false
   property :formatter, :string, :default => "default"
   validates_presence_of :title, :key => "uniq_title"

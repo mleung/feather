@@ -32,5 +32,12 @@
       <%= text_area_field @settings.about, :name => "about", :rows => 10, :cols => 50, :style => "display: none", :id => "configuration-about" %>
     </td>
   </tr>
+  <tr>
+	<td class="field_label">About Formatter:</td>
+	<td>
+	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %></span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>
+	  <%= select_field :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %>
+	</td>
+  </tr>
   </table>
 </div>

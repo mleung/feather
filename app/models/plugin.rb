@@ -1,17 +1,21 @@
 class Plugin < DataMapper::Base
-  property :url, :string
-  property :path, :string
+  property :url, :string, :length => 255
+  property :path, :string, :length => 255
   property :name, :string
   property :author, :string
   property :version, :string
-  property :homepage, :string
-  property :about, :string
+  property :homepage, :string, :length => 255
+  property :about, :string, :length => 255
   property :active, :boolean
   
   before_create :download
   after_create :set_create_activity
   after_update :set_update_activity
   after_destroy :remove
+  
+  class << self
+    @@loaded = []
+  end
 
   ##
   # This grabs the plugin using its url, and loads the metadata for it
@@ -64,11 +68,18 @@ class Plugin < DataMapper::Base
   ##
   # This loads the plugin, first loading any gems it may have
   def load
-    # Add the plugin path to the gem path, and refresh the gem spec index
-    Gem.path << self.path
-    Gem.source_index.refresh!
+    # Setup the Gem path to the plugin
+    Gem.use_paths(Gem.dir, ((Gem.path - [Gem.dir]) + [self.path]))
     # Load the plugin init script
     require File.join(self.path, "init.rb")
+    # Add the plugin to the array of loaded plugins
+    @@loaded << self.name
+  end
+  
+  ##
+  # This returns true if the plugin has been loaded, false otherwise
+  def loaded?
+    @@loaded.include?(self.name)
   end
   
   private

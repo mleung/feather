@@ -24,6 +24,23 @@ var FormHelper = {
   },
 
   /**
+	* This processes the onchange event for an element (such as a dropdown), and makes a request to the specified url (with the element contents), for in place editing via AJAX
+	**/
+  onChange: function(e, url, name) {
+    url += escape($F(name));
+    new Ajax.Request(url, {
+        asynchronous:'true', 
+        evalScripts:'true',
+        method:'put',
+        onLoading: function() {
+          FormHelper.hideShow(name);
+          $(name + '-display').innerText = "Saving..."
+        },
+        onFailure: function() { alert('Something went wrong...') },
+    });
+  },
+
+  /**
 	* This processes the keypress event for an element, and makes a request to the specified url (with the element contents), for in place editing via AJAX
 	**/
   keyPress: function(e, url, name) {
@@ -80,6 +97,15 @@ var FormHelper = {
 	  	Event.observe(name, 'keydown', FormHelper.keyDown.bindAsEventListener(FormHelper));
 	  	Event.observe(name, 'keyup', FormHelper.keyUp.bindAsEventListener(FormHelper));
 	  }
+  },
+
+  /**
+	* This sets up the events for the given dropdown, to allow in place editing and saving to the specified url
+	**/
+  inPlaceDropDownEvents: function(name, url) {
+  	Event.observe(name + '-container', 'click', function() { FormHelper.hideShow(name) });
+  	Event.observe(name, 'blur', function() { FormHelper.showContainer(name) });
+  	Event.observe(name, 'change', FormHelper.onChange.bindAsEventListener(FormHelper, url, name));
   }
 }
 
@@ -88,6 +114,7 @@ Event.observe(window, 'load', function() {
 	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configurations?title=");
 	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
 	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=", true);
+	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configurations?about_formatter=");
 });
 
 var Plugins = {

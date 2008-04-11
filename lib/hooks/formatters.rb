@@ -35,7 +35,7 @@ module Hooks
       # This performs the requested formatting, returning the formatted text
       def format_text(formatter, text)
         formatter = "default" unless available_formatters.include?(formatter)
-        @formatters[formatter].call(text)
+        test = @formatters[formatter].call(text)
       end
     end
   end

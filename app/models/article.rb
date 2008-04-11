@@ -22,26 +22,26 @@ class Article < DataMapper::Base
   after_update :set_update_activity
   
   def fire_before_create_event
-    Hooks::Events.before_create_post(self)
+    Hooks::Events.before_create_article(self)
   end
   
   def fire_after_create_event
     if self.is_published?
-      Hooks::Events.after_publish_post(self)
+      Hooks::Events.after_publish_article(self)
     else
-      Hooks::Events.after_create_post(self)
+      Hooks::Events.after_create_article(self)
     end
   end
   
   def fire_before_update_event
-    Hooks::Events.before_update_post(self)
+    Hooks::Events.before_update_article(self)
   end
   
   def fire_after_update_event
     if self.is_published?
-      Hooks::Events.after_publish_post(self)
+      Hooks::Events.after_publish_article(self)
     else
-      Hooks::Events.after_update_post(self)
+      Hooks::Events.after_update_article(self)
     end
   end
 

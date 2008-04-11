@@ -2,7 +2,7 @@
 	<%= render_title %>
 <% end %>
 
-<% if @articles.length == 0 %>
+<% if @articles.empty? %>
 	No articles found.
 <% else %>
 	<%= partial(:article, :with => @articles) %>

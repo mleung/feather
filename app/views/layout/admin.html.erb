@@ -9,7 +9,7 @@
 <body>
   <div id="header">
     <ul id="nav">
-	<%= render_menu %>
+	    <%= render_menu %>
     </ul>
     <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></a></h1>
     <span id="link-to-blog"><%= link_to "View your blog", "/" %></span>

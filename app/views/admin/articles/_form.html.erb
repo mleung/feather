@@ -9,3 +9,5 @@
   <span class="mock_label">Formatter</span>
   <%= select_control :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) %>
 </p>
+
+<%= render_plugin_views "article_form_fields" %>

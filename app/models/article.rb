@@ -13,15 +13,41 @@ class Article < DataMapper::Base
   
   belongs_to :user
   
+  # Core filters
+  before_save :set_published_permalink
+  after_create :set_create_activity
+  after_update :set_update_activity
+  
+  # Event hooks for plugins
   before_create :fire_before_create_event
   before_update :fire_before_update_event
   before_save :fire_before_save_event
-  before_save :set_published_permalink
   after_create :fire_after_create_event
-  after_create :set_create_activity
   after_update :fire_after_update_event
-  after_update :set_update_activity
   after_save :fire_after_save_event
+  
+  def set_published_permalink
+    # Check to see if we are publishing
+    if self.is_published?
+      # Set the date, only if we haven't already
+      self.published_at = Time.now if self.published_at.nil?
+      # Set the permalink, only if we haven't already
+      self.permalink = "/#{self.published_at.year}/#{Padding::pad_single_digit(self.published_at.month)}/#{Padding::pad_single_digit(self.published_at.day)}/#{self.title.downcase.gsub(/[^a-z0-9]+/i, '-')}" if self.permalink.nil?
+    end
+    true
+  end
+  
+  def set_create_activity
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" created"
+    a.save
+  end
+  
+  def set_update_activity
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" updated"
+    a.save
+  end
   
   def fire_before_create_event
     Hooks::Events.before_create_article(self)
@@ -36,34 +62,13 @@ class Article < DataMapper::Base
     Hooks::Events.before_publish_article(self) if self.is_published?
   end
   
-  def set_published_permalink
-    # Check to see if we are publishing
-    if self.is_published?
-      # Set the date, only if we haven't already
-      self.published_at = Time.now if self.published_at.nil?
-      # Set the permalink, only if we haven't already
-      self.permalink = "/#{self.published_at.year}/#{Padding::pad_single_digit(self.published_at.month)}/#{Padding::pad_single_digit(self.published_at.day)}/#{self.title.downcase.gsub(/[^a-z0-9]+/i, '-')}" if self.permalink.nil?
-    end
-  end
-  
   def fire_after_create_event
     Hooks::Events.after_create_article(self)
   end
   
-  def set_create_activity
-    a = Activity.new
-    a.message = "Article \"#{self.title}\" created"
-    a.save
-  end
   
   def fire_after_update_event
     Hooks::Events.after_update_article(self)
-  end
-  
-  def set_update_activity
-    a = Activity.new
-    a.message = "Article \"#{self.title}\" updated"
-    a.save
   end
   
   def fire_after_save_event

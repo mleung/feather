@@ -15,13 +15,11 @@ module Hooks
         unless @events.nil? || @events.empty? || @events[event].nil? || @events[event].empty?
           @events[event].each do |hook|
             if Hooks::is_hook_valid?(hook)
-              begin
-                hook.call args
-              rescue
-              end
+              hook.call args
             end
           end
         end
+        true
       end
       
       ##

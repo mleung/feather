@@ -106,10 +106,14 @@ module Merb
       output = ""
       Hooks::View.plugin_views.each do |view|
         if view[:name] == name
-          _template_root = File.join(view[:plugin].path, "views")
-          template_location = _template_root / _template_location("_#{view[:partial]}", content_type, view[:name])
-          template_method = Merb::Template.template_for(template_location)
-          output << send(template_method, options)
+          if view[:partial]
+            _template_root = File.join(view[:plugin].path, "views")
+            template_location = _template_root / _template_location("_#{view[:partial]}", content_type, view[:name])
+            template_method = Merb::Template.template_for(template_location)
+            output << send(template_method, options)
+          else
+            output << view[:content]
+          end
         end
       end
       output

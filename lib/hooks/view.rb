@@ -17,7 +17,8 @@ module Hooks
       def plugin_views
         plugin_views = []
         unless @view_hooks.nil? || @view_hooks.values.nil?
-          @view_hooks.values.sort.each do |hook|
+          @view_hooks.keys.each do |key|
+            hook = @view_hooks[key]
             if Hooks::is_hook_valid?(hook)
               begin
                 result = hook.call

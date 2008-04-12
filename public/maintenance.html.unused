@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Feather - Maintenance</title>
+  <link type="text/css" media="all" href="/stylesheets/admin.css" rel="Stylesheet" charset="utf-8" />
+</head>
+<body>
+  <div id="header">
+    <h1>Feather - Maintenance</h1>
+  </div>
+  <div id="wrap">
+    <div id="content">
+      <div class="pad">
+		<h3>Maintenance</h3>
+		This Feather blog is currently undergoing maintenance - check back soon!
+      </div>
+      <div class="bot_shadow">&nbsp;</div>
+    </div>
+  <div id="right">
+  </div>
+  <br style="clear: both;">
+  <div id="footer">
+    <p>
+      <strong>Feather is a thing by <a href="http://www.bloggingmyassoff.com">Michael Leung</a> and <a href="http://crazycool.co.uk">Elliott Draper</a></strong>
+    </p>
+    <br style="clear: both;">
+  </div>
+</body>
+</html>

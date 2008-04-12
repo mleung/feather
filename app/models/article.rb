@@ -117,6 +117,10 @@ class Article < DataMapper::Base
       end
       archives
     end
+    
+    def sort(other)
+      other.published_at <=> self.published_at  
+    end
 
     private 
       def specific_date_function

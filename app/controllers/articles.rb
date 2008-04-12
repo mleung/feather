@@ -17,7 +17,7 @@ class Articles < Application
   
   # This handles the permalink for articles, and is executed using the special permalink Rack handler
   def show
-    if @article = Article.find_by_permalink(request.uri.to_s)
+    if @article = Article.find_by_permalink(request.uri.to_s.chomp("/"))
       # This will render the article and the request will not process any further
       display @article
     else

@@ -21,6 +21,7 @@ module Admin
       @article = Article.new(article)
       @article.user_id = self.current_user.id
       if @article.save
+        expire_index if @article.published
         redirect url(:admin_articles)
       else
         render :new
@@ -33,6 +34,8 @@ module Admin
     
     def update(article)
       if @article.update_attributes(article)
+        expire_index
+        expire_article(@article)
         redirect url(:admin_article, @article)
       else
         render :edit
@@ -41,6 +44,8 @@ module Admin
     
     def delete
       @article.destroy!
+      expire_index
+      expire_article(@article)
       redirect url(:admin_articles)
     end
     
@@ -48,7 +53,6 @@ module Admin
       def find_article
         @article = Article[params[:id]]
       end
-
   end
   
 end

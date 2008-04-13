@@ -80,6 +80,7 @@ Merb::BootLoader.after_app_loads do
   end
 end
 
+require File.join(File.join(Merb.root_path, "lib"), "cache_helper")
 begin 
   require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
 rescue LoadError
@@ -87,7 +88,7 @@ end
 
 
 Merb::Plugins.config[:merb_cache] = {
-   :cache_html_directory => Merb.dir_for(:public) / "cache",
+   :cache_html_directory => Merb.dir_for(:public),
 
    :store => "file",
    :cache_directory => Merb.root_path("tmp/cache")

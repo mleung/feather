@@ -1,5 +1,6 @@
 class Application < Merb::Controller
   include Merb::AssetsMixin
+  include CacheHelper
     
   before :get_settings
   before :load_plugins

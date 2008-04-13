@@ -112,11 +112,23 @@ module Merb
             template_method = Merb::Template.template_for(template_location)
             output << send(template_method, options)
           else
-            output << view[:content]
+            output << Proc.new { |args| ERB.new(view[:content]).result(binding) }.call(options[:with])
           end
         end
       end
       output
+    end
+    
+    ##
+    # This returns the full url for an article
+    def get_full_url(article)
+      "http://#{request.host}#{article.permalink}"
+    end
+    
+    ##
+    # This escapes the specified url
+    def escape_url(url)
+      CGI.escape(url)
     end
     
     ##

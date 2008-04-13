@@ -15,6 +15,7 @@ Merb::Config.use do |c|
   c[:session_secret_key]  = '95bf50e5bb36b2a455611792c271f2581e6b21db'
   c[:session_store] = 'cookie'
   c[:use_mutex] = false
+  
 end
 
 ### Merb doesn't come with database support by default.  You need
@@ -82,3 +83,21 @@ begin
   require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
 rescue LoadError
 end
+
+
+Merb::Plugins.config[:merb_cache] = {
+   :cache_html_directory => Merb.dir_for(:public) / "cache",
+
+   #:store => "database",
+   #:table_name => "merb_cache",
+
+   :store => "file",
+   :cache_directory => Merb.root_path("tmp/cache")
+
+   #:store => "memcache",
+   #:host => "127.0.0.1:11211",
+   #:namespace => "merb_cache",
+
+   #:store => "memory",
+   # store could be: file, memcache, memory, database, ...
+ }

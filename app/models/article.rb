@@ -117,7 +117,7 @@ class Article < DataMapper::Base
       end
       archives
     end
-
+    
     private 
       def specific_date_function
         # This is pretty nasty loading up the db.yml to get at this, but I wasn't able to 

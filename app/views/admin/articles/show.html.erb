@@ -8,7 +8,7 @@
 <h1>View Article</h1>
 
 <p>
-	Title: <%= @article.title %>
+	Title: <%= @article.title %> <%= link_to "(Edit article)", url(:edit_admin_article, @article) %>
 </p>
 
 <p>

@@ -69,6 +69,12 @@ module Hooks
       def after_publish_article(article)
         run_event(:after_publish_article, article)
       end
+      
+      ##
+      # This calls any event handlers for the application_before event
+      def application_before
+        run_event(:application_before)
+      end
     end
   end
 end

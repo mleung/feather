@@ -29,7 +29,7 @@ module Hooks
             end
           end
         end
-        plugin_views
+        plugin_views.sort { |a, b| a[:plugin].name <=> b[:plugin].name }
       end
     end
   end

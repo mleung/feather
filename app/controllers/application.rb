@@ -8,7 +8,7 @@ class Application < Merb::Controller
   ##
   # This grabs settings
   def get_settings
-    @settings = Configuration.first
+    @settings = Configuration.current
   end
   
   ##

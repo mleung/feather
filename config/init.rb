@@ -58,6 +58,8 @@ Merb::BootLoader.after_app_loads do
   require "tzinfo"
   require "net/http"
   require "uri"
+  require "cgi"
+  require "erb"
   require File.join("lib", "padding")
   require File.join("lib", "hooks")
   require File.join("lib", "database")

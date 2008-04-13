@@ -21,6 +21,13 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
+  # This deferred route allows permalinks to be handled, without a separate rack handler
+  r.match("").defer_to do |request, path_match|
+    unless (article = Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
+      {:controller => "articles", :action => "show", :id => article.id}
+    end
+  end
+  
   # Admin namespace
   r.namespace :admin do |admin|
     admin.resource :configurations

@@ -3,9 +3,12 @@ class Application < Merb::Controller
     
   before :get_settings
   before :load_plugins
+  before :fire_before_event
   
+  ##
+  # This grabs settings
   def get_settings
-    @settings = Configuration.first
+    @settings = Configuration.current
   end
   
   ##
@@ -16,10 +19,20 @@ class Application < Merb::Controller
     end
   end
   
+  ##
+  # This fires the application before event with any subscribing plugins
+  def fire_before_event
+    Hooks::Events.application_before
+  end
+  
+  ##
+  # This puts notification text in the session, to be rendered in any view
   def notify(text)
     session[:notifications] = text
   end
   
+  ##
+  # This allows a view to expand its template roots to include its own custom views
   def self.include_plugin_views(plugin)
     self._template_roots << [File.join(File.join(File.dirname(plugin), ".."), "views"), :_template_location]
   end

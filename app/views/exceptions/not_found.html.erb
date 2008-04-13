@@ -1,39 +1,80 @@
-<div id="container">
-  <div id="header-container">
-    <img src="/images/merb.jpg" />
-    <!-- <h1>Mongrel + Erb</h1> -->
-    <h2>pocket rocket web framework</h2>
-    <hr />
-  </div>
+<h1><%= @exception_name %></h1>
+<% if show_details = ::Merb::Config[:exception_details] -%>
+	<h2><%= params[:exception].message %></h2>
+	<h3>Parameters</h3>
+	<ul>
+		<% params[:original_params].each do |param, value| %>
+			<li><strong><%= param %>:</strong> <%= value.inspect %></li>
+		<% end %>
+		<%= "<li>None</li>" if params[:original_params].empty? %>
+	</ul>
 
-  <div id="left-container">
-    <h3>Exception:</h3>
-    <p><%= params[:exception] %></p>
-  </div>
+	<h3>Session</h3>
+	<ul>
+		<% params[:original_session].each do |param, value| %>
+			<li><strong><%= param %>:</strong> <%= value.inspect %></li>
+		<% end %>
+		<%= "<li>None</li>" if params[:original_session].empty? %>			
+	</ul>
 
-  <div id="main-container">
-    <h3>Welcome to Merb!</h3>
-    <p>Merb is a light-weight MVC framework written in Ruby.  We hope you enjoy it.</p>
-    
-    <h3>Where can I find help?</h3>
-    <p>If you have any questions or if you can't figure something out, please take a
-      look at our <a href="http://merb.devjavu.com/"> project development page</a> or,
-      feel free to come chat at irc.freenode.net, channel #merb.</p>
-
-    <h3>How do I edit this page?</h3>
-    <p>You're seeing this page because you need to edit the following files:
-      <ul>
-        <li>config/router.rb <strong><em>(recommended)</em></strong></li>
-        <li>app/views/exceptions/not_found.html.erb <strong><em>(recommended)</em></strong></li>
-        <li>app/views/layout/application.html.erb <strong><em>(change this layout)</em></strong></li>
-      </ul>
-    </p>
-  </div>
-
-  <div id="footer-container">
-    <hr />
-    <div class="left"></div>
-    <div class="right">&copy; 2007 the merb dev team</div>
-    <p>&nbsp;</p>
-  </div>
-</div>
+	<h3>Cookies</h3>
+	<ul>
+		<% params[:original_cookies].each do |param, value| %>
+			<li><strong><%= param %>:</strong> <%= value.inspect %></li>
+		<% end %>
+		<%= "<li>None</li>" if params[:original_cookies].empty? %>			
+	</ul>
+<% else -%>
+<h2><%= request.env["REQUEST_URI"] %> not found!</h2>
+	<h3>What next?</h3>
+	<ul>
+		<li>Please check the url you were attempting to find, to ensure it's correct</li>
+		<li>If you think there is a problem, drop the blog owner a note to let them know!</li>
+	</ul>
+<% end -%>
+<div class="break"></div>
+<% if show_details %>
+	<table class="trace">
+		<% params[:exception].backtrace.each_with_index do |line, index| %>
+			<tbody class="close">
+				<tr class="file">
+					<td class="expand"></td>
+					<td class="path">
+						<%= (line.match(/^([^:]+)/)[1] rescue 'unknown').sub(/\/((opt|usr)\/local\/lib\/(ruby\/)?(gems\/)?(1.8\/)?(gems\/)?|.+\/app\/)/, '') %>
+						<% unless line.match(/\.erb:/) %>
+							in "<strong><%= line.match(/:in `(.+)'$/)[1] rescue '?' %></strong>"
+              			<% else %>
+                			(<strong>ERB Template</strong>)
+              			<% end %>
+					</td>
+					<td class="line">
+						<a href="txmt://open?url=file://<%=file = (line.match(/^([^:]+)/)[1] rescue 'unknown')%>&amp;line=<%= lineno = line.match(/:([0-9]+):/)[1] rescue '?' %>"><%=lineno%></a>&nbsp;
+					</td> 
+				</tr>
+				<tr class="source">
+					<td class="collapse"></td>
+					<td class="code" colspan="2"><% (__caller_lines__(file, lineno, 5) rescue []).each do |llineno, lcode, lcurrent| %>
+<a href="txmt://open?url=file://<%=file%>&amp;line=<%=llineno%>"><%= llineno %></a><%='<em>' if llineno==lineno.to_i %><%= lcode.size > 90 ? CGI.escapeHTML(lcode[0..90])+'<span class="more">......</span>' : CGI.escapeHTML(lcode) %><%='</em>' if llineno==lineno.to_i %>
+<% end %>
+					</td>
+				</tr>
+			</tbody>
+		<% end %>
+	</table>
+	<script type="text/javascript" charset="utf-8">
+		// swap the open & closed classes
+		els = document.getElementsByTagName('td');
+		for(i=0; i<els.length; i++){
+			if(els[i].className=='expand' || els[i].className=='collapse'){
+				els[i].onclick = function(e){
+					tbody = this.parentNode.parentNode;
+					if(tbody.className=='open'){
+						tbody.className='closed';
+					}else{
+						tbody.className='open';
+					}
+				}
+			}
+		}
+	</script>
+<% end %>

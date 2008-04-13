@@ -106,13 +106,29 @@ module Merb
       output = ""
       Hooks::View.plugin_views.each do |view|
         if view[:name] == name
-          _template_root = File.join(view[:plugin].path, "views")
-          template_location = _template_root / _template_location("_#{view[:partial]}", content_type, view[:name])
-          template_method = Merb::Template.template_for(template_location)
-          output << send(template_method, options)
+          if view[:partial]
+            _template_root = File.join(view[:plugin].path, "views")
+            template_location = _template_root / _template_location("_#{view[:partial]}", content_type, view[:name])
+            template_method = Merb::Template.template_for(template_location)
+            output << send(template_method, options)
+          else
+            output << Proc.new { |args| ERB.new(view[:content]).result(binding) }.call(options[:with])
+          end
         end
       end
       output
+    end
+    
+    ##
+    # This returns the full url for an article
+    def get_full_url(article)
+      "http://#{request.host}#{article.permalink}"
+    end
+    
+    ##
+    # This escapes the specified url
+    def escape_url(url)
+      CGI.escape(url)
     end
     
     ##

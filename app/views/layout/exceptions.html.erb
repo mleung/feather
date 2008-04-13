@@ -2,22 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Feather - Admin</title>
-  <%= css_include_tag :admin %>
+  <title>Feather - Error</title>
+  <%= css_include_tag :admin, :exceptions %>
   <%= js_include_tag :prototype, :effects, :admin, :application %>
 </head>
 <body>
   <div id="header">
-    <ul id="nav">
-	    <%= render_menu %>
-    </ul>
-    <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></h1>
-    <span id="link-to-blog"><%= link_to "View your blog", "/" %></span>
+    <h1>Feather - Error</h1>
   </div>
   <div id="wrap">
     <div id="content">
       <div class="pad">
-		<span id="notifications"><%= notifications %></span>
         <%= catch_content :for_layout %>
       </div>
       <div class="bot_shadow">&nbsp;</div>

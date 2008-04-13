@@ -2,28 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Feather - Admin</title>
-  <%= css_include_tag :admin %>
-  <%= js_include_tag :prototype, :effects, :admin, :application %>
+  <title>Feather - Maintenance</title>
+  <link type="text/css" media="all" href="/stylesheets/admin.css" rel="Stylesheet" charset="utf-8" />
 </head>
 <body>
   <div id="header">
-    <ul id="nav">
-	    <%= render_menu %>
-    </ul>
-    <h1><%= link_to @settings.nil? ? "Feather" : @settings.title, url(:admin_dashboard), :id => "blog_title" %></h1>
-    <span id="link-to-blog"><%= link_to "View your blog", "/" %></span>
+    <h1>Feather - Maintenance</h1>
   </div>
   <div id="wrap">
     <div id="content">
       <div class="pad">
-		<span id="notifications"><%= notifications %></span>
-        <%= catch_content :for_layout %>
+		<h3>Maintenance</h3>
+		This Feather blog is currently undergoing maintenance - check back soon!
       </div>
       <div class="bot_shadow">&nbsp;</div>
     </div>
   <div id="right">
-    <%= catch_content :right %>
   </div>
   <br style="clear: both;">
   <div id="footer">

@@ -1,6 +1,6 @@
 class Article < DataMapper::Base  
   property :title, :string, :nullable => false, :length => 255
-  property :content, :string, :nullable => false
+  property :content, :text, :nullable => false
   property :created_at, :datetime
   property :published_at, :datetime
   property :user_id, :integer, :nullable => false

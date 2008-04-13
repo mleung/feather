@@ -1,4 +1,4 @@
-<%= render_plugin_views @articles.nil? ? "before_post" : "before_post_in_list" %>
+<%= render_plugin_views @articles.nil? ? "before_article" : "before_article_in_list", :with => article %>
 <div class="hentry" id="article-<%= article.id %>">
   <h2 class="entry-title">
     <%= link_to(article.title, article.permalink) %>
@@ -15,4 +15,4 @@
     <li><%= render_plugin_views "meta_section", :with => article %></li>
   </ul>
 </div>
-<%= render_plugin_views @articles.nil? ? "after_post" : "after_post_in_list" %>
+<%= render_plugin_views @articles.nil? ? "after_article" : "after_article_in_list", :with => article %>

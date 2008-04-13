@@ -19,4 +19,12 @@ class Configuration < DataMapper::Base
     summary = "#{summary[0..summary.index("\n") - 1]}..." if summary.index("\n")
     summary
   end
+  
+  ##
+  # This returns the current configuration, creating them if they aren't found
+  def self.current
+    configuration = Configuration.first
+    configuration = Configuration.create(:title => "My new blog", :tag_line => "My blog rocks!", :about => "I rock, and so does my blog", :about_formatter => "default") if configuration.nil?
+    configuration    
+  end
 end

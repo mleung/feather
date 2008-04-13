@@ -4,13 +4,13 @@ module Hooks
       ##
       # This registers a partial view, effectively adding a call to the specified partial for the specified view hook point
       def register_partial_view(name, partial)
-        register_view(location_of_caller[0], name, {:partial => partial})
+        register_view(Hooks::get_caller, name, {:partial => partial})
       end
       
       ##
       # This registers a dynamic view, effectively adding string content to the specified view hook point, with a specified identifier
       def register_dynamic_view(name, content, id = nil)
-        id.nil? ? register_view(location_of_caller[0], name, {:content => content}) : register_view(location_of_caller[0], name, {:content => content}, id)
+        id.nil? ? register_view(Hooks::get_caller, name, {:content => content}) : register_view(Hooks::get_caller, name, {:content => content}, id)
       end
 
       ##

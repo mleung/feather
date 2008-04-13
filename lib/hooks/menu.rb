@@ -5,7 +5,7 @@ module Hooks
       # This adds the specified menu items for the calling plugin
       def add_menu_item(text, url)
         @menu_item_hooks ||= {}
-        raise "Unable to add menu item for unrecognized plugin! (#{location_of_caller[0]})" if (plugin = Hooks::get_plugin_by_caller(location_of_caller[0])).nil?
+        raise "Unable to add menu item for unrecognized plugin! (#{Hooks::get_caller})" if (plugin = Hooks::get_plugin_by_caller(Hooks::get_caller)).nil?
         @menu_item_hooks[plugin.id] ||= []
         @menu_item_hooks[plugin.id] << {:text => text, :url => url}
       end

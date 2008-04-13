@@ -34,5 +34,11 @@ module Hooks
       Hooks::Menu.remove_plugin_hooks(id)
       Hooks::View.remove_plugin_hooks(id)
     end
+    
+    ##
+    # This returns the calling file that called the method that then called this helper method
+    def get_caller
+      caller[1].split(":")[0]
+    end
   end
 end

@@ -8,19 +8,31 @@ module Hooks
     ##
     # This returns true if the hook is within a plugin that is active, false otherwise
     def is_hook_valid?(hook)
-      p = get_plugin(hook)
-      !p.nil? && p.active
+      plugin = get_plugin(hook)
+      !plugin.nil? && plugin.active
     end
     
     ##
     # This returns the plugin applicable for any given hook
     def get_plugin(hook)
-      file = eval("__FILE__", hook.binding)
-      Plugin.all.each do |p|
+      get_plugin_by_caller eval("__FILE__", hook.binding)
+    end
+    
+    ##
+    # This returns the plugin applicable for the specified file
+    def get_plugin_by_caller(file)
+      Plugin.all.each do |plugin|
         #TODO: more efficient way to do this?
-        return p if file[0..p.path.length - 1] == p.path
+        return plugin if file[0..plugin.path.length - 1] == plugin.path
       end
       nil
+    end
+    
+    ##
+    # This removes all hooks for the specified plugin
+    def remove_plugin_hooks(id)
+      Hooks::Menu.remove_plugin_hooks(id)
+      Hooks::View.remove_plugin_hooks(id)
     end
   end
 end

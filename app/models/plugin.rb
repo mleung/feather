@@ -59,9 +59,10 @@ class Plugin < DataMapper::Base
   end
   
   ##
-  # This removes the plugin, and adds an activity to show a plugin has been deleted
+  # This removes the plugin, de-registers hooks, and adds an activity to show a plugin has been deleted
   def remove
     FileUtils.rm_rf(self.path)
+    Hooks.remove_plugin_hooks(self.id)
     a = Activity.new
     a.message = "Plugin \"#{self.name}\" deleted"
     a.save

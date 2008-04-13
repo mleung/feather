@@ -49,6 +49,7 @@ use_test :rspec
 # 
 dependencies "merb_helpers"
 dependencies "merb-assets"
+dependencies "merb-cache"
 dependency "merb-action-args"
 # OR
 # OR
@@ -88,16 +89,6 @@ end
 Merb::Plugins.config[:merb_cache] = {
    :cache_html_directory => Merb.dir_for(:public) / "cache",
 
-   #:store => "database",
-   #:table_name => "merb_cache",
-
    :store => "file",
    :cache_directory => Merb.root_path("tmp/cache")
-
-   #:store => "memcache",
-   #:host => "127.0.0.1:11211",
-   #:namespace => "merb_cache",
-
-   #:store => "memory",
-   # store could be: file, memcache, memory, database, ...
- }
+}

@@ -4,7 +4,7 @@ module Admin
     before :find_article, :only => %w(edit update delete show)
 
     def index
-      @articles = Article.all(:order => 'published_at DESC')
+      @articles = Article.all(:order => 'created_at DESC')
       display @articles
     end
     

@@ -2,7 +2,3 @@ db/*.sqlite3
 app/plugins/*
 public/plugins*
 log/*
-public/cache/*.html
-public/cache/**/**
-tmp/cache/*.html
-tmp/cache/**/**

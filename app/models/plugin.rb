@@ -9,16 +9,17 @@ class Plugin < DataMapper::Base
   property :active, :boolean
   
   before_create :download
+  after_create :install
   after_create :set_create_activity
   after_update :set_update_activity
   after_destroy :remove
-  
+
   class << self
     @@loaded = []
   end
 
   ##
-  # This grabs the plugin using its url, and loads the metadata for it
+  # This grabs the plugin using its url, unpacks it, and loads the metadata for it
   def download
     # Load the manifest yaml
     manifest = YAML::load(Net::HTTP.get(URI.parse(url + "/manifest.yml")))
@@ -36,10 +37,19 @@ class Plugin < DataMapper::Base
     recurse(manifest["plugin"]["contents"])
     # Unpack any gems downloaded
     unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
+  end
+  
+  ##
+  # This loads and installs the plugin
+  def install
     # Load the plugin
     self.load
     # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
     require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
+  rescue Exception => err
+    # Catch the error, delete the plugin, and raise an error again
+    self.destroy!
+    raise "Error installing plugin: #{err.message}!"
   end
   
   ##

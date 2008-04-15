@@ -14,6 +14,8 @@ module Admin
       @configuration.about = params[:about] unless params[:about].nil?
       @configuration.about_formatter = params[:about_formatter] unless params[:about_formatter].nil?
       @configuration.save
+      # Expire everything! 
+      expire_everything!
       render_js
     end
   end

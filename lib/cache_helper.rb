@@ -16,11 +16,4 @@ module CacheHelper
     end
   end
   
-  # Unfortunately, since we're using public, we can't call
-  # expire_all_pages becuase that effectitely wipes out the entire public directory. Nasty.
-  def expire_everything!
-    expire_index
-    Article.all.each {|a| expire_article(a)}
-  end
-  
 end

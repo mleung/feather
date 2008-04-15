@@ -88,7 +88,7 @@ end
 
 
 Merb::Plugins.config[:merb_cache] = {
-   :cache_html_directory => Merb.dir_for(:public),
+   :cache_html_directory => Merb.dir_for(:public)  / "cache",
 
    :store => "file",
    :cache_directory => Merb.root_path("tmp/cache")

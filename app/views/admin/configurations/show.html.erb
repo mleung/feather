@@ -39,5 +39,12 @@
 	  <%= select_field :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %>
 	</td>
   </tr>
+  <tr>
+	<td class="field_label">Clear Cache?</td>
+	<td>
+	  <span id="configuration-clear-cache-display"></span>
+	  <%= submit_field :id => "configuration-clear-cache", :value => "Clear" %>
+	</td>
+  </tr>
   </table>
 </div>

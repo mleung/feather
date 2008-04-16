@@ -115,6 +115,18 @@ Event.observe(window, 'load', function() {
 	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
 	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=", true);
 	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configurations?about_formatter=");
+	Event.observe("configuration-clear-cache", "click", function() {
+		new Ajax.Request("/admin/configurations", {
+			asynchronous:'true',
+			evalScripts:'true',
+			method:'put',
+			onLoading: function() {
+				$('configuration-clear-cache').hide();
+				$('configuration-clear-cache-display').innerText = "Saving...";
+			},
+			onFailure: function() { alert('Something went wrong...') },
+		});
+	});
 });
 
 var Plugins = {

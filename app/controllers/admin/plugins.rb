@@ -19,6 +19,7 @@ module Admin
       @plugin = Plugin.new
       @plugin.url = plugin[:url]
       if @plugin.save
+        expire_all_pages if Hooks::View.has_views_registered?(@plugin)
         redirect url(:admin_plugin, @plugin)
       else
         render :new
@@ -30,6 +31,7 @@ module Admin
       @plugin = Plugin[id]
       @plugin.active = (params[:active] == "true" ? true : false) if params[:active]
       @plugin.save
+      expire_all_pages if Hooks::View.has_views_registered?(@plugin)
       render_js
     end
     

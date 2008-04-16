@@ -2,6 +2,12 @@ module Hooks
   module View
     class << self
       ##
+      # This returns true if the specified plugin has views registered, false otherwise
+      def has_views_registered?(plugin)
+        @view_hooks.include?(plugin.id)
+      end
+      
+      ##
       # This registers a partial view, effectively adding a call to the specified partial for the specified view hook point
       def register_partial_view(name, partial)
         register_view(Hooks::get_caller, name, {:partial => partial})

@@ -18,8 +18,9 @@ class Configuration < DataMapper::Base
     unless summary.nil? || summary.empty?
       summary = summary.gsub("\r\n", "\n")
       summary = "#{summary[0..summary.index("\n") - 1]}..." if summary.index("\n")
-      summary
+      summary = summary.gsub(/"/, "'")
     end
+    summary
   end
   
   ##

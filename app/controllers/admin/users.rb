@@ -40,6 +40,13 @@ module Admin
         render :edit
       end
     end
+    
+    def delete
+      @user = User[params[:id]]
+      @user.destroy!
+      redirect url(:admin_users)
+    end
+    
   end
   
 end

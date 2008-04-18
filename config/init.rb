@@ -51,6 +51,7 @@ dependencies "merb_helpers"
 dependencies "merb-assets"
 dependencies "merb-cache"
 dependency "merb-action-args"
+dependency "merb-mailer"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
@@ -78,6 +79,8 @@ Merb::BootLoader.after_app_loads do
   rescue Exception => e
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
+  
+  Merb::Mailer.delivery_method = :sendmail
 end
 
 require File.join(File.join(Merb.root_path, "lib"), "cache_helper")

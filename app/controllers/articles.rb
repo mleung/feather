@@ -13,11 +13,15 @@ class Articles < Application
     else
       @articles = Article.find_recent
     end
+    # Can't use this with caching, meaning post-process events are tricky...
+    #render_then_call(display(@articles)) { Hooks::Events.after_article_index(@articles) }
     display @articles
   end
-  
+
   def show(id)
     @article = Article[id]
+    # Can't use this with caching, meaning post-process events are tricky...
+    #render_then_call(display(@article)) { Hooks::Events.after_article_show(@article) }
     display @article
   end
 end

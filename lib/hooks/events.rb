@@ -75,6 +75,18 @@ module Hooks
       def application_before
         run_event(:application_before)
       end
+      
+      ##
+      # This calls any event handlers for the after_article_index event
+      def after_article_index(articles)
+        run_event(:after_article_index, articles)
+      end
+      
+      ##
+      # This calls any event handlers for the after_article_show event
+      def after_article_show(article)
+        run_event(:after_article_show, article)
+      end
     end
   end
 end

@@ -2,6 +2,12 @@ module Hooks
   module View
     class << self
       ##
+      # This returns an array of the available hooks
+      def available_hooks
+        ["before_article", "before_article_in_list", "after_article", "after_article_in_list", "article_form_fields", "between_articles", "meta_section", "head", "header", "before_layout", "after_layout", "sidebar", "footer"]
+      end
+      
+      ##
       # This returns true if the specified plugin has views registered, false otherwise
       def has_views_registered?(plugin)
         @view_hooks.include?(plugin.id)
@@ -23,6 +29,7 @@ module Hooks
       # This registers a view with the specified id, for the specified view name, and with optional options
       def register_view(caller, name, options, id = rand(1000000).to_s)
         raise "Unable to register view for unrecognized plugin! (#{caller})" if (plugin = Hooks::get_plugin_by_caller(caller)).nil?
+        raise "View hook #{name} is not available!" unless available_hooks.include?(name)
         @view_hooks ||= {}
         @view_hooks[plugin.id] ||= []
         @view_hooks[plugin.id] << {:id => id, :name => name}.merge(options)

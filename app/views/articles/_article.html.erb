@@ -16,3 +16,4 @@
   </ul>
 </div>
 <%= render_plugin_views @articles.nil? ? "after_article" : "after_article_in_list", :with => article %>
+<%= render_plugin_views "between_articles", :with => {:before => article, :after => @articles[@articles.index(article) + 1]} unless @articles.nil? || @articles[@articles.index(article) + 1].nil? %>

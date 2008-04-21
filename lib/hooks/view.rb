@@ -4,7 +4,7 @@ module Hooks
       ##
       # This returns an array of the available hooks
       def available_hooks
-        ["before_article", "before_article_in_list", "after_article", "after_article_in_list", "article_form_fields", "between_articles", "meta_section", "head", "header", "before_layout", "after_layout", "sidebar", "footer"]
+        ["first_article_in_list", "last_article_in_list", "before_article", "before_article_in_list", "after_article", "after_article_in_list", "article_form_fields", "between_articles", "meta_section", "head", "header", "before_layout", "after_layout", "sidebar", "footer"]
       end
       
       ##

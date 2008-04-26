@@ -1,6 +1,8 @@
 var ArticleHelper = {
 
-  // This function will auto-resize a text area instead of showing scroll bars.
+  /**
+ 	* This function will auto-resize a text area instead of showing scroll bars
+	**/
   resizeTextArea:  function(elem) {
     a = elem.value.split('\n');
     b = 1;

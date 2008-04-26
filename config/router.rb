@@ -35,8 +35,6 @@ Merb::Router.prepare do |r|
     admin.resources :categories
     admin.resources :plugins
     admin.resources :articles
-    admin.resources :users
-    admin.resources :sessions
     admin.match("").to(:controller => "dashboard", :action => "index")
   end
   
@@ -44,11 +42,10 @@ Merb::Router.prepare do |r|
   r.match("/:year").to(:controller => "articles", :action => "index").name(:year)
   r.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
   r.match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
-  # Permalinks are handled with a Rack hook
   
-  r.default_routes
-  
+  # Default routes, and index
+  r.default_routes  
   r.match('/').to(:controller => 'articles', :action =>'index')
 end
 
-AuthenticatedSystem.add_routes rescue nil
+AuthenticatedSystem.add_routes

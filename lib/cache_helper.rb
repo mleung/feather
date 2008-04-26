@@ -2,10 +2,9 @@ module CacheHelper
   def expire_index
     expire_page(:controller => '/', :action => "index")
   end
-  
+
   def expire_article(article)
-    # If an article is a draft, it
-    # will not have a permalink to split on.
+    # If an article is a draft, it will not have a permalink to split on
     unless article.permalink.nil?
       parts = article.permalink.split("/")
       # Expire the year. 
@@ -15,5 +14,4 @@ module CacheHelper
       expire_page(:controller => '/', :action => article.permalink)
     end
   end
-  
 end

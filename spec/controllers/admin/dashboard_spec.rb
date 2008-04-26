@@ -1,20 +1,21 @@
 require File.join(File.dirname(__FILE__), "../..", 'spec_helper.rb')
 
-describe Admin::Dashboard, "index action" do
-  before(:each) do
-    dispatch_to(Admin::Dashboard, :index)
+module Admin
+  describe Dashboard do
+    before(:each) do
+      @activity = [mock(:activity)]
+    end
+
+    describe "/admin" do
+      it "should request dashboard" do
+        Activity.should_receive(:all).with(:order => "created_at DESC", :limit => 5).and_return(@activity)
+        controller = dispatch_to(Dashboard, :index) do |controller|
+          controller.should_receive(:login_required).and_return(true)
+          controller.should_receive(:display).with(@activity)
+        end
+        controller.assigns(:activity).should == @activity
+        controller.should be_successful
+      end
+    end
   end
-  
-  it "should have a route to /admin" do
-    request_to("/admin") do |params|
-      params[:controller].should == "admin/dashboard"
-      params[:action].should == "index"
-    end   
-  end
-  
-  it "should successfully show the dashboard" do
-    controller = get "/admin"
-    controller.should be_successful
-  end
-  
 end

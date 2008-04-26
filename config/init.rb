@@ -5,7 +5,6 @@ Gem.path.unshift(Merb.root / "gems")
 # Make the app's "lib" directory a place where ruby files get "require"d from
 $LOAD_PATH.unshift(Merb.root / "lib")
 
-
 Merb::Config.use do |c|
   
   ### Sets up a custom session id key, if you want to piggyback sessions of other applications
@@ -52,6 +51,7 @@ dependencies "merb-assets"
 dependencies "merb-cache"
 dependency "merb-action-args"
 dependency "merb-mailer"
+dependency "merb_stories" if Merb.environment == "test"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
@@ -79,7 +79,7 @@ Merb::BootLoader.after_app_loads do
   rescue Exception => e
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
-  
+
   Merb::Mailer.delivery_method = :sendmail
 end
 
@@ -89,10 +89,8 @@ begin
 rescue LoadError
 end
 
-
 Merb::Plugins.config[:merb_cache] = {
    :cache_html_directory => Merb.dir_for(:public)  / "cache",
-
    :store => "file",
    :cache_directory => Merb.root_path("tmp/cache")
 }

@@ -1,10 +1,9 @@
 module Admin
   class Articles < Base
-
     before :find_article, :only => %w(edit update delete show)
 
     def index
-      @articles = Article.all(:order => 'created_at DESC')
+      @articles = Article.all(:order => "created_at DESC")
       display @articles
     end
     
@@ -21,8 +20,13 @@ module Admin
       @article = Article.new(article)
       @article.user_id = self.current_user.id
       if @article.save
+        # Expire the article index to reflect the newly published article
         expire_index if @article.published
-        redirect url(:admin_articles)
+        render_then_call(redirect(url(:admin_articles))) do
+          # Call events after the redirect
+          Hooks::Events.after_publish_article_request(@article, request) if @article.is_published?
+          Hooks::Events.after_create_article_request(@article, request)
+        end
       else
         render :new
       end
@@ -34,9 +38,14 @@ module Admin
     
     def update(article)
       if @article.update_attributes(article)
+        # Expire the index and article to reflect the updated article
         expire_index
         expire_article(@article)
-        redirect url(:admin_article, @article)
+        render_then_call(redirect(url(:admin_article, @article))) do
+          # Call events after the redirect
+          Hooks::Events.after_publish_article_request(@article, request) if @article.is_published?
+          Hooks::Events.after_update_article_request(@article, request)
+        end
       else
         render :edit
       end
@@ -44,6 +53,7 @@ module Admin
     
     def delete
       @article.destroy!
+      # Expire the index and article to reflect the removal of the article
       expire_index
       expire_article(@article)
       redirect url(:admin_articles)
@@ -54,5 +64,4 @@ module Admin
         @article = Article[params[:id]]
       end
   end
-  
 end

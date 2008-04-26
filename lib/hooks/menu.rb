@@ -11,7 +11,7 @@ module Hooks
       end
 
       ##
-      # This returns the menu items for any plugins that have used the above call
+      # This returns the menu items for any plugins that have used the above call (providing the plugins are active)
       def menu_items
         menu_items = []
         unless @menu_item_hooks.nil?
@@ -21,7 +21,7 @@ module Hooks
         end
         menu_items
       end
-      
+
       ##
       # This removes any plugin hooks for the plugin with the specified id
       def remove_plugin_hooks(id)

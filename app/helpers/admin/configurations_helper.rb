@@ -1,7 +1,6 @@
 module Merb
-module Admin
-module ConfigurationsHelper
-
-end
-end # Admin
+  module Admin
+    module ConfigurationsHelper
+    end
+  end
 end

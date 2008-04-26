@@ -1,4 +1,3 @@
-
 var FormHelper = {	
   /**
 	* This toggles the visibility of the specified element, and alternately toggles the *_container element

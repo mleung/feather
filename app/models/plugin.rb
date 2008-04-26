@@ -7,7 +7,7 @@ class Plugin < DataMapper::Base
   property :homepage, :string, :length => 255
   property :about, :string, :length => 255
   property :active, :boolean
-  
+
   before_create :download
   after_create :install
   after_create :set_create_activity
@@ -38,7 +38,7 @@ class Plugin < DataMapper::Base
     # Unpack any gems downloaded
     unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
   end
-  
+
   ##
   # This loads and installs the plugin
   def install
@@ -51,7 +51,7 @@ class Plugin < DataMapper::Base
     self.destroy!
     raise "Error installing plugin: #{err.message}!"
   end
-  
+
   ##
   # This adds the activity to show a plugin has been installed
   def set_create_activity
@@ -67,7 +67,7 @@ class Plugin < DataMapper::Base
     a.message = "Plugin \"#{self.name}\" #{self.active ? 'activated' : 'de-activated'}"
     a.save
   end
-  
+
   ##
   # This removes the plugin, de-registers hooks, and adds an activity to show a plugin has been deleted
   def remove
@@ -77,7 +77,7 @@ class Plugin < DataMapper::Base
     a.message = "Plugin \"#{self.name}\" deleted"
     a.save
   end
-  
+
   ##
   # This loads the plugin, first loading any gems it may have
   def load
@@ -88,13 +88,13 @@ class Plugin < DataMapper::Base
     # Add the plugin to the array of loaded plugins
     @@loaded << self.name
   end
-  
+
   ##
   # This returns true if the plugin has been loaded, false otherwise
   def loaded?
     @@loaded.include?(self.name)
   end
-  
+
   private
     ##
     # This recursively uses the yaml to download the files specified in the manifest
@@ -116,7 +116,7 @@ class Plugin < DataMapper::Base
         end
       end
     end
-    
+
     ##
     # This recursively unpacks the gems used by the plugin
     def unpack_gems(gems)

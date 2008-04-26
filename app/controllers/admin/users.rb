@@ -1,16 +1,16 @@
 module Admin
   class Users < Base
+    before :find_user, :only => %w(edit update delete show)
 
     def index
       @users = User.all
       display @users
     end
-    
+
     def show
-      @user = User[params[:id]]
       display @user
     end
-    
+
     def new
       @user = User.new(params[:user] || {})
       display @user
@@ -18,7 +18,6 @@ module Admin
 
     def create
       cookies.delete :auth_token
-
       @user = User.new(params[:user])
       if @user.save
         redirect_back_or_default(url(:admin_users))
@@ -26,27 +25,27 @@ module Admin
         render :new
       end
     end
-    
+
     def edit
-      @user = User[params[:id]]
       display @user
     end
-    
+
     def update
-      @user = User[params[:id]]
       if @user.update_attributes(params[:user])
         redirect_back_or_default(url(:admin_users))
       else
         render :edit
       end
     end
-    
+
     def delete
-      @user = User[params[:id]]
       @user.destroy!
       redirect url(:admin_users)
     end
-    
+
+    private
+      def find_user
+        @user = User[params[:id]]
+      end    
   end
-  
 end

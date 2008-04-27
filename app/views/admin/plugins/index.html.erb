@@ -7,16 +7,24 @@
 
 <h1>View Plugins</h1>
 
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Author</th>
-		<th>Version</th>
-		<th>Homepage</th>
-		<th>Active</th>
-		<th></th>
-	</tr>
-  <%= partial("plugin", :with => @plugins) %>
+<table class='tabular'>
+  <thead>
+  	<tr>
+  		<th>Name</th>
+  		<th>Author</th>
+  		<th>Version</th>
+  		<th>Homepage</th>
+  		<th>Active</th>
+  		<th></th>
+  	</tr>
+	</thead>
+	<tbody>
+    <% if @plugins.any? %>
+      <%= partial("plugin", :with => @plugins) %>
+    <% else %>
+      <tr><td colspan="6">You do not currently have any plugins installed.</td></tr>
+    <% end %>
+  </tbody>
 </table>
 <br />
 <%= link_to "Install plugin", url(:new_admin_plugin) %>

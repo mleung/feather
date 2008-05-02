@@ -14,7 +14,7 @@ class Article < DataMapper::Base
   belongs_to :user
   
   # Core filters
-  before_create :set_published_permalink
+  before_save :set_published_permalink
   after_create :set_create_activity
   after_update :set_update_activity
   

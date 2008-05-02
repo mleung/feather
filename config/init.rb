@@ -68,7 +68,7 @@ Merb::BootLoader.after_app_loads do
 
   # This loads the plugins
   begin
-    Plugin.all.each do |p|
+    Plugin.all(:order => :name).each do |p|
       begin
         p.load
         Merb.logger.info("\"#{p.name}\" loaded")

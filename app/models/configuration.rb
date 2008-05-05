@@ -6,11 +6,16 @@ class Configuration < DataMapper::Base
   property :permalink_format, :string
 
   after_save :set_activity
+  before_save :prepend_slash_on_permalink
 
   def set_activity
     a = Activity.new
     a.message = "Configuration updated"
     a.save
+  end
+  
+  def prepend_slash_on_permalink
+    self.permalink_format = '/' + self.permalink_format if !self.permalink_format.nil? && self.permalink_format.index('/') != 0
   end
 
   ##

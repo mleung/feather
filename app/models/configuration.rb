@@ -3,6 +3,7 @@ class Configuration < DataMapper::Base
   property :tag_line, :string, :length => 255
   property :about, :text
   property :about_formatter, :string
+  property :permalink_format, :string
 
   after_save :set_activity
 
@@ -28,7 +29,7 @@ class Configuration < DataMapper::Base
   # This returns the current configuration, creating the record if it isn't found
   def self.current
     configuration = Configuration.first
-    configuration = Configuration.create(:title => "My new Feather blog", :tag_line => "Feather rocks!", :about => "I rock, and so does my Feather blog", :about_formatter => "default") if configuration.nil?
+    configuration = Configuration.create(:title => "My new Feather blog", :tag_line => "Feather rocks!", :about => "I rock, and so does my Feather blog", :about_formatter => "default", :permalink_format => "/:year/:month/:day/:title") if configuration.nil?
     configuration    
   end
 end

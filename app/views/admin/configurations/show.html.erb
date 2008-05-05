@@ -6,6 +6,11 @@
    <p>
     <strong>To add a new line to your about, hold shift and hit enter.</strong>
   </p>
+   <p>
+    <strong>Permalink Format:</strong>
+    <br/>You can use the following variables to create a permalink: :year, :month, :day, :title
+    <br/>For example: /articles/:year/:month/:day/:title -> /articles/2008/5/15/my-neat-blog-post
+  </p>
  <% end %>
    
 <h1>Blog Settings</h1>
@@ -40,7 +45,7 @@
 	</td>
   </tr>
   <tr>
-    <td class="field_label">Permalink Format (variables: :year, :month, :day, :title):</td>
+    <td class="field_label">Permalink Format:</td>
     <td>
       <span id="configuration-permalink-format-container"><span id="configuration-permalink-format-display"><%= @settings.permalink_format %></span> <a href="#" id="edit-configuration-permalink-format">edit</a></span>
       <%= text_field :name => "permalink_format", :value => @settings.permalink_format, :size => 30, :style => "display: none", :id => "configuration-permalink-format" %>

@@ -29,7 +29,9 @@ module Admin
     end
 
     def update(id)
-      @plugin.active = (params[:active] == "true" ? true : false) if params[:active]
+      #merb-action-args doesn't appear to play nice with ajax calls, so we're using params for the plugin active flag
+      @plugin = Plugin[id]
+      @plugin.active = params[:active] == "true" if params[:active]
       @plugin.save
       # Check to see if the plugin has any views registered, if so we'll need to expire all pages to be safe
       expire_all_pages if Hooks::View.has_views_registered?(@plugin)

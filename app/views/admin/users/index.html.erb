@@ -1,12 +1,16 @@
-<table>
-	<tr>
-		<th>Login</th>
-    	<th>Name</th>
-		<th>E-mail</th>
-		<th>Timezone</th>
-		<th></th>
-	</tr>
-  <%= partial('admin/users/user', :with => @users) %>
+<table class='tabular'>
+  <thead>
+  	<tr>
+  		<th>Login</th>
+      	<th>Name</th>
+  		<th>E-mail</th>
+  		<th>Timezone</th>
+  		<th></th>
+  	</tr>
+	</thead>
+	<tbody>
+    <%= partial('admin/users/user', :with => @users) %>
+  </tbody>
 </table>
 <br />
 <%= link_to "Create new user", url(:new_admin_user) %>

@@ -112,6 +112,7 @@ Event.observe(window, 'load', function() {
 	//Set up the events for the configuration page
 	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configurations?title=");
 	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
+	FormHelper.inPlaceEditEvents("configuration-permalink-format", "/admin/configurations?permalink_format=");
 	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=", true);
 	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configurations?about_formatter=");
 	Event.observe("configuration-clear-cache", "click", function() {

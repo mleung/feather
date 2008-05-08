@@ -175,6 +175,7 @@ label {
 }
 
 #feather-tagline {
+	display: block;
   font-size: 0.5em;
 }
 
@@ -199,4 +200,22 @@ label {
 
 .mock_label {
   font-weight: bold;
+}
+
+table.tabular { 
+	border-collapse: collapse; 
+}
+
+table.tabular thead th {
+	background: #303030;
+	color: #fff;
+	font-weight: bold;
+}
+
+table.tabular th, table.tabular td {
+	padding: 4px 8px;
+}
+
+table.tabular tbody th, table.tabular tbody td {
+	font-size: 0.9em;
 }

@@ -7,14 +7,22 @@
 
 <h1>View Articles</h1>
 
-<table>
-	<tr>
-		<th>Title</th>
-		<th>Published</th>
-		<th>By</th>
-		<th></th>
-	</tr>		
-  <%= partial('admin/articles/article', :with => @articles) %>
+<table class='tabular'>
+	<thead>
+  	<tr>
+  		<th>Title</th>
+  		<th>Published</th>
+  		<th>By</th>
+  		<th></th>
+  	</tr>	
+	</thead>
+	<tbody>	
+	  <% if @articles.any? %>
+      <%= partial('admin/articles/article', :with => @articles) %>
+    <% else %>
+      <tr><td colspan="4">You have not written any articles yet. <%= link_to "Write one now?", url(:new_admin_article) %></td></tr>
+    <% end %>
+  </tbody>
 </table>
 <br />
 <%= link_to "New article", url(:new_admin_article) %>

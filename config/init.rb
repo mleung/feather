@@ -51,6 +51,7 @@ dependencies "merb-assets"
 dependencies "merb-cache"
 dependency "merb-action-args"
 dependency "merb-mailer"
+dependency 'merb_paginate'
 dependency "merb_stories" if Merb.environment == "test"
 # OR
 # OR

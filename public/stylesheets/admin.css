@@ -219,3 +219,11 @@ table.tabular th, table.tabular td {
 table.tabular tbody th, table.tabular tbody td {
 	font-size: 0.9em;
 }
+
+#action {
+ float: right; 
+}
+
+#pagination {
+  padding: 10px;
+}

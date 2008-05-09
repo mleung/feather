@@ -4,7 +4,6 @@ module Admin
 
     def index
       @articles = Article.paginate(:page => params[:page], :per_page => 10, :order => "created_at DESC")
-      
       display @articles
     end
     

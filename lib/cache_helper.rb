@@ -4,7 +4,7 @@ module CacheHelper
   end
 
   def expire_article(article)
-    # If an article is a draft, it will not have a permalink to split on
+    # If an article is a draft, it will not have a published_at date to go by.
     unless article.published_at.nil?
       year = article.published_at.year
       month = article.published_at.month

@@ -113,16 +113,14 @@ label {
 }
 
 #footer {
-	margin:0 auto;
 	margin-bottom:1em;
 	font-family:'Lucida Grande', Tahoma, Arial, Helvetica, sans-serif;
 	font-size:0.75em;
 	color:#333;
 	
-	margin-left:3%;
-	width:67%;
-	min-width:545px;
-	padding:0px 15px;
+	width: 75%;
+  min-width:545px;
+/*  padding:0px 15px;*/
 	margin-bottom:3.5em;
 }
 

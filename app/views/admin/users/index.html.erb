@@ -1,3 +1,8 @@
+<div id="action">
+  <%= link_to "Create new user", url(:new_admin_user) %>
+</div>
+<h1>View Users</h1>
+
 <table class='tabular'>
   <thead>
   	<tr>
@@ -12,5 +17,3 @@
     <%= partial('admin/users/user', :with => @users) %>
   </tbody>
 </table>
-<br />
-<%= link_to "Create new user", url(:new_admin_user) %>

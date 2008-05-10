@@ -29,7 +29,13 @@
         <div id="archives">
           <h3>Archives</h3>
           <ul id="archives">
-            <%= partial('shared/archive', :with => @archives) %>
+            <%= partial('shared/archive', :with => @archives[0...20]) %>
+			<% if @archives.length > 20 %>
+				<a id="view_all_archive_link" href="#" onclick="document.getElementById('view_all_archive').style.display = 'inline'; document.getElementById('view_all_archive_link').style.display = 'none';">View all</a>
+				<span id="view_all_archive" style="display: none;">
+					<%= partial('shared/archive', :with => @archives[20...@archives.length]) %>
+				</span>
+			<% end %>
           </ul>
         </div>
       <% end %>

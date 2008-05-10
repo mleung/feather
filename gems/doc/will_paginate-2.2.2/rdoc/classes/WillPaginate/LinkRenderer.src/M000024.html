@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>visible_page_numbers (WillPaginate::LinkRenderer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/will_paginate/view_helpers.rb, line 229</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">visible_page_numbers</span>
+      <span class="ruby-identifier">inner_window</span>, <span class="ruby-identifier">outer_window</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:inner_window</span>].<span class="ruby-identifier">to_i</span>, <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:outer_window</span>].<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">window_from</span> = <span class="ruby-identifier">current_page</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">inner_window</span>
+      <span class="ruby-identifier">window_to</span> = <span class="ruby-identifier">current_page</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">inner_window</span>
+      
+      <span class="ruby-comment cmt"># adjust lower or upper limit if other is out of bounds</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">window_to</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_pages</span>
+        <span class="ruby-identifier">window_from</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">window_to</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">total_pages</span>
+        <span class="ruby-identifier">window_to</span> = <span class="ruby-identifier">total_pages</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">window_from</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">window_to</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">window_from</span>
+        <span class="ruby-identifier">window_from</span> = <span class="ruby-value">1</span>
+        <span class="ruby-identifier">window_to</span> = <span class="ruby-identifier">total_pages</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">window_to</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">total_pages</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-identifier">visible</span>   = (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">total_pages</span>).<span class="ruby-identifier">to_a</span>
+      <span class="ruby-identifier">left_gap</span>  = (<span class="ruby-value">2</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">outer_window</span>)<span class="ruby-operator">...</span><span class="ruby-identifier">window_from</span>
+      <span class="ruby-identifier">right_gap</span> = (<span class="ruby-identifier">window_to</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">...</span>(<span class="ruby-identifier">total_pages</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">outer_window</span>)
+      <span class="ruby-identifier">visible</span>  <span class="ruby-operator">-=</span> <span class="ruby-identifier">left_gap</span>.<span class="ruby-identifier">to_a</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">left_gap</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">left_gap</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">visible</span>  <span class="ruby-operator">-=</span> <span class="ruby-identifier">right_gap</span>.<span class="ruby-identifier">to_a</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">right_gap</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">right_gap</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+
+      <span class="ruby-identifier">visible</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

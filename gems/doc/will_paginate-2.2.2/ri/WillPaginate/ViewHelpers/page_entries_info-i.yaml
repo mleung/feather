@@ -1,0 +1,14 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Renders a helpful message with numbers of displayed vs. total entries. You can use this as a blueprint for your own, similar helpers.
+- !ruby/struct:SM::Flow::VERB 
+  body: "  &lt;%= page_entries_info @posts %&gt;\n  #-&gt; Displaying entries 6 - 10 of 26 in total\n"
+full_name: WillPaginate::ViewHelpers#page_entries_info
+is_singleton: false
+name: page_entries_info
+params: (collection)
+visibility: public

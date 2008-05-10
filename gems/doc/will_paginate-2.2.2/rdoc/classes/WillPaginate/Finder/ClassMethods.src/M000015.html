@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>paginate_by_sql (WillPaginate::Finder::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/will_paginate/finder.rb, line 128</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">paginate_by_sql</span>(<span class="ruby-identifier">sql</span>, <span class="ruby-identifier">options</span>)
+        <span class="ruby-constant">WillPaginate</span><span class="ruby-operator">::</span><span class="ruby-constant">Collection</span>.<span class="ruby-identifier">create</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">wp_parse_options</span>(<span class="ruby-identifier">options</span>)) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pager</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">query</span> = <span class="ruby-identifier">sanitize_sql</span>(<span class="ruby-identifier">sql</span>)
+          <span class="ruby-identifier">original_query</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">dup</span>
+          <span class="ruby-comment cmt"># add limit, offset</span>
+          <span class="ruby-identifier">add_limit!</span> <span class="ruby-identifier">query</span>, <span class="ruby-identifier">:offset</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">:limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">per_page</span>
+          <span class="ruby-comment cmt"># perfom the find</span>
+          <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">replace</span> <span class="ruby-identifier">find_by_sql</span>(<span class="ruby-identifier">query</span>)
+          
+          <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">total_entries</span>
+            <span class="ruby-identifier">count_query</span> = <span class="ruby-identifier">original_query</span>.<span class="ruby-identifier">sub</span> <span class="ruby-regexp re">/\bORDER\s+BY\s+[\w`,\s]+$/</span><span class="ruby-identifier">mi</span>, <span class="ruby-value str">''</span>
+            <span class="ruby-identifier">count_query</span> = <span class="ruby-node">&quot;SELECT COUNT(*) FROM (#{count_query})&quot;</span>
+            
+            <span class="ruby-keyword kw">unless</span> [<span class="ruby-value str">'oracle'</span>, <span class="ruby-value str">'oci'</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">adapter_name</span>.<span class="ruby-identifier">downcase</span>)
+              <span class="ruby-identifier">count_query</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">' AS count_table'</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-comment cmt"># perform the count query</span>
+            <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">total_entries</span> = <span class="ruby-identifier">count_by_sql</span>(<span class="ruby-identifier">count_query</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

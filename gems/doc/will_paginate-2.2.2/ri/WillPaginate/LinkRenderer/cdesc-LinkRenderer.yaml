@@ -1,0 +1,31 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: This class does the heavy lifting of actually building the pagination links. It is used by <tt>will_paginate</tt> helper internally.
+constants: []
+
+full_name: WillPaginate::LinkRenderer
+includes: []
+
+instance_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: gap_marker
+- !ruby/object:RI::MethodSummary 
+  name: html_attributes
+- !ruby/object:RI::MethodSummary 
+  name: page_link_or_span
+- !ruby/object:RI::MethodSummary 
+  name: to_html
+- !ruby/object:RI::MethodSummary 
+  name: url_for
+- !ruby/object:RI::MethodSummary 
+  name: visible_page_numbers
+- !ruby/object:RI::MethodSummary 
+  name: windowed_links
+name: LinkRenderer
+superclass: Object

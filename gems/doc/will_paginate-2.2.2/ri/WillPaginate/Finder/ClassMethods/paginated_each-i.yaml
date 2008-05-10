@@ -1,0 +1,16 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Iterates through all records by loading one page at a time. This is useful for migrations or any other use case where you don't want to load all the records in memory at once.
+- !ruby/struct:SM::Flow::P 
+  body: It uses <tt>paginate</tt> internally; therefore it accepts all of its options. You can specify a starting page with <tt>:page</tt> (default is 1). Default <tt>:order</tt> is <tt>&quot;id&quot;</tt>, override if necessary.
+- !ruby/struct:SM::Flow::P 
+  body: See http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord where Jamis Buck describes this and also uses a more efficient way for MySQL.
+full_name: WillPaginate::Finder::ClassMethods#paginated_each
+is_singleton: false
+name: paginated_each
+params: (options = {}, &block)
+visibility: public

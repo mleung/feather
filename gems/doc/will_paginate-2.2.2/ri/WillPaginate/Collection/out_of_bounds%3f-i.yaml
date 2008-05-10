@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Helper method that is true when someone tries to fetch a page with a larger number than the last page. Can be used in combination with flashes and redirecting.
+full_name: WillPaginate::Collection#out_of_bounds?
+is_singleton: false
+name: out_of_bounds?
+params: ()
+visibility: public

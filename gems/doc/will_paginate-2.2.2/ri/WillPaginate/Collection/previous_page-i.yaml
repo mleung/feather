@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: current_page - 1 or nil if there is no previous page
+full_name: WillPaginate::Collection#previous_page
+is_singleton: false
+name: previous_page
+params: ()
+visibility: public

@@ -1,0 +1,55 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: 
+- !ruby/object:RI::Attribute 
+  comment: 
+  name: current_page
+  rw: R
+- !ruby/object:RI::Attribute 
+  comment: 
+  name: per_page
+  rw: R
+- !ruby/object:RI::Attribute 
+  comment: 
+  name: total_entries
+  rw: R
+- !ruby/object:RI::Attribute 
+  comment: 
+  name: total_pages
+  rw: R
+class_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: create
+- !ruby/object:RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:SM::Flow::H 
+  level: 1
+  text: The key to pagination
+- !ruby/struct:SM::Flow::P 
+  body: Arrays returned from paginating finds are, in fact, instances of this little class. You may think of WillPaginate::Collection as an ordinary array with some extra properties. Those properties are used by view helpers to generate correct page links.
+- !ruby/struct:SM::Flow::P 
+  body: "WillPaginate::Collection also assists in rolling out your own pagination solutions: see <tt>create</tt>."
+- !ruby/struct:SM::Flow::P 
+  body: "If you are writing a library that provides a collection which you would like to conform to this API, you don't have to copy these methods over; simply make your plugin/gem dependant on the &quot;will_paginate&quot; gem:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  gem 'will_paginate'\n  require 'will_paginate/collection'\n\n  # now use WillPaginate::Collection directly or subclass it\n"
+constants: []
+
+full_name: WillPaginate::Collection
+includes: []
+
+instance_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: next_page
+- !ruby/object:RI::MethodSummary 
+  name: offset
+- !ruby/object:RI::MethodSummary 
+  name: out_of_bounds?
+- !ruby/object:RI::MethodSummary 
+  name: previous_page
+- !ruby/object:RI::MethodSummary 
+  name: replace
+- !ruby/object:RI::MethodSummary 
+  name: total_entries=
+name: Collection
+superclass: Array

@@ -1,0 +1,42 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+- !ruby/struct:SM::Flow::H 
+  level: 1
+  text: Paginating finders for ActiveRecord models
+- !ruby/struct:SM::Flow::P 
+  body: WillPaginate adds <tt>paginate</tt>, <tt>per_page</tt> and other methods to ActiveRecord::Base class methods and associations. It also hooks into <tt>method_missing</tt> to intercept pagination calls to dynamic finders such as <tt>paginate_by_user_id</tt> and translate them to ordinary finders (<tt>find_all_by_user_id</tt> in this case).
+- !ruby/struct:SM::Flow::P 
+  body: "In short, paginating finders are equivalent to ActiveRecord finders; the only difference is that we start with &quot;paginate&quot; instead of &quot;find&quot; and that <tt>:page</tt> is required parameter:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  @posts = Post.paginate :all, :page =&gt; params[:page], :order =&gt; 'created_at DESC'\n"
+- !ruby/struct:SM::Flow::P 
+  body: "In paginating finders, &quot;all&quot; is implicit. There is no sense in paginating a single record, right? So, you can drop the <tt>:all</tt> argument:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  Post.paginate(...)              =&gt;  Post.find :all\n  Post.paginate_all_by_something  =&gt;  Post.find_all_by_something\n  Post.paginate_by_something      =&gt;  Post.find_all_by_something\n"
+- !ruby/struct:SM::Flow::H 
+  level: 2
+  text: The importance of the <tt>:order</tt> parameter
+- !ruby/struct:SM::Flow::P 
+  body: In ActiveRecord finders, <tt>:order</tt> parameter specifies columns for the <tt>ORDER BY</tt> clause in SQL. It is important to have it, since pagination only makes sense with ordered sets. Without the <tt>ORDER BY</tt> clause, databases aren't required to do consistent ordering when performing <tt>SELECT</tt> queries; this is especially true for PostgreSQL.
+- !ruby/struct:SM::Flow::P 
+  body: Therefore, make sure you are doing ordering on a column that makes the most sense in the current context. Make that obvious to the user, also. For perfomance reasons you will also want to add an index to that column.
+constants: []
+
+full_name: WillPaginate::Finder::ClassMethods
+includes: []
+
+instance_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: paginate
+- !ruby/object:RI::MethodSummary 
+  name: paginate_by_sql
+- !ruby/object:RI::MethodSummary 
+  name: paginated_each
+- !ruby/object:RI::MethodSummary 
+  name: wp_count
+name: ClassMethods
+superclass: 

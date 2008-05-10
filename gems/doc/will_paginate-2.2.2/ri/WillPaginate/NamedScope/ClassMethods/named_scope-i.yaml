@@ -1,0 +1,36 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Adds a class method for retrieving and querying objects. A scope represents a narrowing of a database query, such as <tt>:conditions =&gt; {:color =&gt; :red}, :select =&gt; 'shirts.*', :include =&gt; :washing_instructions</tt>.
+- !ruby/struct:SM::Flow::VERB 
+  body: "  class Shirt &lt; ActiveRecord::Base\n    named_scope :red, :conditions =&gt; {:color =&gt; 'red'}\n    named_scope :dry_clean_only, :joins =&gt; :washing_instructions, :conditions =&gt; ['washing_instructions.dry_clean_only = ?', true]\n  end\n"
+- !ruby/struct:SM::Flow::P 
+  body: The above calls to <tt>named_scope</tt> define class methods <tt>Shirt.red</tt> and <tt>Shirt.dry_clean_only</tt>. <tt>Shirt.red</tt>, in effect, represents the query <tt>Shirt.find(:all, :conditions =&gt; {:color =&gt; 'red'})</tt>.
+- !ruby/struct:SM::Flow::P 
+  body: Unlike Shirt.find(...), however, the object returned by <tt>Shirt.red</tt> is not an Array; it resembles the association object constructed by a <tt>has_many</tt> declaration. For instance, you can invoke <tt>Shirt.red.find(:first)</tt>, <tt>Shirt.red.count</tt>, <tt>Shirt.red.find(:all, :conditions =&gt; {:size =&gt; 'small'})</tt>. Also, just as with the association objects, name scopes acts like an Array, implementing Enumerable; <tt>Shirt.red.each(&amp;block)</tt>, <tt>Shirt.red.first</tt>, and <tt>Shirt.red.inject(memo, &amp;block)</tt> all behave as if Shirt.red really were an Array.
+- !ruby/struct:SM::Flow::P 
+  body: "These named scopes are composable. For instance, <tt>Shirt.red.dry_clean_only</tt> will produce all shirts that are both red and dry clean only. Nested finds and calculations also work with these compositions: <tt>Shirt.red.dry_clean_only.count</tt> returns the number of garments for which these criteria obtain. Similarly with <tt>Shirt.red.dry_clean_only.average(:thread_count)</tt>."
+- !ruby/struct:SM::Flow::P 
+  body: All scopes are available as class methods on the ActiveRecord descendent upon which the scopes were defined. But they are also available to <tt>has_many</tt> associations. If,
+- !ruby/struct:SM::Flow::VERB 
+  body: "  class Person &lt; ActiveRecord::Base\n    has_many :shirts\n  end\n"
+- !ruby/struct:SM::Flow::P 
+  body: then <tt>elton.shirts.red.dry_clean_only</tt> will return all of Elton's red, dry clean only shirts.
+- !ruby/struct:SM::Flow::P 
+  body: Named scopes can also be procedural.
+- !ruby/struct:SM::Flow::VERB 
+  body: "  class Shirt &lt; ActiveRecord::Base\n    named_scope :colored, lambda { |color|\n      { :conditions =&gt; { :color =&gt; color } }\n    }\n  end\n"
+- !ruby/struct:SM::Flow::P 
+  body: In this example, <tt>Shirt.colored('puce')</tt> finds all puce shirts.
+- !ruby/struct:SM::Flow::P 
+  body: "Named scopes can also have extensions, just as with <tt>has_many</tt> declarations:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  class Shirt &lt; ActiveRecord::Base\n    named_scope :red, :conditions =&gt; {:color =&gt; 'red'} do\n      def dom_id\n        'red_shirts'\n      end\n    end\n  end\n"
+full_name: WillPaginate::NamedScope::ClassMethods#named_scope
+is_singleton: false
+name: named_scope
+params: (name, options = {}, &block)
+visibility: public

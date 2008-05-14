@@ -1,10 +1,15 @@
-class Configuration < DataMapper::Base
-  property :title, :string
-  property :tag_line, :string, :length => 255
-  property :about, :text
-  property :about_formatter, :string
+class Configuration
 
-  after_save :set_activity
+  include DataMapper::Resource
+
+  property :id, Integer, :key => true
+  property :title, String
+  property :tag_line, String, :length => 255
+  # TODO: was TEXT, is VARCHAR now, should be TEXT again
+  property :about, String
+  property :about_formatter, String
+
+  after :save, :set_activity
 
   def set_activity
     a = Activity.new

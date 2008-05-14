@@ -1,30 +1,37 @@
-class Article < DataMapper::Base  
-  property :title, :string, :nullable => false, :length => 255
-  property :content, :text, :nullable => false
-  property :created_at, :datetime
-  property :published_at, :datetime
-  property :user_id, :integer, :nullable => false
-  property :permalink, :string, :length => 255
-  property :published, :boolean, :default => false
-  property :formatter, :string, :default => "default"
-  validates_presence_of :title, :key => "uniq_title"
-  validates_presence_of :content, :key => "uniq_content"
-  validates_presence_of :user_id, :key => "uniq_user_id"
+class Article
+  
+  include DataMapper::Resource
+  include DataMapper::Validate
+  
+  property :id, Integer, :key => true
+  property :title, String, :nullable => false, :length => 255
+  # was TEXT, should be TEXT again
+  property :content, String, :nullable => false
+  property :created_at, DateTime
+  property :published_at, DateTime
+  property :user_id, Integer, :nullable => false
+  property :permalink, String, :length => 255
+  property :published, TrueClass, :default => false
+  property :formatter, String, :default => "default"
+  
+  validates_present :title, :key => "uniq_title"
+  validates_present :content, :key => "uniq_content"
+  validates_present :user_id, :key => "uniq_user_id"
   
   belongs_to :user
   
   # Core filters
-  before_save :set_published_permalink
-  after_create :set_create_activity
-  after_update :set_update_activity
+  before :save, :set_published_permalink
+  after :save, :set_create_activity
+  after :save, :set_update_activity
   
   # Event hooks for plugins
-  before_create :fire_before_create_event
-  before_update :fire_before_update_event
-  before_save :fire_before_save_event
-  after_create :fire_after_create_event
-  after_update :fire_after_update_event
-  after_save :fire_after_save_event
+  before :save, :fire_before_create_event
+  before :save, :fire_before_update_event
+  before :save, :fire_before_save_event
+  after :save, :fire_after_create_event
+  after :save, :fire_after_update_event
+  after :save, :fire_after_save_event
   
   ##
   # This sets the published date and permalink when an article is published
@@ -40,23 +47,29 @@ class Article < DataMapper::Base
   end
 
   def set_create_activity
-    a = Activity.new
-    a.message = "Article \"#{self.title}\" created"
-    a.save
+    if new_record?
+      a = Activity.new
+      a.message = "Article \"#{self.title}\" created"
+      a.save
+    end
   end
 
   def set_update_activity
-    a = Activity.new
-    a.message = "Article \"#{self.title}\" updated"
-    a.save
+    unless new_record?
+      a = Activity.new
+      a.message = "Article \"#{self.title}\" updated"
+      a.save
+    end
   end
 
   def fire_before_create_event
-    Hooks::Events.before_create_article(self)
+    if new_record?
+      Hooks::Events.before_create_article(self)
+    end
   end
 
   def fire_before_update_event
-    Hooks::Events.before_update_article(self)
+    Hooks::Events.before_update_article(self) unless new_record?
   end
 
   def fire_before_save_event
@@ -65,11 +78,13 @@ class Article < DataMapper::Base
   end
 
   def fire_after_create_event
-    Hooks::Events.after_create_article(self)
+    if new_record?
+      Hooks::Events.after_create_article(self)
+    end
   end
   
   def fire_after_update_event
-    Hooks::Events.after_update_article(self)
+    Hooks::Events.after_update_article(self) unless new_record?
   end
 
   def fire_after_save_event
@@ -87,22 +102,22 @@ class Article < DataMapper::Base
     # Custom finders
 
     def find_recent
-      self.all(:published => true, :limit => 10, :order => "published_at DESC")
+      self.all(:published => true, :limit => 10, :order => [:published_at.desc])
     end
 
     def find_by_year(year)
-      self.all(:published_at.like => "#{year}%", :published => true, :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}%", :published => true, :order => [:published_at.desc])
     end
 
     def find_by_year_month(year, month)
       month = Padding::pad_single_digit(month)
-      self.all(:published_at.like => "#{year}-#{month}%", :published => true, :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}-#{month}%", :published => true, :order => [:published_at.desc])
     end
 
     def find_by_year_month_day(year, month, day)
       month = Padding::pad_single_digit(month)
       day = Padding::pad_single_digit(day)
-      self.all(:published_at.like => "#{year}-#{month}-#{day}%", :published => true, :order => "published_at DESC")
+      self.all(:published_at.like => "#{year}-#{month}-#{day}%", :published => true, :order => [:published_at.desc])
     end
 
     def find_by_permalink(permalink)

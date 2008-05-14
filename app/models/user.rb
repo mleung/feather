@@ -4,49 +4,57 @@ begin
 rescue 
   nil
 end
-class User < DataMapper::Base
+class User
+
+  include DataMapper::Resource
+  include DataMapper::Validate
   include AuthenticatedSystem::Model
 
   attr_accessor :password, :password_confirmation
 
-  property :login,                      :string
-  property :email,                      :string, :length => 255
-  property :crypted_password,           :string
-  property :salt,                       :string
-  property :remember_token_expires_at,  :datetime
-  property :remember_token,             :string
-  property :time_zone,                  :string
-  property :created_at,                 :datetime
-  property :updated_at,                 :datetime
-  property :name,                       :string
-  property :default_formatter,          :string
+  property :id, Integer, :key => true
+  property :login,                      String
+  property :email,                      String, :length => 255
+  property :crypted_password,           String
+  property :salt,                       String
+  property :remember_token_expires_at,  DateTime
+  property :remember_token,             String
+  property :time_zone,                  String
+  property :created_at,                 DateTime
+  property :updated_at,                 DateTime
+  property :name,                       String
+  property :default_formatter,          String
 
-  validates_length_of         :login,                   :within => 3..40
-  validates_uniqueness_of     :login
-  validates_presence_of       :password,                :if => proc {password_required?}
-  validates_presence_of       :password_confirmation,   :if => proc {password_required?}
-  validates_length_of         :password,                :within => 4..40, :if => proc {password_required?}
-  validates_confirmation_of   :password,                :groups => :create
-  validates_presence_of       :email
+  validates_length            :login,                   :within => 3..40
+  validates_is_unique         :login
+  validates_present           :password,                :if => proc {password_required?}
+  validates_present           :password_confirmation,   :if => proc {password_required?}
+  validates_length            :password,                :within => 4..40, :if => proc {password_required?}
+  validates_is_confirmed      :password,                :groups => :create
+  validates_present           :email
 
-  before_save :encrypt_password
+  before :save, :encrypt_password
 
-  after_create :set_create_activity
-  after_update :set_update_activity
+  after :save, :set_create_activity
+  after :save, :set_update_activity
 
   def set_create_activity
-    a = Activity.new
-    a.message = "User \"#{self.login}\" created"
-    a.save
+    if new_record?
+      a = Activity.new
+      a.message = "User \"#{self.login}\" created"
+      a.save
+    end
   end
 
   def set_update_activity
-    a = Activity.new
-    a.message = "User \"#{self.login}\" updated"
-    a.save
+    unless new_record?
+      a = Activity.new
+      a.message = "User \"#{self.login}\" updated"
+      a.save
+    end
   end
 
-  def login=(value)
-    @login = value.downcase unless value.nil?
+  def login=(value);
+    attribute_set :login, value.downcase unless value.nil?
   end
 end

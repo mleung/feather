@@ -40,8 +40,9 @@ class Article
     if self.is_published?
       # Set the date, only if we haven't already
       self.published_at = Time.now if self.published_at.nil?
+      
       # Set the permalink, only if we haven't already
-      self.permalink = "/#{self.published_at.year}/#{Padding::pad_single_digit(self.published_at.month)}/#{Padding::pad_single_digit(self.published_at.day)}/#{self.title.downcase.gsub(/[^a-z0-9]+/i, '-')}" if self.permalink.nil?
+      self.permalink = create_permalink
     end
     true
   end
@@ -95,6 +96,20 @@ class Article
   def is_published?
     # We need this beacuse the values get populated from the params
     self.published == "1"
+  end
+  
+  def create_permalink
+    permalink = Configuration.current.permalink_format.gsub(/:year/,self.published_at.year.to_s)
+    permalink.gsub!(/:month/,Padding::pad_single_digit(self.published_at.month))
+    permalink.gsub!(/:day/,Padding::pad_single_digit(self.published_at.day))
+    
+    title = self.title.gsub(/\W+/, ' ') # all non-word chars to spaces
+    title.strip!            # ohh la la
+    title.downcase!         #
+    title.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
+    permalink.gsub!(/:title/,title)
+    
+    permalink
   end
 
   class << self

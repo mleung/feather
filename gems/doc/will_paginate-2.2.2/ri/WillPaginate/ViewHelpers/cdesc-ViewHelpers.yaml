@@ -1,0 +1,34 @@
+--- !ruby/object:RI::ClassDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+- !ruby/struct:SM::Flow::H 
+  level: 1
+  text: Will Paginate view helpers
+- !ruby/struct:SM::Flow::P 
+  body: "Currently there is only one view helper: <tt>will_paginate</tt>. It renders the pagination links for the given collection. The helper itself is lightweight and serves only as a wrapper around link renderer instantiation; the renderer then does all the hard work of generating the HTML."
+- !ruby/struct:SM::Flow::H 
+  level: 2
+  text: Global options for helpers
+- !ruby/struct:SM::Flow::P 
+  body: "Options for pagination helpers are optional and get their default values from the WillPaginate::ViewHelpers.pagination_options hash. You can write to this hash to override default options on the global level:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Previous page'\n"
+- !ruby/struct:SM::Flow::P 
+  body: By putting this into your environment.rb you can easily translate link texts to previous and next pages, as well as override some other defaults to your liking.
+constants: []
+
+full_name: WillPaginate::ViewHelpers
+includes: []
+
+instance_methods: 
+- !ruby/object:RI::MethodSummary 
+  name: page_entries_info
+- !ruby/object:RI::MethodSummary 
+  name: paginated_section
+- !ruby/object:RI::MethodSummary 
+  name: will_paginate
+name: ViewHelpers
+superclass: 

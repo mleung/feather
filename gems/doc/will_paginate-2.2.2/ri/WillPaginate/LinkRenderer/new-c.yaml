@@ -1,0 +1,22 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/object:SM::Flow::LIST 
+  contents: 
+  - !ruby/struct:SM::Flow::LI 
+    label: "*"
+    body: <tt>collection</tt> is a WillPaginate::Collection instance or any other object that conforms to that API
+  - !ruby/struct:SM::Flow::LI 
+    label: "*"
+    body: <tt>options</tt> are forwarded from <tt>will_paginate</tt> view helper
+  - !ruby/struct:SM::Flow::LI 
+    label: "*"
+    body: <tt>template</tt> is the reference to the template being rendered
+  type: :BULLET
+full_name: WillPaginate::LinkRenderer::new
+is_singleton: true
+name: new
+params: (collection, options, template)
+visibility: public

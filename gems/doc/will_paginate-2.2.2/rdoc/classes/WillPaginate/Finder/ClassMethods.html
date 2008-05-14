@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: WillPaginate::Finder::ClassMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">WillPaginate::Finder::ClassMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/will_paginate/finder_rb.html">
+                lib/will_paginate/finder.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Paginating finders for ActiveRecord models</h1>
+<p>
+WillPaginate adds <tt><a
+href="ClassMethods.html#M000013">paginate</a></tt>, <tt>per_page</tt> and
+other methods to ActiveRecord::Base class methods and associations. It also
+hooks into <tt>method_missing</tt> to intercept pagination calls to dynamic
+finders such as <tt>paginate_by_user_id</tt> and translate them to ordinary
+finders (<tt>find_all_by_user_id</tt> in this case).
+</p>
+<p>
+In short, paginating finders are equivalent to ActiveRecord finders; the
+only difference is that we start with &quot;<a
+href="ClassMethods.html#M000013">paginate</a>&quot; instead of
+&quot;find&quot; and that <tt>:page</tt> is required parameter:
+</p>
+<pre>
+  @posts = Post.paginate :all, :page =&gt; params[:page], :order =&gt; 'created_at DESC'
+</pre>
+<p>
+In paginating finders, &quot;all&quot; is implicit. There is no sense in
+paginating a single record, right? So, you can drop the <tt>:all</tt>
+argument:
+</p>
+<pre>
+  Post.paginate(...)              =&gt;  Post.find :all
+  Post.paginate_all_by_something  =&gt;  Post.find_all_by_something
+  Post.paginate_by_something      =&gt;  Post.find_all_by_something
+</pre>
+<h2>The importance of the <tt>:order</tt> parameter</h2>
+<p>
+In ActiveRecord finders, <tt>:order</tt> parameter specifies columns for
+the <tt>ORDER BY</tt> clause in SQL. It is important to have it, since
+pagination only makes sense with ordered sets. Without the <tt>ORDER
+BY</tt> clause, databases aren&#8216;t required to do consistent ordering
+when performing <tt>SELECT</tt> queries; this is especially true for
+PostgreSQL.
+</p>
+<p>
+Therefore, make sure you are doing ordering on a column that makes the most
+sense in the current context. Make that obvious to the user, also. For
+perfomance reasons you will also want to add an index to that column.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000013">paginate</a>&nbsp;&nbsp;
+      <a href="#M000015">paginate_by_sql</a>&nbsp;&nbsp;
+      <a href="#M000014">paginated_each</a>&nbsp;&nbsp;
+      <a href="#M000016">wp_count</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="ClassMethods.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('ClassMethods.src/M000013.html');return false;">
+          <span class="method-name">paginate</span><span class="method-args">(*args, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This is the main paginating finder.
+</p>
+<h2>Special parameters for paginating finders</h2>
+<ul>
+<li><tt>:page</tt> &#8212; REQUIRED, but defaults to 1 if false or nil
+
+</li>
+<li><tt>:per_page</tt> &#8212; defaults to <tt>CurrentModel.per_page</tt>
+(which is 30 if not overridden)
+
+</li>
+<li><tt>:total_entries</tt> &#8212; use only if you manually count total
+entries
+
+</li>
+<li><tt>:count</tt> &#8212; additional options that are passed on to
+<tt>count</tt>
+
+</li>
+<li><tt>:finder</tt> &#8212; name of the ActiveRecord finder used (default:
+&quot;find&quot;)
+
+</li>
+</ul>
+<p>
+All other options (<tt>conditions</tt>, <tt>order</tt>, &#8230;) are
+forwarded to <tt>find</tt> and <tt>count</tt> calls.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="ClassMethods.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('ClassMethods.src/M000015.html');return false;">
+          <span class="method-name">paginate_by_sql</span><span class="method-args">(sql, options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Wraps <tt>find_by_sql</tt> by simply adding LIMIT and OFFSET to your SQL
+string based on the params otherwise used by paginating finds:
+<tt>page</tt> and <tt>per_page</tt>.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  @developers = Developer.paginate_by_sql ['select * from developers where salary &gt; ?', 80000],
+                         :page =&gt; params[:page], :per_page =&gt; 3
+</pre>
+<p>
+A query for counting rows will automatically be generated if you
+don&#8216;t supply <tt>:total_entries</tt>. If you experience problems with
+this generated SQL, you might want to perform the count manually in your
+application.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="ClassMethods.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('ClassMethods.src/M000014.html');return false;">
+          <span class="method-name">paginated_each</span><span class="method-args">(options = {}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Iterates through all records by loading one page at a time. This is useful
+for migrations or any other use case where you don&#8216;t want to load all
+the records in memory at once.
+</p>
+<p>
+It uses <tt><a href="ClassMethods.html#M000013">paginate</a></tt>
+internally; therefore it accepts all of its options. You can specify a
+starting page with <tt>:page</tt> (default is 1). Default <tt>:order</tt>
+is <tt>&quot;id&quot;</tt>, override if necessary.
+</p>
+<p>
+See <a
+href="http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord">weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord</a>
+where Jamis Buck describes this and also uses a more efficient way for
+MySQL.
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="ClassMethods.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('ClassMethods.src/M000016.html');return false;">
+          <span class="method-name">wp_count</span><span class="method-args">(options, args, finder)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Does the not-so-trivial job of finding out the total number of entries in
+the database. It relies on the ActiveRecord <tt>count</tt> method.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

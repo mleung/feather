@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Calculates visible page numbers using the <tt>:inner_window</tt> and <tt>:outer_window</tt> options.
+full_name: WillPaginate::LinkRenderer#visible_page_numbers
+is_singleton: false
+name: visible_page_numbers
+params: ()
+visibility: protected

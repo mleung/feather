@@ -1,0 +1,20 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Wrapper for rendering pagination links at both top and bottom of a block of content.
+- !ruby/struct:SM::Flow::VERB 
+  body: "  &lt;% paginated_section @posts do %&gt;\n    &lt;ol id=&quot;posts&quot;&gt;\n      &lt;% for post in @posts %&gt;\n        &lt;li&gt; ... &lt;/li&gt;\n      &lt;% end %&gt;\n    &lt;/ol&gt;\n  &lt;% end %&gt;\n"
+- !ruby/struct:SM::Flow::P 
+  body: "will result in:"
+- !ruby/struct:SM::Flow::VERB 
+  body: "  &lt;div class=&quot;pagination&quot;&gt; ... &lt;/div&gt;\n  &lt;ol id=&quot;posts&quot;&gt;\n    ...\n  &lt;/ol&gt;\n  &lt;div class=&quot;pagination&quot;&gt; ... &lt;/div&gt;\n"
+- !ruby/struct:SM::Flow::P 
+  body: Arguments are passed to a <tt>will_paginate</tt> call, so the same options apply. Don't use the <tt>:id</tt> option; otherwise you'll finish with two blocks of pagination links sharing the same ID (which is invalid HTML).
+full_name: WillPaginate::ViewHelpers#paginated_section
+is_singleton: false
+name: paginated_section
+params: (*args, &block)
+visibility: public

@@ -11,6 +11,7 @@ module Admin
       @configuration.tag_line = params[:tag_line] unless params[:tag_line].nil?
       @configuration.about = params[:about] unless params[:about].nil?
       @configuration.about_formatter = params[:about_formatter] unless params[:about_formatter].nil?
+      @configuration.permalink_format = params[:permalink_format] unless params[:permalink_format].nil?
       @configuration.save
       # Expire all pages as the configuration settings affect the overall template
       expire_all_pages

@@ -5,6 +5,10 @@
   </p>
 <% end %>
 
+<div id="action">
+  <%= link_to "New article", url(:new_admin_article) %>
+</div>
+
 <h1>View Articles</h1>
 
 <table class='tabular'>
@@ -24,5 +28,7 @@
     <% end %>
   </tbody>
 </table>
-<br />
-<%= link_to "New article", url(:new_admin_article) %>
+<div id="pagination">
+  <%= merb_paginate @articles %>
+  <%= page_entries_info @articles %>
+</div>

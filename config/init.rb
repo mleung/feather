@@ -46,15 +46,17 @@ use_test :rspec, "merb_stories"
 
 # These are some examples of how you might specify dependencies.
 # 
-dependencies "merb_helpers"
-dependencies "merb-assets"
-dependencies "merb-cache"
+dependency "merb_helpers"
+dependency "merb-assets"
+dependency "merb-cache"
 dependency "merb-action-args"
 dependency "merb-mailer"
+dependency 'merb_paginate'
 
 dependency "dm-aggregates"
 dependency "dm-validations"
 dependency "dm-timestamps"
+
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
@@ -71,7 +73,7 @@ Merb::BootLoader.after_app_loads do
 
   # This loads the plugins
   begin
-    Plugin.all.each do |p|
+    Plugin.all(:order => [:name]).each do |p|
       begin
         p.load
         Merb.logger.info("\"#{p.name}\" loaded")

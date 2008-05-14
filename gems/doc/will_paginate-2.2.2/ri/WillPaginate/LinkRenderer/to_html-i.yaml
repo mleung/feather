@@ -1,0 +1,12 @@
+--- !ruby/object:RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:SM::Flow::P 
+  body: Process it! This method returns the complete HTML string which contains pagination links. Feel free to subclass LinkRenderer and change this method as you see fit.
+full_name: WillPaginate::LinkRenderer#to_html
+is_singleton: false
+name: to_html
+params: ()
+visibility: public

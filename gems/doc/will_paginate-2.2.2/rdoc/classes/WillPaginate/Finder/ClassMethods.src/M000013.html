@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>paginate (WillPaginate::Finder::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/will_paginate/finder.rb, line 64</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">paginate</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+        <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>
+        <span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">total_entries</span> = <span class="ruby-identifier">wp_parse_options</span>(<span class="ruby-identifier">options</span>)
+        <span class="ruby-identifier">finder</span> = (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:finder</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'find'</span>).<span class="ruby-identifier">to_s</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">finder</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'find'</span>
+          <span class="ruby-comment cmt"># an array of IDs may have been given:</span>
+          <span class="ruby-identifier">total_entries</span> <span class="ruby-operator">||=</span> (<span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">size</span>)
+          <span class="ruby-comment cmt"># :all is implicit</span>
+          <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">:all</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-constant">WillPaginate</span><span class="ruby-operator">::</span><span class="ruby-constant">Collection</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">total_entries</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pager</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">count_options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">except</span> <span class="ruby-identifier">:page</span>, <span class="ruby-identifier">:per_page</span>, <span class="ruby-identifier">:total_entries</span>, <span class="ruby-identifier">:finder</span>
+          <span class="ruby-identifier">find_options</span> = <span class="ruby-identifier">count_options</span>.<span class="ruby-identifier">except</span>(<span class="ruby-identifier">:count</span>).<span class="ruby-identifier">update</span>(<span class="ruby-identifier">:offset</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">:limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">per_page</span>) 
+          
+          <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">find_options</span>
+          <span class="ruby-comment cmt"># @options_from_last_find = nil</span>
+          <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">replace</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">finder</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+          
+          <span class="ruby-comment cmt"># magic counting for user convenience:</span>
+          <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">total_entries</span> = <span class="ruby-identifier">wp_count</span>(<span class="ruby-identifier">count_options</span>, <span class="ruby-identifier">args</span>, <span class="ruby-identifier">finder</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">pager</span>.<span class="ruby-identifier">total_entries</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,4 +1,5 @@
 # Allows you to tell a plugin it depends on another, and will load the dependency first.
+# Usage: PluginDependencies::register_dependency "feather-comments" in init.rb of your plugin.
 module PluginDependencies
  class << self
    def register_dependency(dependency)

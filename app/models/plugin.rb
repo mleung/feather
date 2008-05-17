@@ -81,12 +81,16 @@ class Plugin < DataMapper::Base
   ##
   # This loads the plugin, first loading any gems it may have
   def load
-    # Setup the Gem path to the plugin
-    Gem.use_paths(Gem.dir, ((Gem.path - [Gem.dir]) + [self.path]))
-    # Load the plugin init script
-    require File.join(self.path, "init.rb")
-    # Add the plugin to the array of loaded plugins
-    @@loaded << self.name
+    # Plugin dependencies let you load a plugin before this one,
+    # so we don't want to load that sucker twice, now do we?
+    unless loaded?
+      # Setup the Gem path to the plugin
+      Gem.use_paths(Gem.dir, ((Gem.path - [Gem.dir]) + [self.path]))
+      # Load the plugin init script
+      require File.join(self.path, "init.rb")
+      # Add the plugin to the array of loaded plugins
+      @@loaded << self.name
+    end
   end
 
   ##

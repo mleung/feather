@@ -40,7 +40,7 @@ use_orm :datamapper
 ### merb.
 ###
 # use_test :test_unit
-use_test :rspec
+use_test :rspec, 'merb_stories'
 
 ### Add your other dependencies here
 
@@ -52,7 +52,6 @@ dependencies "merb-cache"
 dependency "merb-action-args"
 dependency "merb-mailer"
 dependency 'merb_paginate'
-dependency "merb_stories" if Merb.environment == "test"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"

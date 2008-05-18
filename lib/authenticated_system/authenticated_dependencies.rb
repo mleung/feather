@@ -1,4 +1,4 @@
-require 'merb_helpers'
+dependency 'merb_helpers'
 
 base = File.dirname(__FILE__)
 

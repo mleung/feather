@@ -12,7 +12,7 @@ class Plugin < DataMapper::Base
   after_create :install
   after_create :set_create_activity
   after_update :set_update_activity
-  after_destroy :remove
+  #after_destroy :remove
 
   class << self
     @@loaded = []
@@ -22,21 +22,26 @@ class Plugin < DataMapper::Base
   # This grabs the plugin using its url, unpacks it, and loads the metadata for it
   def download
     # Load the manifest yaml
-    manifest = YAML::load(Net::HTTP.get(URI.parse(url + "/manifest.yml")))
+    manifest = YAML::load(Net::HTTP.get(URI.parse(url + ".yml")))
     # Grab metadata from manifest
-    self.name = manifest["plugin"]["name"]
-    self.author = manifest["plugin"]["author"]
-    self.version = manifest["plugin"]["version"]
-    self.homepage = manifest["plugin"]["homepage"]
-    self.about = manifest["plugin"]["about"]
+    self.name = manifest["name"]
+    self.author = manifest["author"]
+    self.version = manifest["version"]
+    self.homepage = manifest["homepage"]
+    self.about = manifest["about"]
     # Build the path
     self.path = File.join(File.join(File.join(Merb.root, "app"), "plugins"), URI.parse(url).path.split("/").last.split(".").first)
     # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
-    # Download all of the plugin contents
-    recurse(manifest["plugin"]["contents"])
+    Dir.mkdir(self.path)
+    # Download the package and untgz
+    require 'zlib'
+    require 'stringio'
+    require 'archive/tar/minitar'
+    package = Net::HTTP.get(URI.parse(url + ".tgz"))
+    Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
     # Unpack any gems downloaded
-    unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
+    unpack_gems(manifest["gems"]["."]) unless manifest["gems"].nil?
   end
 
   ##

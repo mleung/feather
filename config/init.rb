@@ -46,6 +46,7 @@ use_test :rspec, 'merb_stories'
 
 # These are some examples of how you might specify dependencies.
 # 
+gem "archive-tar-minitar"
 dependencies "merb_helpers"
 dependencies "merb-assets"
 dependencies "merb-cache"

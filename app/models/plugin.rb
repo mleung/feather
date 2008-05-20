@@ -131,9 +131,7 @@ class Plugin < DataMapper::Base
     def unpack_gems(gems)
       gems.each do |gem|
         # Unpack the gem
-        `gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
-        # We can't seem to use --target on the gem command above to actually specify the output folder - so it's in Merb.root; lets move it
-        FileUtils.mv gem.gsub(".gem", ""), File.join(File.join(self.path, "gems"), gem.gsub(".gem", ""))
+        `cd #{File.join(self.path, "gems")}; gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
       end
     end
 end

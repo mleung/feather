@@ -30,7 +30,7 @@ class Plugin < DataMapper::Base
     self.homepage = manifest["homepage"]
     self.about = manifest["about"]
     # Build the path
-    self.path = File.join(File.join(File.join(Merb.root, "app"), "plugins"), URI.parse(url).path.split("/").last.split(".").first)
+    self.path = File.join(Merb.root, "app", "plugins", self.name)
     # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
     Dir.mkdir(self.path)

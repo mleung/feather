@@ -70,6 +70,7 @@ Merb::BootLoader.after_app_loads do
   require File.join("lib", "padding")
   require File.join("lib", "hooks")
   require File.join("lib", "database")
+  require File.join("lib", "plugin_dependencies")
 
   # This loads the plugins
   begin

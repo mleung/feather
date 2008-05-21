@@ -12,7 +12,7 @@ class Plugin < DataMapper::Base
   after_create :install
   after_create :set_create_activity
   after_update :set_update_activity
-  #after_destroy :remove
+  after_destroy :remove
 
   class << self
     @@loaded = []

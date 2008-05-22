@@ -17,7 +17,7 @@ class PluginSetting < DataMapper::Base
     
     def write(handle, value)
       plugin = Hooks.get_plugin_by_caller(Hooks.get_caller)
-      if setting = read(handle)
+      if setting = find_by_handle_and_plugin(handle, plugin)
         setting.value = value
       else
         setting = new({:handle => handle, :value => value, :plugin_id => plugin.id})

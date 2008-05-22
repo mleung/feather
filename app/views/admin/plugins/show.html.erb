@@ -8,7 +8,13 @@
 <h1><%= @plugin.name %></h1>
 
 <p>
-	v<%= @plugin.version %> by <%= @plugin.author %>
+  Version: <%= @plugin.version %>
+</p>
+  
+<p>
+  Author: <%= @plugin.author['name'] %><br />
+	Homepage: <%= @plugin.author['homepage'] %><br />
+	E-Mail: <%= @plugin.author['email'] %>
 </p>
 
 <p>

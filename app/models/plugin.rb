@@ -2,8 +2,10 @@ class Plugin < DataMapper::Base
   property :url, :string, :length => 255
   property :path, :string, :length => 255
   property :name, :string
-  property :author, :string
   property :version, :string
+  property :author_name, :string
+  property :author_email, :string
+  property :author_homepage, :string
   property :homepage, :string, :length => 255
   property :about, :string, :length => 255
   property :active, :boolean
@@ -22,7 +24,7 @@ class Plugin < DataMapper::Base
   # This grabs the plugin using its url, unpacks it, and loads the metadata for it
   def download
     # Load the manifest yaml
-    manifest = YAML::load(Net::HTTP.get(URI.parse(url + ".yml")))
+    manifest = YAML::load(Net::HTTP.get(URI.parse(url)))
     # Grab metadata from manifest
     self.name = manifest["name"]
     self.author = manifest["author"]
@@ -38,7 +40,9 @@ class Plugin < DataMapper::Base
     require 'zlib'
     require 'stringio'
     require 'archive/tar/minitar'
-    package = Net::HTTP.get(URI.parse(url + ".tgz"))
+    # FIXME: should support full URLs too
+    package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
+    package = Net::HTTP.get(URI.parse(package_url))
     Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
     # Unpack any gems downloaded
     unpack_gems(manifest["gems"]["."]) unless manifest["gems"].nil?
@@ -102,6 +106,20 @@ class Plugin < DataMapper::Base
   # This returns true if the plugin has been loaded, false otherwise
   def loaded?
     @@loaded.include?(self.name)
+  end
+  
+  def author
+    {
+      'name' => author_name,
+      'email' => author_email,
+      'homepage' => author_homepage
+    }
+  end
+  
+  def author=(author)
+    %W{name email homepage}.each do |k|
+      self.send("author_#{k}=".to_sym, author[k])
+    end
   end
 
   private

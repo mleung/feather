@@ -10,6 +10,7 @@ module Hooks
       ##
       # This returns true if the specified plugin has views registered, false otherwise
       def has_views_registered?(plugin)
+        @view_hooks ||= {}
         @view_hooks.include?(plugin.id)
       end
 

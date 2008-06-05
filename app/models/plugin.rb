@@ -2,8 +2,10 @@ class Plugin < DataMapper::Base
   property :url, :string, :length => 255
   property :path, :string, :length => 255
   property :name, :string
-  property :author, :string
   property :version, :string
+  property :author_name, :string
+  property :author_email, :string
+  property :author_homepage, :string
   property :homepage, :string, :length => 255
   property :about, :string, :length => 255
   property :active, :boolean
@@ -22,21 +24,28 @@ class Plugin < DataMapper::Base
   # This grabs the plugin using its url, unpacks it, and loads the metadata for it
   def download
     # Load the manifest yaml
-    manifest = YAML::load(Net::HTTP.get(URI.parse(url + "/manifest.yml")))
+    manifest = YAML::load(Net::HTTP.get(URI.parse(url)))
     # Grab metadata from manifest
-    self.name = manifest["plugin"]["name"]
-    self.author = manifest["plugin"]["author"]
-    self.version = manifest["plugin"]["version"]
-    self.homepage = manifest["plugin"]["homepage"]
-    self.about = manifest["plugin"]["about"]
+    self.name = manifest["name"]
+    self.author = manifest["author"]
+    self.version = manifest["version"]
+    self.homepage = manifest["homepage"]
+    self.about = manifest["about"]
     # Build the path
-    self.path = File.join(File.join(File.join(Merb.root, "app"), "plugins"), URI.parse(url).path.split("/").last.split(".").first)
+    self.path = File.join(Merb.root, "app", "plugins", self.name)
     # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
-    # Download all of the plugin contents
-    recurse(manifest["plugin"]["contents"])
+    Dir.mkdir(self.path)
+    # Download the package and untgz
+    require 'zlib'
+    require 'stringio'
+    require 'archive/tar/minitar'
+    # FIXME: should support full URLs too
+    package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
+    package = Net::HTTP.get(URI.parse(package_url))
+    Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
     # Unpack any gems downloaded
-    unpack_gems(manifest["plugin"]["contents"]["gems"]["."]) unless manifest["plugin"]["contents"]["gems"].nil?
+    unpack_gems(manifest["gems"]["."]) unless manifest["gems"].nil?
   end
 
   ##
@@ -98,6 +107,20 @@ class Plugin < DataMapper::Base
   def loaded?
     @@loaded.include?(self.name)
   end
+  
+  def author
+    {
+      'name' => author_name,
+      'email' => author_email,
+      'homepage' => author_homepage
+    }
+  end
+  
+  def author=(author)
+    %W{name email homepage}.each do |k|
+      self.send("author_#{k}=".to_sym, author[k])
+    end
+  end
 
   private
     ##
@@ -126,9 +149,7 @@ class Plugin < DataMapper::Base
     def unpack_gems(gems)
       gems.each do |gem|
         # Unpack the gem
-        `gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
-        # We can't seem to use --target on the gem command above to actually specify the output folder - so it's in Merb.root; lets move it
-        FileUtils.mv gem.gsub(".gem", ""), File.join(File.join(self.path, "gems"), gem.gsub(".gem", ""))
+        `cd #{File.join(self.path, "gems")}; gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
       end
     end
 end

@@ -63,6 +63,9 @@ Merb::BootLoader.after_app_loads do
   require "uri"
   require "cgi"
   require "erb"
+  require "zlib"
+  require "stringio"
+  require "archive/tar/minitar"
   require File.join("lib", "padding")
   require File.join("lib", "hooks")
   require File.join("lib", "database")

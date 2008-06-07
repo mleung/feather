@@ -37,10 +37,6 @@ class Plugin < DataMapper::Base
     FileUtils.rm_rf(self.path)
     Dir.mkdir(self.path)
     # Download the package and untgz
-    require 'zlib'
-    require 'stringio'
-    require 'archive/tar/minitar'
-    # FIXME: should support full URLs too
     package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
     package = Net::HTTP.get(URI.parse(package_url))
     Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)

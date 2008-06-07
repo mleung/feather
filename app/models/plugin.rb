@@ -24,7 +24,7 @@ class Plugin < DataMapper::Base
   # This grabs the plugin using its url, unpacks it, and loads the metadata for it
   def download
     # Load the manifest yaml
-    manifest = YAML::load(Net::HTTP.get(URI.parse(url + "/manifest.yml")))
+    manifest = YAML::load(Net::HTTP.get(URI.parse(url)))
     # Grab metadata from manifest
     self.name = manifest["name"]
     self.author = manifest["author"]
@@ -35,9 +35,9 @@ class Plugin < DataMapper::Base
     self.path = File.join(Merb.root, "app", "plugins", self.name)
     # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
-    FileUtils.mkdir_p(path)
+    FileUtils.mkdir_p(self.path)
     # Download the package and untgz
-    package_url = File.join(url.split('/').join('/'), manifest["package"])
+    package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
     package = Net::HTTP.get(URI.parse(package_url))
     Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
     # Unpack any gems downloaded

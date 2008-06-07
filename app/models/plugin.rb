@@ -35,7 +35,7 @@ class Plugin < DataMapper::Base
     self.path = File.join(Merb.root, "app", "plugins", self.name)
     # Remove any existing plugin at the path
     FileUtils.rm_rf(self.path)
-    Dir.mkdir(self.path)
+    FileUtils.mkdir_p(self.path)
     # Download the package and untgz
     package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
     package = Net::HTTP.get(URI.parse(package_url))

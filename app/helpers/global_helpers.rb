@@ -163,5 +163,9 @@ module Merb
       plugin = Plugin.first(:name => name)
       plugin && plugin.active
     end
+    
+    def link_to_author(author)
+      link_to author["name"], author["homepage"]
+    end
   end
 end

@@ -41,7 +41,7 @@ class Plugin < DataMapper::Base
     package = Net::HTTP.get(URI.parse(package_url))
     Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
     # Unpack any gems downloaded
-    unpack_gems(manifest["gems"]["."]) unless manifest["gems"].nil?
+    unpack_gems(Dir.glob(File.join(self.path, "gems", "*.gem")).collect { |p| p.split("/").last })
   end
 
   ##

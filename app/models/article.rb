@@ -1,9 +1,9 @@
-class Article
-  
+class Article  
   include DataMapper::Resource
   include DataMapper::Validate
+  include MerbPaginate::Finders::Datamapper
   
-  property :id, Integer, :key => true
+  property :id, Integer, :key => true, :serial => true
   property :title, String, :nullable => false, :length => 255
   # was TEXT, should be TEXT again
   property :content, String, :nullable => false

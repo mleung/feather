@@ -1,7 +1,7 @@
 class PluginSetting
   include DataMapper::Resource
   
-  property :id, Integer, :key => true
+  property :id, Integer, :key => true, :serial => true
   property :handle, String
   property :value, String
   property :plugin_id, Integer

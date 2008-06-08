@@ -1,7 +1,7 @@
 class Plugin
   include DataMapper::Resource
 
-  property :id, Integer, :key => true  
+  property :id, Integer, :key => true, :serial => true
   property :url, String, :length => 255
   property :path, String, :length => 255
   property :name, String

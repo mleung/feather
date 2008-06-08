@@ -5,14 +5,13 @@ rescue
   nil
 end
 class User
-
   include DataMapper::Resource
   include DataMapper::Validate
   include AuthenticatedSystem::Model
 
   attr_accessor :password, :password_confirmation
 
-  property :id, Integer, :key => true
+  property :id, Integer, :key => true, :serial => true
   property :login,                      String
   property :email,                      String, :length => 255
   property :crypted_password,           String
@@ -27,9 +26,9 @@ class User
 
   validates_length            :login,                   :within => 3..40
   validates_is_unique         :login
-  validates_present           :password,                :if => proc {password_required?}
-  validates_present           :password_confirmation,   :if => proc {password_required?}
-  validates_length            :password,                :within => 4..40, :if => proc {password_required?}
+  validates_present           :password,                :if => :password_required?
+  validates_present           :password_confirmation,   :if => :password_required?
+  validates_length            :password,                :within => 4..40, :if => :password_required?
   validates_is_confirmed      :password,                :groups => :create
   validates_present           :email
 

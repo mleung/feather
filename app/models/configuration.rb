@@ -1,8 +1,7 @@
 class Configuration
-
   include DataMapper::Resource
 
-  property :id, Integer, :key => true
+  property :id, Integer, :key => true, :serial => true
   property :title, String
   property :tag_line, String, :length => 255
   # TODO: was TEXT, is VARCHAR now, should be TEXT again

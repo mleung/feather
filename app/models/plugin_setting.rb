@@ -1,7 +1,10 @@
-class PluginSetting < DataMapper::Base
-  property :handle, :string
-  property :value, :string
-  property :plugin_id, :integer
+class PluginSetting
+  include DataMapper::Resource
+  
+  property :id, Integer, :key => true
+  property :handle, String
+  property :value, String
+  property :plugin_id, Integer
 
   class << self
     

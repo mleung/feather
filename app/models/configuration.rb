@@ -1,12 +1,17 @@
-class Configuration < DataMapper::Base
-  property :title, :string
-  property :tag_line, :string, :length => 255
-  property :about, :text
-  property :about_formatter, :string
-  property :permalink_format, :string
+class Configuration
 
-  after_save :set_activity
-  before_save :prepend_slash_on_permalink
+  include DataMapper::Resource
+
+  property :id, Integer, :key => true
+  property :title, String
+  property :tag_line, String, :length => 255
+  # TODO: was TEXT, is VARCHAR now, should be TEXT again
+  property :about, String
+  property :about_formatter, String
+  property :permalink_format, String
+
+  after :save, :set_activity
+  before :save, :prepend_slash_on_permalink
 
   def set_activity
     a = Activity.new

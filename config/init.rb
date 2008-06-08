@@ -40,7 +40,7 @@ use_orm :datamapper
 ### merb.
 ###
 # use_test :test_unit
-use_test :rspec, 'merb_stories'
+use_test :rspec, "merb_stories"
 
 ### Add your other dependencies here
 
@@ -50,9 +50,16 @@ gem "archive-tar-minitar"
 dependencies "merb_helpers"
 dependencies "merb-assets"
 dependencies "merb-cache"
+dependency "merb_helpers"
+dependency "merb-assets"
+dependency "merb-cache"
 dependency "merb-action-args"
 dependency "merb-mailer"
 dependency 'merb_paginate'
+dependency "dm-aggregates"
+dependency "dm-validations"
+dependency "dm-timestamps"
+
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
@@ -73,7 +80,7 @@ Merb::BootLoader.after_app_loads do
 
   # This loads the plugins
   begin
-    Plugin.all(:order => :name).each do |p|
+    Plugin.all(:order => [:name]).each do |p|
       begin
         p.load
         Merb.logger.info("\"#{p.name}\" loaded")

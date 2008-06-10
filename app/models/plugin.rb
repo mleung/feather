@@ -4,11 +4,11 @@ class Plugin
   property :id, Integer, :key => true, :serial => true
   property :url, String, :length => 255
   property :path, String, :length => 255
-  property :name, String
-  property :version, String
-  property :author_name, String
-  property :author_email, String
-  property :author_homepage, String
+  property :name, String, :length => 255
+  property :version, String, :length => 255
+  property :author_name, String, :length => 255
+  property :author_email, String, :length => 255
+  property :author_homepage, String, :length => 255
   property :homepage, String, :length => 255
   property :about, String, :length => 255
   property :active, Boolean
@@ -53,15 +53,23 @@ class Plugin
   # This loads and installs the plugin
   def install
     if new_record?
-      # Load the plugin
-      self.load
-      # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
-      require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
+      # Ensure we don't have any errors while saving already
+      if self.errors.empty?
+        begin
+          # Load the plugin
+          self.load
+          # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
+          require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
+        rescue Exception => err
+          # If we have an issue installing, lets destroy the plugin to rollback, and put an error on the object so it displays on the form
+          self.destroy
+          self.errors.add "Error installing plugin: #{err.message}"
+        end
+      else
+        # If we do, destroy the plugin to rollback, and then the form will display the errors
+        self.destroy
+      end
     end
-  rescue Exception => err
-    # Catch the error, delete the plugin, and raise an error again
-    self.destroy!
-    raise "Error installing plugin: #{err.message}!"
   end
 
   ##

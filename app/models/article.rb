@@ -11,7 +11,7 @@ class Article
   property :published_at, DateTime
   property :user_id, Integer, :nullable => false
   property :permalink, String, :length => 255
-  property :published, TrueClass, :default => false
+  property :published, Boolean, :default => false
   property :formatter, String, :default => "default"
   
   validates_present :title, :key => "uniq_title"
@@ -95,7 +95,7 @@ class Article
 
   def is_published?
     # We need this beacuse the values get populated from the params
-    self.published == "1"
+    self.published == "1" || self.published
   end
   
   def create_permalink

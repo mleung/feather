@@ -20,7 +20,7 @@ module Admin
       @plugin = Plugin.new
       @plugin.url = plugin[:url]
       if @plugin.save
-        # Check to see if the plugin has any views registered, if so we'll need to expire all pages to be safe
+        # Check to see if the plugin has any views registered, if so we'll expire the cache
         expire_all_pages if Hooks::View.has_views_registered?(@plugin)
         redirect url(:admin_plugin, @plugin)
       else
@@ -39,7 +39,7 @@ module Admin
     end
 
     def delete(id)
-      @plugin.destroy!
+      @plugin.destroy
       redirect url(:admin_plugins)
     end
 

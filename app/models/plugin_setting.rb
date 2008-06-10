@@ -9,7 +9,7 @@ class PluginSetting
   class << self
     
     def find_by_handle_and_plugin(handle, plugin)
-      find(:first, :conditions => ['handle = ? AND plugin_id = ?', handle, plugin.id])
+      first(:conditions => ['handle = ? AND plugin_id = ?', handle, plugin.id])
     end
 
     def read(handle)

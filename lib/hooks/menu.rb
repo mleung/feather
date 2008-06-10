@@ -25,7 +25,7 @@ module Hooks
       ##
       # This removes any plugin hooks for the plugin with the specified id
       def remove_plugin_hooks(id)
-        @menu_item_hooks.delete(id)
+        @menu_item_hooks.delete(id) unless @menu_item_hooks.nil? || @menu_item_hooks.empty?
       end
     end
   end

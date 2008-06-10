@@ -61,7 +61,7 @@ module Hooks
       ##
       # This removes any view hooks for the specified plugin
       def remove_plugin_hooks(id)
-        @view_hooks.delete(id)
+        @view_hooks.delete(id) unless @view_hooks.nil? || @view_hooks.empty?
       end
     end
   end

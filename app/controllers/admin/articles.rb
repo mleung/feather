@@ -18,6 +18,7 @@ module Admin
     
     def create(article)
       @article = Article.new(article)
+      @article.published = true if @article.published == "1"
       @article.user_id = self.current_user.id
       if @article.save
         # Expire the article index to reflect the newly published article
@@ -37,6 +38,7 @@ module Admin
     end
     
     def update(article)
+      article["published"] = true if article["published"] == "1"
       if @article.update_attributes(article)
         # Expire the index and article to reflect the updated article
         expire_index

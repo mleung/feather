@@ -1,7 +1,7 @@
 class Article  
-  include DataMapper::Resource
   include DataMapper::Validate
   include MerbPaginate::Finders::Datamapper
+  include DataMapper::Resource
   
   property :id, Integer, :key => true, :serial => true
   property :title, String, :nullable => false, :length => 255
@@ -21,16 +21,16 @@ class Article
   belongs_to :user
   
   # Core filters
-  before :save, :set_published_permalink
-  after :save, :set_create_activity
-  after :save, :set_update_activity
+  before :update, :set_published_permalink
+  after :update, :set_create_activity
+  after :update, :set_update_activity
   
   # Event hooks for plugins
-  before :save, :fire_before_create_event
-  before :save, :fire_before_update_event
+  before :create, :fire_before_create_event
+  before :update, :fire_before_update_event
   before :save, :fire_before_save_event
-  after :save, :fire_after_create_event
-  after :save, :fire_after_update_event
+  after :create, :fire_after_create_event
+  after :update, :fire_after_update_event
   after :save, :fire_after_save_event
   
   ##

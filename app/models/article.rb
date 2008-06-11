@@ -22,7 +22,7 @@ class Article
   
   # Core filters
   before :update, :set_published_permalink
-  after :update, :set_create_activity
+  after :create, :set_create_activity
   after :update, :set_update_activity
   
   # Event hooks for plugins

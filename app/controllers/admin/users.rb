@@ -39,7 +39,7 @@ module Admin
     end
 
     def delete
-      @user.destroy!
+      @user.destroy
       redirect url(:admin_users)
     end
 

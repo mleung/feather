@@ -54,7 +54,7 @@ module Admin
     end
     
     def delete
-      @article.destroy!
+      @article.destroy
       # Expire the index and article to reflect the removal of the article
       expire_index
       expire_article(@article)

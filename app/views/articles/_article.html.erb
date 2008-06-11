@@ -6,7 +6,7 @@
   <div class="vcard">
     Posted by <span class="fn"><%= article.user.name %></span>
   </div>
-  <abbr class="published" title=""><%= article.published_at.strftime("on %b %d, %y") %></abbr>
+  <abbr class="published" title=""><%= article.published_at.strftime("on %b %d, %y") unless article.published_at.nil? %></abbr>
   <br class="clear" />
   <div class="entry-content">
     <%= render_article(article) %>

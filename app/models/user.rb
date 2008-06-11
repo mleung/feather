@@ -5,9 +5,9 @@ rescue
   nil
 end
 class User
-  include DataMapper::Resource
   include DataMapper::Validate
   include AuthenticatedSystem::Model
+  include DataMapper::Resource
 
   attr_accessor :password, :password_confirmation
 

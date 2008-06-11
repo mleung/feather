@@ -5,6 +5,13 @@ class Application < Merb::Controller
   before :get_settings
   before :load_plugins
   before :fire_before_event
+  before :fix_cache_issue_with_merb_093
+  
+  ##
+  # This just makes sure that params[:format] isn't null, to get around the merb 0.9.3 cache issue
+  def fix_cache_issue_with_merb_093
+    params[:format] = [] if params[:format].nil?
+  end
 
   ##
   # This grabs settings

@@ -21,7 +21,7 @@ class Article
   belongs_to :user
   
   # Core filters
-  before :update, :set_published_permalink
+  before :save, :set_published_permalink
   after :create, :set_create_activity
   after :update, :set_update_activity
   

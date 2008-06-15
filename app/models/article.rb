@@ -60,9 +60,7 @@ class Article
   end
 
   def fire_before_create_event
-    if new_record?
-      Hooks::Events.before_create_article(self)
-    end
+    Hooks::Events.before_create_article(self)
   end
 
   def fire_before_update_event
@@ -75,9 +73,7 @@ class Article
   end
 
   def fire_after_create_event
-    if new_record?
-      Hooks::Events.after_create_article(self)
-    end
+    Hooks::Events.after_create_article(self)
   end
   
   def fire_after_update_event

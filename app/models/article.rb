@@ -48,19 +48,15 @@ class Article
   end
 
   def set_create_activity
-    if new_record?
-      a = Activity.new
-      a.message = "Article \"#{self.title}\" created"
-      a.save
-    end
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" created"
+    a.save
   end
 
   def set_update_activity
-    unless new_record?
-      a = Activity.new
-      a.message = "Article \"#{self.title}\" updated"
-      a.save
-    end
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" updated"
+    a.save
   end
 
   def fire_before_create_event

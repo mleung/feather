@@ -5,8 +5,7 @@ class Article
   
   property :id, Integer, :key => true, :serial => true
   property :title, String, :nullable => false, :length => 255
-  # was TEXT, should be TEXT again
-  property :content, String, :nullable => false
+  property :content, Text, :nullable => false
   property :created_at, DateTime
   property :published_at, DateTime
   property :user_id, Integer, :nullable => false

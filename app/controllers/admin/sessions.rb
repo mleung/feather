@@ -11,7 +11,7 @@ module Admin
       if logged_in?
         if params[:remember_me] == "1"
           self.current_user.remember_me
-          cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
+          cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at.to_time }
         end
         redirect_back_or_default('/')
       else

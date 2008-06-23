@@ -52,26 +52,22 @@ class Plugin
   ##
   # This loads and installs the plugin
   def install
-    if created_on == Date.today and touched_on == Date.today and new_record? == false and updated_on == nil
-      # Ensure we don't have any errors while saving already
-      if self.errors.empty?
-        begin
-          # Load the plugin
-          self.load
-          # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
-          Merb.logger.debug!("Trying to autoload install.rb of plugin (#{File.join(self.path, "install.rb")})")
-          require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
-        rescue Exception => err
-          # If we have an issue installing, lets destroy the plugin to rollback, and put an error on the object so it displays on the form
-          self.destroy
-          self.errors.add "Error installing plugin: #{err.message}"
-        end
-      else
-        # If we do, destroy the plugin to rollback, and then the form will display the errors
+    # Ensure we don't have any errors while saving already
+    if self.errors.empty?
+      begin
+        # Load the plugin
+        self.load
+        # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
+        Merb.logger.debug!("Trying to autoload install.rb of plugin (#{File.join(self.path, "install.rb")})")
+        require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
+      rescue Exception => err
+        # If we have an issue installing, lets destroy the plugin to rollback, and put an error on the object so it displays on the form
         self.destroy
+        self.errors.add "Error installing plugin: #{err.message}"
       end
     else
-      Merb.logger.debug!("Not reinstalling already installed plugin")
+      # If we do, destroy the plugin to rollback, and then the form will display the errors
+      self.destroy
     end
   end
 

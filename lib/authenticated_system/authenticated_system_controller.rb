@@ -111,7 +111,7 @@ module AuthenticatedSystem
         user = cookies[:auth_token] && User.find_authenticated_model_with_remember_token(cookies[:auth_token])
         if user && user.remember_token?
           user.remember_me
-          cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at }
+          cookies[:auth_token] = { :value => user.remember_token, :expires => user.remember_token_expires_at.to_time }
           self.current_user = user
         end
       end

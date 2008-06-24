@@ -12,7 +12,7 @@ Merb::Config.use do |c|
   # c[:session_id_key] = '_session_id'
   
   c[:session_secret_key]  = '95bf50e5bb36b2a455611792c271f2581e6b21db'
-  c[:session_store] = 'cookie'
+  c[:session_store] = 'datamapper'
   c[:use_mutex] = false
   
 end

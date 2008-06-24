@@ -12,9 +12,10 @@ module Database
       klass.auto_migrate!
     end
     
-    # This does the initial auto migration of all core classes
+    # This does the initial auto migration of all core classes, as well as the session table
     def initial_setup
       CORE.each { |c| c.auto_migrate! }
+      Merb::DataMapperSession.auto_migrate!
     end
   end
 end

@@ -1,38 +1,10 @@
-require 'digest/sha1'
-begin
-  require File.join(File.dirname(__FILE__), '..', '..', "lib", "authenticated_system", "authenticated_dependencies")
-rescue 
-  nil
-end
 class User
-  include DataMapper::Validate
-  include AuthenticatedSystem::Model
-  include DataMapper::Resource
+  include MerbAuth::Adapter::DataMapper
+  include MerbAuth::Adapter::DataMapper::DefaultModelSetup
 
-  attr_accessor :password, :password_confirmation
-
-  property :id, Integer, :key => true, :serial => true
-  property :login,                      String
-  property :email,                      String, :length => 255
-  property :crypted_password,           String
-  property :salt,                       String
-  property :remember_token_expires_at,  DateTime
-  property :remember_token,             String
   property :time_zone,                  String
-  property :created_at,                 DateTime
-  property :updated_at,                 DateTime
   property :name,                       String
   property :default_formatter,          String
-
-  validates_length            :login,                   :within => 3..40
-  validates_is_unique         :login
-  validates_present           :password,                :if => :password_required?
-  validates_present           :password_confirmation,   :if => :password_required?
-  validates_length            :password,                :within => 4..40, :if => :password_required?
-  validates_is_confirmed      :password,                :groups => :create
-  validates_present           :email
-
-  before :save, :encrypt_password
 
   after :save, :set_create_activity
   after :save, :set_update_activity

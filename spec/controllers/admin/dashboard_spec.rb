@@ -8,7 +8,7 @@ module Admin
 
     describe "/admin" do
       it "should request dashboard" do
-        Activity.should_receive(:all).with(:order => "created_at DESC", :limit => 5).and_return(@activity)
+        Activity.should_receive(:all).with(:order => [:created_at.desc], :limit => 5).and_return(@activity)
         controller = dispatch_to(Dashboard, :index) do |controller|
           controller.should_receive(:login_required).and_return(true)
           controller.should_receive(:display).with(@activity)

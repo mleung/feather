@@ -17,7 +17,6 @@ class Application < Merb::Controller
   # This grabs settings
   def get_settings
     @settings = Configuration.current
-    debugger
   end
 
   ##

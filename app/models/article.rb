@@ -20,7 +20,7 @@ class Article
   belongs_to :user
   
   # Core filters
-  before :update, :set_published_permalink
+  before :save, :set_published_permalink
   after :create, :set_create_activity
   after :update, :set_update_activity
   
@@ -47,25 +47,19 @@ class Article
   end
 
   def set_create_activity
-    if new_record?
-      a = Activity.new
-      a.message = "Article \"#{self.title}\" created"
-      a.save
-    end
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" created"
+    a.save
   end
 
   def set_update_activity
-    unless new_record?
-      a = Activity.new
-      a.message = "Article \"#{self.title}\" updated"
-      a.save
-    end
+    a = Activity.new
+    a.message = "Article \"#{self.title}\" updated"
+    a.save
   end
 
   def fire_before_create_event
-    if new_record?
-      Hooks::Events.before_create_article(self)
-    end
+    Hooks::Events.before_create_article(self)
   end
 
   def fire_before_update_event
@@ -78,9 +72,7 @@ class Article
   end
 
   def fire_after_create_event
-    if new_record?
-      Hooks::Events.after_create_article(self)
-    end
+    Hooks::Events.after_create_article(self)
   end
   
   def fire_after_update_event

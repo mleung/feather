@@ -58,7 +58,6 @@ class Plugin
         # Load the plugin
         self.load
         # Also, if there is an "install.rb" script present, run that to setup anything the plugin needs (database tables etc)
-        Merb.logger.debug!("Trying to autoload install.rb of plugin (#{File.join(self.path, "install.rb")})")
         require File.join(self.path, "install.rb") if File.exists?(File.join(self.path, "install.rb"))
       rescue Exception => err
         # If we have an issue installing, lets destroy the plugin to rollback, and put an error on the object so it displays on the form

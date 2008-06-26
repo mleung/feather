@@ -48,8 +48,6 @@ use_test :rspec, "merb_stories"
 # 
 gem "archive-tar-minitar"
 dependencies "merb_helpers"
-dependencies "merb-assets"
-dependencies "merb-cache"
 dependency "merb_helpers"
 dependency "merb-assets"
 dependency "merb-cache"
@@ -104,5 +102,6 @@ end
 Merb::Plugins.config[:merb_cache] = {
    :cache_html_directory => Merb.dir_for(:public)  / "cache",
    :store => "file",
-   :cache_directory => Merb.root_path("tmp/cache")
+   :cache_directory => Merb.root_path("tmp/cache"),
+   :disable => "development"
 }

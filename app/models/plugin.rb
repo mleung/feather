@@ -62,7 +62,7 @@ class Plugin
       rescue Exception => err
         # If we have an issue installing, lets destroy the plugin to rollback, and put an error on the object so it displays on the form
         self.destroy
-        self.errors.add "Error installing plugin: #{err.message}"
+        self.errors.add :general, "Error installing plugin: #{err.message}"
       end
     else
       # If we do, destroy the plugin to rollback, and then the form will display the errors

@@ -36,9 +36,9 @@ class Article
   # This sets the published date and permalink when an article is published
   def set_published_permalink
     # Check to see if we are publishing
-    if self.is_published?
+    if self.published?
       # Set the date, only if we haven't already
-      self.published_at = Time.now if self.published_at.nil?
+      self.published_at ||= Time.now
       
       # Set the permalink, only if we haven't already
       self.permalink = create_permalink
@@ -68,7 +68,7 @@ class Article
 
   def fire_before_save_event
     Hooks::Events.before_save_article(self)
-    Hooks::Events.before_publish_article(self) if self.is_published?
+    Hooks::Events.before_publish_article(self) if self.published?
   end
 
   def fire_after_create_event
@@ -81,12 +81,12 @@ class Article
 
   def fire_after_save_event
     Hooks::Events.after_save_article(self)
-    Hooks::Events.after_publish_article(self) if self.is_published?
+    Hooks::Events.after_publish_article(self) if self.published?
   end
 
-  def is_published?
+  def published=(binary_string)
     # We need this beacuse the values get populated from the params
-    self.published == "1" || self.published
+    attribute_set(:published, binary_string == "1")
   end
   
   def create_permalink

@@ -42,6 +42,8 @@ class Article
       
       # Set the permalink, only if we haven't already
       self.permalink = create_permalink
+    else
+      self.published_at = self.permalink = nil
     end
     true
   end

@@ -40,22 +40,23 @@ use_orm :datamapper
 ### merb.
 ###
 # use_test :test_unit
-use_test :rspec, "merb_stories"
+use_test :rspec
 
 ### Add your other dependencies here
 
 # These are some examples of how you might specify dependencies.
 # 
 gem "archive-tar-minitar"
-dependencies "merb_helpers"
-dependencies "merb-assets"
-dependencies "merb-cache"
 dependency "merb_helpers"
 dependency "merb-assets"
 dependency "merb-cache"
 dependency "merb-action-args"
+dependency "merb_has_flash"
+dependency "merb_helpers"
 dependency "merb-mailer"
 dependency 'merb_paginate'
+dependency "merb-slices"
+dependency "merb-auth"
 dependency "dm-aggregates"
 dependency "dm-validations"
 dependency "dm-timestamps"
@@ -63,6 +64,13 @@ dependency "dm-timestamps"
 # OR
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
+
+Merb::BootLoader.before_app_loads do
+  Merb::Slices.config[:merb_auth] = {
+    :layout => :admin,
+    :login_field => :login
+  }
+end
 
 Merb::BootLoader.after_app_loads do
   require "tzinfo"
@@ -96,10 +104,6 @@ Merb::BootLoader.after_app_loads do
 end
 
 require File.join(File.join(Merb.root_path, "lib"), "cache_helper")
-begin 
-  require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
-rescue LoadError
-end
 
 Merb::Plugins.config[:merb_cache] = {
    :cache_html_directory => Merb.dir_for(:public)  / "cache",

@@ -27,7 +27,7 @@ Merb::Router.prepare do |r|
       {:controller => "articles", :action => "show", :id => article.id}
     end
   end
-  
+
   # Admin namespace
   r.namespace :admin do |admin|
     admin.resource :configurations
@@ -37,7 +37,10 @@ Merb::Router.prepare do |r|
     admin.resources :articles
     admin.match("").to(:controller => "dashboard", :action => "index")
   end
-  
+
+  # Mount merb-auth.
+  r.add_slice :MerbAuth, "admin"
+
   # Year/month/day routes
   r.match("/:year").to(:controller => "articles", :action => "index").name(:year)
   r.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
@@ -48,4 +51,3 @@ Merb::Router.prepare do |r|
   r.match('/').to(:controller => 'articles', :action =>'index')
 end
 
-AuthenticatedSystem.add_routes

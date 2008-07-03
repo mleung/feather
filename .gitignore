@@ -2,4 +2,5 @@ config/database.yml
 db/*.sqlite3
 app/plugins/*
 public/plugins*
+public/favicon.ico
 log/*

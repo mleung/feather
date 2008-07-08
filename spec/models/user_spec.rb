@@ -201,7 +201,7 @@ describe User, "remember_me" do
   it "should set remember_token_expires_at to a specific date" do
     time = Time.mktime(2009,12,25)
     @user.remember_me_until(time)
-    @user.remember_token_expires_at.should == time    
+    @user.remember_token_expires_at.should == DateTime.parse(time.to_s)
   end
 
   it "should set the remember_me token when remembering" do
@@ -218,14 +218,14 @@ describe User, "remember_me" do
     today = Time.now
     remember_until = today + (2* Merb::Const::WEEK)
     @user.remember_me_for( Merb::Const::WEEK * 2)
-    @user.remember_token_expires_at.should == (remember_until)
+    @user.remember_token_expires_at.should == DateTime.parse(remember_until.to_s)
   end
 
   it "should remember_me for two weeks" do
     t = Time.now
     Time.stub!(:now).and_return(t)
     @user.remember_me
-    @user.remember_token_expires_at.should == (Time.now + (2 * Merb::Const::WEEK ))
+    @user.remember_token_expires_at.should == DateTime.parse((Time.now + (2 * Merb::Const::WEEK )).to_s)
   end
 
   it "should forget me" do

@@ -145,7 +145,7 @@ class Article
 
     private 
       def specific_date_function
-        if Merb::Orms::DataMapper.full_config[Merb.environment.to_s]["adapter"] == "sqlite3"
+        if Merb::Orms::DataMapper.config[:adapter] == "sqlite3"
           "strftime('%Y', published_at) as year, strftime('%m', published_at) as month"
         else
           "extract(year from published_at) as year, extract(month from published_at) as month"

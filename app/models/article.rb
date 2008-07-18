@@ -87,7 +87,7 @@ class Article
   end
 
   def published=(binary_string)
-    # We need this beacuse the values get populated from the params
+    # We need this because the values get populated from the params
     attribute_set(:published, binary_string == "1")
   end
   

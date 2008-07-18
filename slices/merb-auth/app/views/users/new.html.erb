@@ -1,5 +1,5 @@
 <%= error_messages_for @user %>
-<% form_for @user, :action => url(:admin_users) do %>
+<% form_for @user, :action => url(:users) do %>
   <p>
     <%= text_control :login, :label => "Login" %>
   </p>
@@ -19,6 +19,6 @@
     <%= select_control :default_formatter, :label => "Default Formatter", :collection => Hooks::Formatters.available_formatters %>
   </p>
   <p>
-    <%= submit_button "Create" %> or <%= link_to('Cancel', url(:admin_users)) %>
+    <%= submit_button "Create" %> or <%= link_to('Cancel', url(:users)) %>
   </p>
 <% end %>

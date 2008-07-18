@@ -9,10 +9,7 @@ module Admin
     
     describe "/admin/articles" do
       it "should get all articles in descending created order" do
-        Article.should_receive(:all) do |args|
-          args[:order].should == [:created_at.desc]
-          @articles
-        end
+        Article.should_receive(:all).with(:order => [:created_at.desc], :offset => 0, :limit => 10).and_return(@articles)
         controller = dispatch_to(Articles, :index) do |controller|
           controller.should_receive(:login_required).and_return(true)
           controller.should_receive(:display).with(@articles)

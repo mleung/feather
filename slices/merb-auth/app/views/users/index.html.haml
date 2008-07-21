@@ -1,0 +1,18 @@
+#action
+  = link_to "Create new user", url(:new_user) 
+%h1
+  View Users
+%table.tabular
+  %thead
+    %tr
+      %th
+        Login
+      %th
+        Name
+      %th
+        E-mail
+      %th
+        Timezone
+      %th/
+  %tbody
+    = partial('admin/users/user', :with => @users) 

@@ -1,0 +1,11 @@
+= text_control :title, :size => 50, :label => 'Title:' 
+= text_area_control :content, :rows => 20, :cols => 100, :label => 'Content:' 
+%p
+  %span.mock_label
+    Published?
+  = checkbox_control :published, :value => "1" 
+%p
+  %span.mock_label
+    Formatter
+  = select_control :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) 
+= render_plugin_views "article_form_fields"

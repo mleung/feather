@@ -1,0 +1,32 @@
+- throw_content :right do 
+%h4
+  View Articles
+%p
+  Here you can view existing articles.
+- end
+#action
+  = link_to "New article", url(:new_admin_article) 
+%h1
+  View Articles
+%table.tabular
+  %thead
+    %tr
+      %th
+        Title
+      %th
+        Published
+      %th
+        By
+      %th/
+  %tbody
+    - if @articles.any? 
+    = partial('admin/articles/article', :with => @articles) 
+    - else
+    %tr
+      %td{ :colspan => "4" }
+        You have not written any articles yet. 
+        = link_to "Write one now?", url(:new_admin_article) 
+    - end 
+#pagination
+  = merb_paginate @articles
+  = page_entries_info @articles 

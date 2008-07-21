@@ -1,0 +1,12 @@
+%tr
+  %th
+    = link_to user.login, url(:user, user) 
+  %td
+    = user.name 
+  %td
+    = user.email 
+  %td
+    = user.time_zone
+  %td
+    = link_to "Edit", url(:edit_user, user) 
+    = link_to 'Delete', url(:delete_user, user), {:method => :delete, :onclick => "return confirm('Are you sure?')"} 

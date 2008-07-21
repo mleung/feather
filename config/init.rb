@@ -60,6 +60,8 @@ dependency "merb-auth"
 dependency "dm-aggregates"
 dependency "dm-validations"
 dependency "dm-timestamps"
+dependency "merb-haml"
+dependency "haml"
 
 # OR
 # OR

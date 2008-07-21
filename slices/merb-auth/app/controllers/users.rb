@@ -16,7 +16,7 @@ module MerbAuth
     end
 
     def delete(id)
-      @user = User.get(id).destroy
+      User.get(id).destroy
       redirect url(:users)
     end
 

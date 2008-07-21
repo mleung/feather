@@ -15,6 +15,11 @@ module MerbAuth
       display @user      
     end
 
+    def delete
+      @user = User.get(params[:id]).destroy
+      redirect url(:users)
+    end
+
     def update
       @user = User.get(params[:id])
       if @user.update_attributes(params[:user])

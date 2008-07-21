@@ -5,24 +5,24 @@ module MerbAuth
       display @users
     end
 
-    def show
-      @user = User.get(params[:id])
+    def show(id)
+      @user = User.get(id)
       display @user
     end
 
-    def edit
-      @user = User.get(params[:id])
+    def edit(id)
+      @user = User.get(id)
       display @user      
     end
 
-    def delete
-      @user = User.get(params[:id]).destroy
+    def delete(id)
+      @user = User.get(id).destroy
       redirect url(:users)
     end
 
-    def update
-      @user = User.get(params[:id])
-      if @user.update_attributes(params[:user])
+    def update(id, user)
+      @user = User.get(id)
+      if @user.update_attributes(user)
         redirect_back_or_default(url(:users))
       else
         render :edit

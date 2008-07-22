@@ -1,6 +1,7 @@
 module MerbAuth
   class Users
     def index
+      store_location
       @users = User.all
       display @users
     end

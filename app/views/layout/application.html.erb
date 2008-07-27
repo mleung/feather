@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%= catch_content :title %></title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <% require_css('application') %>
+  <%= include_required_css %>
+  <%= render_plugin_views "head" %>
+ </head>
+
+<body>
+<div id="container">
+  <div id="header">
+    <h1><span><%= link_to(render_title, "/") %></span></h1>
+    <h2><%= render_tag_line %></h2>
+    <%= render_plugin_views "header" %>
+  </div>
+
+  <div id="page">
+    <div id="content">
+      <%= render_plugin_views "before_layout" %>
+      <%= catch_content :for_layout %>
+      <%= render_plugin_views "after_layout" %>
+    </div>
+
+    <div id="sidebar">
+      <%= render_about_text %>
+      <% unless @articles.blank? %>
+        <div id="archives">
+          <h3>Archives</h3>
+          <ul id="archives">
+            <%= partial('shared/archive', :with => @archives[0...20]) %>
+			<% if @archives.length > 20 %>
+				<a id="view_all_archive_link" href="#" onclick="document.getElementById('view_all_archive').style.display = 'inline'; document.getElementById('view_all_archive_link').style.display = 'none';">View all</a>
+				<span id="view_all_archive" style="display: none;">
+					<%= partial('shared/archive', :with => @archives[20...@archives.length]) %>
+				</span>
+			<% end %>
+          </ul>
+        </div>
+      <% end %>
+	    <%= render_plugin_views "sidebar" %>
+    </div>
+    <br style="clear:both;" />
+  </div>
+
+  <div id="footer">
+    <hr />
+    <p><%= link_to(render_title, "/") %></p>
+    <ul>
+      <li>powered by <%= link_to 'feather', 'http://featherblog.org' %> /
+          styled with <%= link_to 'scribbish', 'http://quotedprintable.com/pages/scribbish' %></li>
+    </ul>
+    <%= render_plugin_views "footer" %>
+  </div>
+</div>
+</body>
+</html>

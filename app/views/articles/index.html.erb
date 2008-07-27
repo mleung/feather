@@ -1,0 +1,11 @@
+<% throw_content :title do %>
+	<%= render_title %>
+<% end %>
+
+<% if @articles.empty? %>
+	No articles found.
+<% else %>
+	<%= render_plugin_views "first_article_in_list", :with => {:first => @articles.first} %>
+	<%= partial(:article, :with => @articles) %>
+	<%= render_plugin_views "last_article_in_list", :with => {:last => @articles.last} %>
+<% end %>

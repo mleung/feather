@@ -1,0 +1,19 @@
+<%= render_plugin_views @articles.nil? ? "before_article" : "before_article_in_list", :with => article %>
+<div class="hentry" id="article-<%= article.id %>">
+  <h2 class="entry-title">
+    <%= link_to(article.title, article.permalink) %>
+  </h2>
+  <div class="vcard">
+    Posted by <span class="fn"><%= article.user.name %></span>
+  </div>
+  <abbr class="published" title=""><%= article.published_at.strftime("on %b %d, %y") unless article.published_at.nil? %></abbr>
+  <br class="clear" />
+  <div class="entry-content">
+    <%= render_article(article) %>
+  </div>
+  <ul class="meta">
+    <li><%= render_plugin_views "meta_section", :with => article %></li>
+  </ul>
+</div>
+<%= render_plugin_views @articles.nil? ? "after_article" : "after_article_in_list", :with => article %>
+<%= render_plugin_views "between_articles", :with => {:before => article, :after => @articles[@articles.index(article) + 1]} unless @articles.nil? || @articles[@articles.index(article) + 1].nil? %>

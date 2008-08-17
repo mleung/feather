@@ -2,12 +2,12 @@
 <%= text_area_control :content, :rows => 20, :cols => 100, :label => 'Content:' %>
 <p>
   <span class="mock_label">Published?</span>
-  <%= checkbox_control :published, :value => "1" %>
+  <%= checkbox_control :published %>
 </p>
 
 <p>
-  <span class="mock_label">Formatter</span>
-  <%= select_control :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) %>
+  <%#<span class="mock_label">Formatter</span>%>
+  <%#= select_control :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) %>
 </p>
 
 <%= render_plugin_views "article_form_fields" %>

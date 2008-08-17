@@ -43,10 +43,10 @@
     </td>
   </tr>
   <tr>
-	<td class="field_label">About Formatter:</td>
+	<%#<td class="field_label">About Formatter:</td>
 	<td>
-	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %></span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>
-	  <%= select_field :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %>
+	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %><%#</span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>%>
+ 	  <%#= select_field :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
 	</td>
   </tr>
   <tr>
@@ -57,10 +57,10 @@
     </td>
   </tr>
   <tr>
-	<td class="field_label">Clear Cache?</td>
+	<%#<td class="field_label">Clear Cache?</td>
 	<td>
 	  <span id="configuration-clear-cache-display"></span>
-	  <%= submit_field :id => "configuration-clear-cache", :value => "Clear" %>
+	  <%= submit :id => "configuration-clear-cache", :value => "Clear" %>
 	</td>
   </tr>
   </table>

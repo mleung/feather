@@ -1,4 +1,4 @@
-<% form_tag :action => url(:login) do -%>
+<%= form :action => url(:login) do %>
 <p><label for="login">Login</label><br/>
 <%= text_field :name => "login" %></p>
 
@@ -8,5 +8,5 @@
 <p><label for="remember_me">Remember me:
 <%= checkbox_field :name => 'remember_me' %></label></p>
 
-<p><%= submit_button 'Log in' %></p>
-<% end -%>
+<p><%= submit 'Log in' %></p>
+<% end =%>

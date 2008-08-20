@@ -39,14 +39,14 @@
     <td class="field_label">About:</td>
     <td>
       <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
-      <%= text_area_field @settings.about, :name => "about", :rows => 10, :cols => 50, :style => "display: none", :id => "configuration-about" %>
+      <%= text_area @settings.about, :name => "about", :rows => 10, :cols => 50, :style => "display: none", :id => "configuration-about" %>
     </td>
   </tr>
   <tr>
-	<%#<td class="field_label">About Formatter:</td>
+	<td class="field_label">About Formatter:</td>
 	<td>
-	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %><%#</span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>%>
- 	  <%#= select_field :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
+	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %></span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>
+ 	  <%= select :collection => Hooks::Formatters.available_formatters.collect { |i| [i, i] }, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
 	</td>
   </tr>
   <tr>

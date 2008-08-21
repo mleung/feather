@@ -46,7 +46,7 @@
 	<td class="field_label">About Formatter:</td>
 	<td>
 	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %></span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>
- 	  <%= select :collection => Hooks::Formatters.available_formatters.collect { |i| [i, i] }, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
+ 	  <%= select :collection => Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
 	</td>
   </tr>
   <tr>

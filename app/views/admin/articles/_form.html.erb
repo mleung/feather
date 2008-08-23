@@ -1,13 +1,13 @@
-<%= text_control :title, :size => 50, :label => 'Title:' %>
-<%= text_area_control :content, :rows => 20, :cols => 100, :label => 'Content:' %>
+<%= text_field :title, :size => 50, :label => 'Title:' %>
+<%= text_area :content, :rows => 20, :cols => 100, :label => 'Content:' %>
 <p>
   <span class="mock_label">Published?</span>
-  <%= checkbox_control :published %>
+  <%= check_box :published %>
 </p>
 
 <p>
-  <%#<span class="mock_label">Formatter</span>%>
-  <%#= select_control :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) %>
+  <span class="mock_label">Formatter</span>
+  <%= select :formatter, :collection => Hooks::Formatters.available_formatters, :selected => (@article.new_record? ? (self.current_user.default_formatter || "default") : @article.formatter) %>
 </p>
 
 <%= render_plugin_views "article_form_fields" %>

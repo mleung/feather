@@ -1,24 +1,24 @@
 <%= error_messages_for @user %>
-<% form_for @user, :action => url(:users) do %>
+<%= form_for @user, :action => url(:users) do %>
   <p>
-    <%= text_control :login, :label => "Login" %>
+    <%= text_field :login, :label => "Login" %>
   </p>
   <p>
-    <%= text_control :email, :label => "Email" %>
+    <%= text_field :email, :label => "Email" %>
   </p>
   <p>
-    <%= password_control :password, :label => "Password" %>
+    <%= password_field :password, :label => "Password" %>
   </p>
   <p>
-    <%= password_control :password_confirmation, :label => "Password Confirmation" %>
+    <%= password_field :password_confirmation, :label => "Password Confirmation" %>
   </p>
   <p>
-	<%= select_control :time_zone, :label => "Timezone", :collection => get_timezones %>
+	<%= select :time_zone, :label => "Timezone", :collection => get_timezones %>
   </p>
   <p>
-    <%= select_control :default_formatter, :label => "Default Formatter", :collection => Hooks::Formatters.available_formatters %>
+    <%= select :default_formatter, :label => "Default Formatter", :collection => Hooks::Formatters.available_formatters %>
   </p>
   <p>
-    <%= submit_button "Create" %> or <%= link_to('Cancel', url(:users)) %>
+    <%= submit "Create" %> or <%= link_to('Cancel', url(:users)) %>
   </p>
-<% end %>
+<% end =%>

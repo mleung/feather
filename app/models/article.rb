@@ -1,7 +1,7 @@
 class Article  
   include DataMapper::Resource
   include DataMapper::Validate
-  # include ::MerbPaginate::Finders::Datamapper
+  include ::MerbPaginate::Finders::Datamapper
   
   property :id, Integer, :key => true, :serial => true
   property :title, String, :nullable => false, :length => 255

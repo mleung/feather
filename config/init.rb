@@ -54,12 +54,12 @@ dependency "merb-action-args"
 dependency "merb_has_flash"
 dependency "merb_helpers"
 dependency "merb-mailer"
-dependency 'merb_paginate'
 dependency "merb-slices"
 dependency "merb-auth"
 dependency "dm-aggregates"
 dependency "dm-validations"
 dependency "dm-timestamps"
+dependency "merb_paginate"
 
 # OR
 # OR

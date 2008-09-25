@@ -1,0 +1,7 @@
+Your account has been created.
+
+  Username: <%= @ivar.email %>
+
+Visit this url to activate your account:
+
+  <%= url(MA[:routes][:user][:activate], :activation_code => @ivar.activation_code) %>

@@ -1,0 +1,9 @@
+<%= @message %>
+<%= form @ivar, :action => url(:merb_auth_passwords), :method => :put do %>
+  <% unless @ivar.has_forgotten_password? %>
+   <%= password_field :name => "current_password", :label => "Current Password" %>
+  <% end %>
+  <%= password_field :password, :label => "Password" %>
+  <%= password_field :password_confirmation, :label => "Password Confirmation" %>
+  <%= submit "Save" %>
+<% end =%>

@@ -1,7 +1,7 @@
 class Article  
-  include DataMapper::Validate
-  include MerbPaginate::Finders::Datamapper
   include DataMapper::Resource
+  include DataMapper::Validate
+  # include ::MerbPaginate::Finders::Datamapper
   
   property :id, Integer, :key => true, :serial => true
   property :title, String, :nullable => false, :length => 255
@@ -129,6 +129,7 @@ class Article
     end
 
     def find_by_permalink(permalink)
+      Merb.logger.debug!("permalink: #{permalink}")
       self.first(:permalink => permalink)
     end
 

@@ -1,5 +1,5 @@
 class Articles < Application
-  cache_pages :index, :show
+  # cache_pages :index, :show
 
   # This handles the index (recent articles), or the year/month/day views
   def index

@@ -2,7 +2,7 @@ if defined?(Merb::Plugins)
 
   require "digest/sha1"
   require "merb-mailer"
-  require "merb_helpers"
+  require "merb-helpers"
   
   load File.join(File.dirname(__FILE__), "merb-auth", "initializer.rb")
   

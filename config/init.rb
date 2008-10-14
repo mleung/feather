@@ -14,6 +14,7 @@ Merb::Config.use do |c|
   c[:session_secret_key]  = '95bf50e5bb36b2a455611792c271f2581e6b21db'
   c[:session_store] = 'datamapper'
   c[:use_mutex] = false
+  c[:logfile] = Merb.log_path + "/merb.log"
   
 end
 
@@ -39,20 +40,19 @@ use_orm :datamapper
 ### merb_rspec is installed by default if you did gem install
 ### merb.
 ###
-# use_test :test_unit
-use_test :rspec
+use_test :test_unit
+# use_test :rspec
 
 ### Add your other dependencies here
 
 # These are some examples of how you might specify dependencies.
 # 
 gem "archive-tar-minitar"
-dependency "merb_helpers"
+dependency "merb-helpers"
 dependency "merb-assets"
 dependency "merb-cache"
 dependency "merb-action-args"
 dependency "merb_has_flash"
-dependency "merb_helpers"
 dependency "merb-mailer"
 dependency "merb-slices"
 dependency "merb-auth"

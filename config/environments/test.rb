@@ -1,7 +1,12 @@
 Merb.logger.info("Loaded TEST Environment...")
 Merb::Config.use { |c|
+  c[:testing]           = true
   c[:exception_details] = true
-  c[:reload_classes] = true
-  c[:reload_time] = 0.5
-  c[:log_file] = Merb.log_path + "/test.log"
+  c[:log_auto_flush ]   = true
+  # log less in testing environment
+  c[:log_level]         = :error
+
+  c[:log_file]  = Merb.root / "log" / "test.log"
+  # or redirect logger using IO handle
+  # c[:log_stream] = STDOUT
 }

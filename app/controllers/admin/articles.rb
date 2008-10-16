@@ -17,7 +17,7 @@ module Admin
     
     def create(article)
       @article = Article.new(article)
-      @article.user_id = @session.user
+      @article.user_id = session.user_id
       if @article.save
         # Expire the article index to reflect the newly published article
         # expire_index if @article.published

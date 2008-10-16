@@ -50,12 +50,15 @@ use_test :test_unit
 gem "archive-tar-minitar"
 dependency "merb-helpers"
 dependency "merb-assets"
-dependency "merb-cache"
+# dependency "merb-cache"
 dependency "merb-action-args"
 dependency "merb_has_flash"
 dependency "merb-mailer"
 dependency "merb-slices"
 dependency "merb-auth"
+dependency "merb-auth-slice-password"
+dependency "merb-auth-core"
+dependency "merb-auth-more"
 dependency "dm-aggregates"
 dependency "dm-validations"
 dependency "dm-timestamps"
@@ -99,15 +102,25 @@ Merb::BootLoader.after_app_loads do
   rescue Exception => e
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
+#  raise "You must specify a valid openid in Merb.root/config/openid to use this example app" unless File.exists?(Merb.root / "config" / "open_id")
+  DataMapper.auto_migrate!
+  User.create(:login => "admin", 
+              :password => "password", :password_confirmation => "password", 
+              :email => "admin@example.com", 
+              :name => "admin",
+              :time_zone => "Europe/London",
+ #             :identity_url => File.read(Merb.root / "config" / "open_id"),
+              :time_zone => "Europe/London")
 
   Merb::Mailer.delivery_method = :sendmail
 end
 
 require File.join(File.join(Merb.root_path, "lib"), "cache_helper")
 
-Merb::Plugins.config[:merb_cache] = {
-   :cache_html_directory => Merb.dir_for(:public)  / "cache",
-   :store => "file",
-   :cache_directory => Merb.root_path("tmp/cache"),
-   :disable => "development"
-}
+# Merb::Plugins.config[:merb_cache] = {
+#   :cache_html_directory => Merb.dir_for(:public)  / "cache",
+#   :store => "file",
+#   :cache_directory => Merb.root_path("tmp/cache"),
+#   :disable => "development"
+# }
+

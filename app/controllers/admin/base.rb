@@ -1,6 +1,6 @@
 module Admin
   class Base < Application
     layout :admin
-    before :login_required
+    before :ensure_authenticated
   end
 end

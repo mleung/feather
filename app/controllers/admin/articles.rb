@@ -17,10 +17,10 @@ module Admin
     
     def create(article)
       @article = Article.new(article)
-      @article.user_id = self.current_user.id
+      @article.user_id = @session.user
       if @article.save
         # Expire the article index to reflect the newly published article
-        expire_index if @article.published
+        # expire_index if @article.published
         render_then_call(redirect(url(:admin_articles))) do
           # Call events after the redirect
           Hooks::Events.after_publish_article_request(@article, request) if @article.published?
@@ -38,8 +38,8 @@ module Admin
     def update(article)
       if @article.update_attributes(article)
         # Expire the index and article to reflect the updated article
-        expire_index
-        expire_article(@article)
+        # expire_index
+        # expire_article(@article)
         render_then_call(redirect(url(:admin_article, @article))) do
           # Call events after the redirect
           Hooks::Events.after_publish_article_request(@article, request) if @article.published?
@@ -53,8 +53,8 @@ module Admin
     def delete
       @article.destroy
       # Expire the index and article to reflect the removal of the article
-      expire_index
-      expire_article(@article)
+      # expire_index
+      # expire_article(@article)
       redirect url(:admin_articles)
     end
     

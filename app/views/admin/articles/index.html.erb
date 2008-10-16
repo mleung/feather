@@ -22,7 +22,7 @@
 	</thead>
 	<tbody>	
 	  <% if @articles.any? %>
-      <%= partial('admin/articles/article', :with => @articles) %>
+      <%= partial('admin/articles/article', :with => :articles) %>
     <% else %>
       <tr><td colspan="4">You have not written any articles yet. <%= link_to "Write one now?", url(:new_admin_article) %></td></tr>
     <% end %>

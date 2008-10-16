@@ -64,7 +64,7 @@ module Merb
     ##
     # This returns the published at date for an article as a relative date (taking into account timezones)
     def render_relative_published_at(article)
-      article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? self.current_user.time_zone : article.user.time_zone).utc_to_local(article.published_at))
+      article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? self.user.time_zone : article.user.time_zone).utc_to_local(article.published_at))
     end
 
     ##
@@ -107,12 +107,12 @@ module Merb
       items << {:text => "Articles", :url => url(:admin_articles)}
       items << {:text => "Plugins", :url => url(:admin_plugins)}
       items << {:text => "Settings", :url => url(:admin_configurations)}
-      items << {:text => "Users", :url => url(:users)}
-      if self.current_user == :false
-        items << {:text => "Login", :url => url(:login)}
-      else
-        items << {:text => "Logout", :url => url(:logout)}
-      end
+    #  items << {:text => "Users", :url => url(:users)}
+      # if self.current_user == :false
+      #  items << {:text => "Login", :url => url(:login)}
+      # else
+      #  items << {:text => "Logout", :url => url(:logout)}
+      # end
       Hooks::Menu.menu_items.each { |item| items << item }
       items
     end

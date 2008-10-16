@@ -10,7 +10,7 @@ class Article
   property :published_at, DateTime
   property :user_id, Integer, :nullable => false
   property :permalink, String, :length => 255
-  property :published, Boolean, :default => false
+  property :published, Boolean, :default => true
   property :formatter, String, :default => "default"
   
   validates_present :title, :key => "uniq_title"

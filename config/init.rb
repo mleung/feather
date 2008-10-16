@@ -105,10 +105,11 @@ Merb::BootLoader.after_app_loads do
 #  raise "You must specify a valid openid in Merb.root/config/openid to use this example app" unless File.exists?(Merb.root / "config" / "open_id")
   DataMapper.auto_migrate!
   User.create(:login => "admin", 
-              :password => "password", :password_confirmation => "password", 
-              :email => "admin@example.com", 
               :name => "admin",
+              :email => "admin@example.com", 
+              :password => "password", :password_confirmation => "password", 
               :time_zone => "Europe/London",
+              :active => true,
  #             :identity_url => File.read(Merb.root / "config" / "open_id"),
               :time_zone => "Europe/London")
 

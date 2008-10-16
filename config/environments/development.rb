@@ -22,5 +22,6 @@ Merb::Config.use { |c|
   c[:reload_classes] = true
   c[:reload_templates] = true
   c[:reload_time] = 0.5
-  c[:log_file] = Merb.log_path + "/merb.log"
+  c[:log_stream] = 'stdout'
+# file] = Merb.log_path + "/merb.log"
 }

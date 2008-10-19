@@ -116,7 +116,7 @@ Merb::BootLoader.after_app_loads do
   Merb::Mailer.delivery_method = :sendmail
 end
 
-require File.join(File.join(Merb.root_path, "lib"), "cache_helper")
+# require File.join(File.join(Merb.root_path, "lib"), "cache_helper")
 
 # Merb::Plugins.config[:merb_cache] = {
 #   :cache_html_directory => Merb.dir_for(:public)  / "cache",

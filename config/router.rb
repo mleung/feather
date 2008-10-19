@@ -23,7 +23,7 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do 
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   # This deferred route allows permalinks to be handled, without a separate rack handler
-#  match("/admin", :method => :get).to(:controller => "exceptions", :action => "unauthenticated")
+  # match("/admin", :method => :get).to(:controller => "exceptions", :action => "unauthenticated")
   match(/.*/).defer_to do |request, params|
     unless (article = Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
       {:controller => "articles", :action => "show", :id => article.id}

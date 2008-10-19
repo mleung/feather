@@ -11,6 +11,7 @@ module Admin
     end
     
     def new
+      only_provides :html
       @article = Article.new
       display @article
     end
@@ -21,11 +22,13 @@ module Admin
       if @article.save
         # Expire the article index to reflect the newly published article
         # expire_index if @article.published
-        render_then_call(redirect(url(:admin_articles))) do
+          render_then_call(redirect(url(:admin_articles))) do
+            @article.time_zone = session.user.time_zone
+          end
           # Call events after the redirect
-          Hooks::Events.after_publish_article_request(@article, request) if @article.published?
-          Hooks::Events.after_create_article_request(@article, request)
-        end
+          # Hooks::Events.after_publish_article_request(@article, request) if @article.published?
+          # Hooks::Events.after_create_article_request(@article, request)
+        # end
       else
         render :new
       end
@@ -46,7 +49,8 @@ module Admin
           Hooks::Events.after_update_article_request(@article, request)
         end
       else
-        render :edit
+         display @article, :edit
+         # render :edit
       end
     end
     

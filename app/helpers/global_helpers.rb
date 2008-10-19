@@ -64,7 +64,7 @@ module Merb
     ##
     # This returns the published at date for an article as a relative date (taking into account timezones)
     def render_relative_published_at(article)
-      article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? self.user.time_zone : article.user.time_zone).utc_to_local(article.published_at))
+      article.published_at.nil? ? "Not yet" : render_relative_date(TZInfo::Timezone.get(logged_in? ? session.time_zone : article.user.time_zone).utc_to_local(article.published_at))
     end
 
     ##

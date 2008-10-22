@@ -109,8 +109,8 @@ Merb::BootLoader.after_app_loads do
               :email => "admin@example.com", 
               :password => "password", :password_confirmation => "password", 
               :time_zone => "Europe/London",
-#              :active => true,
- #             :identity_url => File.read(Merb.root / "config" / "open_id"),
+              :active => true,
+#             :identity_url => File.read(Merb.root / "config" / "open_id"),
               :time_zone => "Europe/London")
 
   Merb::Mailer.delivery_method = :sendmail

@@ -102,16 +102,18 @@ Merb::BootLoader.after_app_loads do
   rescue Exception => e
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
+
 #  raise "You must specify a valid openid in Merb.root/config/openid to use this example app" unless File.exists?(Merb.root / "config" / "open_id")
-  DataMapper.auto_migrate!
+  DataMapper.auto_migrate! { 
   User.create(:login => "admin", 
               :name => "admin",
               :email => "admin@example.com", 
               :password => "password", :password_confirmation => "password", 
               :time_zone => "Europe/London",
-              :active => true,
+#              :active => true,
 #             :identity_url => File.read(Merb.root / "config" / "open_id"),
               :time_zone => "Europe/London")
+       }       
 
   Merb::Mailer.delivery_method = :sendmail
 end

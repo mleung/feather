@@ -28,20 +28,16 @@ Merb::Router.prepare do
       {:controller => "articles", :action => "show", :id => article.id}
     end
   end
-
-  authenticate do
-    match("/admin").to(:controller => "dashboard")
-  end
   
   # Admin namespace
   namespace :admin do
-    resources :configurations
+    resource :configuration
     resources :categories
     resources :plugins
     resources :articles
-    match("/dashboard").to(:controller => "dashboard").name(:dashboard)
-    match("").to(:controller => "dashboard").name(:dashboard)
+    resource :dashboard
   end
+  match("/admin").to(:action => "show", :controller => "admin/dashboards")
 
   # Year/month/day routes
   match("/:year").to(:controller => "articles", :action => "index").name(:year)

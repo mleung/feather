@@ -23,6 +23,7 @@ end
 ### if you need a database.
 
 ### Uncomment for DataMapper ORM
+require "dm-core"
 use_orm :datamapper
 
 ### Uncomment for ActiveRecord ORM

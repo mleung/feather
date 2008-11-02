@@ -106,7 +106,7 @@ module Merb
       items << {:text => "Dashboard", :url => url(:admin_dashboard)}
       items << {:text => "Articles", :url => url(:admin_articles)}
       items << {:text => "Plugins", :url => url(:admin_plugins)}
-      items << {:text => "Settings", :url => url(:admin_configurations)}
+      items << {:text => "Settings", :url => url(:admin_configuration)}
     #  items << {:text => "Users", :url => url(:users)}
       # if self.current_user == :false
       #  items << {:text => "Login", :url => url(:login)}

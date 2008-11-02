@@ -2,17 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Feather - Error</title>
+  <title>Feather</title>
   <%= css_include_tag :admin, :exceptions %>
   <%= js_include_tag :prototype, :effects, :admin, :application %>
 </head>
 <body>
   <div id="header">
-    <h1>Feather - Error</h1>
+    <h1>Feather</h1>
   </div>
   <div id="wrap">
     <div id="content">
       <div class="pad">
+		    <span id="notifications"><%= notifications %></span>
         <%= catch_content :for_layout %>
       </div>
       <div class="bot_shadow">&nbsp;</div>

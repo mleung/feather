@@ -1,6 +1,8 @@
 module Merb
-  module Admin
-    module DashboardHelper
+  module Feather
+    module Admin
+      module DashboardHelper
+      end
     end
   end
 end

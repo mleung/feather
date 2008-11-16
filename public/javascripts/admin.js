@@ -110,13 +110,13 @@ var FormHelper = {
 
 Event.observe(window, 'load', function() {
 	//Set up the events for the configuration page
-	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configurations?title=");
-	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configurations?tag_line=");
-	FormHelper.inPlaceEditEvents("configuration-permalink-format", "/admin/configurations?permalink_format=");
-	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configurations?about=", true);
-	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configurations?about_formatter=");
+	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configuration?title=");
+	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configuration?tag_line=");
+	FormHelper.inPlaceEditEvents("configuration-permalink-format", "/admin/configuration?permalink_format=");
+	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configuration?about=", true);
+	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configuration?about_formatter=");
 	Event.observe("configuration-clear-cache", "click", function() {
-		new Ajax.Request("/admin/configurations", {
+		new Ajax.Request("/admin/configuration", {
 			asynchronous:'true',
 			evalScripts:'true',
 			method:'put',

@@ -1,4 +1,6 @@
 module Merb
-  module ArticlesHelper
+  module Feather
+    module ArticlesHelper
+    end
   end
 end

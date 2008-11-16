@@ -1,6 +1,8 @@
-module Admin
-  class Base < Application
-    layout :admin
-    before :ensure_authenticated
+module Feather
+  module Admin
+    class Base < Application
+      layout :admin
+      before :ensure_authenticated
+    end
   end
 end

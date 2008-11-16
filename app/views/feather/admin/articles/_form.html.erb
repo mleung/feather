@@ -1,0 +1,13 @@
+<%= text_field :title, :size => 50, :label => 'Title:' %>
+<%= text_area :content, :rows => 20, :cols => 100, :label => 'Content:' %>
+<p>
+  <span class="mock_label">Published?</span>
+  <%= check_box :published %>
+</p>
+
+<p>
+  <span class="mock_label">Formatter</span>
+  <%= select :formatter, :collection => Feather::Hooks::Formatters.available_formatters, :selected => "default" %>
+</p>
+
+<%= render_plugin_views "article_form_fields" %>

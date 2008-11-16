@@ -46,24 +46,24 @@ use_test :test_unit
 
 ### Add your other dependencies here
 
+require 'config/dependencies.rb'
+
 # These are some examples of how you might specify dependencies.
 # 
 gem "archive-tar-minitar"
-dependency "merb-helpers"
-dependency "merb-assets"
-# dependency "merb-cache"
-dependency "merb-action-args"
-dependency "merb_has_flash"
-dependency "merb-mailer"
-dependency "merb-slices"
-dependency "merb-auth"
-dependency "merb-auth-slice-password"
-dependency "merb-auth-core"
-dependency "merb-auth-more"
-dependency "dm-aggregates"
-dependency "dm-validations"
-dependency "dm-timestamps"
-dependency "merb_paginate"
+#dependency "merb-helpers"
+#dependency "merb-assets"
+#dependency "merb-action-args"
+#dependency "merb_has_flash"
+#dependency "merb-mailer"
+#dependency "merb-slices"
+#dependency "merb-auth"
+#dependency "merb-auth-slice-password"
+#dependency "merb-auth-core"
+#dependency "merb-auth-more"
+#dependency "dm-aggregates"
+#dependency "dm-validations"
+#dependency "dm-timestamps"
 
 # OR
 # OR
@@ -77,6 +77,7 @@ Merb::BootLoader.before_app_loads do
 end
 
 Merb::BootLoader.after_app_loads do
+  Merb::Authentication.user_class = Feather::User
   require "tzinfo"
   require "net/http"
   require "uri"
@@ -85,14 +86,15 @@ Merb::BootLoader.after_app_loads do
   require "zlib"
   require "stringio"
   require "archive/tar/minitar"
-  require File.join("lib", "padding")
-  require File.join("lib", "hooks")
-  require File.join("lib", "database")
-  require File.join("lib", "plugin_dependencies")
+  require File.join("lib", "feather", "padding")
+  require File.join("lib", "feather", "hooks")
+  require File.join("lib", "feather", "database")
+  require File.join("lib", "feather", "plugin_dependencies")
+  require File.join("lib", "merb_auth_setup")
 
   # This loads the plugins
   begin
-    Plugin.all(:order => [:name]).each do |p|
+    Feather::Plugin.all(:order => [:name]).each do |p|
       begin
         p.load
         Merb.logger.info("\"#{p.name}\" loaded")
@@ -106,7 +108,7 @@ Merb::BootLoader.after_app_loads do
 
 #  raise "You must specify a valid openid in Merb.root/config/openid to use this example app" unless File.exists?(Merb.root / "config" / "open_id")
   DataMapper.auto_migrate! { 
-  User.create(:login => "admin", 
+  Feather::User.create(:login => "admin", 
               :name => "admin",
               :email => "admin@example.com", 
               :password => "password", :password_confirmation => "password", 

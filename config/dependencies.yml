@@ -16,5 +16,4 @@
 - dm-aggregates (>= 0, runtime)
 - dm-validations (>= 0, runtime)
 - dm-timestamps (>= 0, runtime)
-- merb_paginate (>= 0, runtime)
 - dm-core (>= 0, runtime)

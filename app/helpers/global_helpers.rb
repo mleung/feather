@@ -11,13 +11,13 @@ module Merb
     ##
     # This formats the specified text using the specified formatter, returning the result
     def render_text(formatter, text)
-      Hooks::Formatters.format_text(formatter, text)
+      ::Feather::Hooks::Formatters.format_text(formatter, text)
     end
 
     ##
     # This formats the specified article, using it's configured formatter, returning the result
     def render_article(article)
-      Hooks::Formatters.format_article(article)
+      ::Feather::Hooks::Formatters.format_article(article)
     end
 
     ##
@@ -90,13 +90,13 @@ module Merb
     ##
     # This returns the url for the month article index
     def month_url(year, month)
-      url(:month, {:year => year, :month => Padding::pad_single_digit(month)})
+      url(:month, {:year => year, :month => Feather::Padding::pad_single_digit(month)})
     end
 
     ##
     # This returns the url for the day article index
     def day_url(year, month, day)
-      url(:day, {:year => year, :month => Padding::pad_single_digit(month), :day => Padding::pad_single_digit(day)})
+      url(:day, {:year => year, :month => Feather::Padding::pad_single_digit(month), :day => Feather::Padding::pad_single_digit(day)})
     end
 
     ##
@@ -113,7 +113,7 @@ module Merb
       # else
       #  items << {:text => "Logout", :url => url(:logout)}
       # end
-      Hooks::Menu.menu_items.each { |item| items << item }
+      ::Feather::Hooks::Menu.menu_items.each { |item| items << item }
       items
     end
 
@@ -127,7 +127,7 @@ module Merb
     # This renders all plugin views for the specified hook
     def render_plugin_views(name, options = {})
       output = ""
-      Hooks::View.plugin_views.each do |view|
+      ::Feather::Hooks::View.plugin_views.each do |view|
         if view[:name] == name
           if view[:partial]
             # Set the template root, create the template method and call the partial
@@ -159,7 +159,7 @@ module Merb
     ##
     # This returns true if the specified plugin is active, false if it isn't or is unavailable
     def is_plugin_active(name)
-      plugin = Plugin.first(:name => name)
+      plugin = Feather::Plugin.first(:name => name)
       plugin && plugin.active
     end
     

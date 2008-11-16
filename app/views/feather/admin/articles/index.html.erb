@@ -1,0 +1,41 @@
+<% throw_content :right do %>
+  <h4>View Articles</h4>
+  <p>
+	Here you can view existing articles.
+  </p>
+<% end %>
+
+<div id="action">
+  <%= link_to "New article", url(:new_admin_article) %>
+</div>
+
+<h1>View Articles</h1>
+
+<table class='tabular'>
+	<thead>
+  	<tr>
+  		<th>Title</th>
+  		<th>Published</th>
+  		<th>By</th>
+  		<th></th>
+  	</tr>	
+	</thead>
+	<tbody>	
+	  <% if @articles.any? %>
+      <%= partial('feather/admin/articles/article', :with => @articles) %>
+    <% else %>
+      <tr><td colspan="4">You have not written any articles yet. <%= link_to "Write one now?", url(:new_admin_article) %></td></tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="pagination">
+  <% if @page_count > 1 %>
+    <% 1.upto(@page_count) do |page| %>
+      <% if (params[:page] || 1) == 1 %>
+        <%= page %>
+      <% else %>
+        <%= link_to page, url(:admin_articles, :page => page) %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

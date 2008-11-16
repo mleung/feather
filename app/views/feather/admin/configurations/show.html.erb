@@ -1,0 +1,67 @@
+<% throw_content :right do %>
+  <h4>Settings</h4>
+   <p>
+     This page contains the global options for your blog.
+   </p>
+   <p>
+    <strong>To add a new line to your about, hold shift and hit enter.</strong>
+  </p>
+   <p>
+    <strong>Permalink Format:</strong>
+    <ul>
+    	<li>You can use the following variables to create a permalink: :year, :month, :day, :title</li>
+			<li>For example: /articles/:year/:month/:day/:title -> /articles/2008/5/15/my-neat-blog-post</li>
+			<li>The format <strong>must</strong> start with a '/'</li>
+    </ul>
+    <br/>
+    <br/>
+  </p>
+ <% end %>
+   
+<h1>Blog Settings</h1>
+<div class="info_container">
+  <table class="in_place_editing">
+  <tr>
+    <td class="field_label">Title:</td>
+    <td>
+      <span id="configuration-title-container"><span id="configuration-title-display"><%= @settings.title %></span> <a href="#" id="edit-configuration-title">edit</a></span>
+      <%= text_field :name => "title", :value => @settings.title, :size => 30, :style => "display: none", :id => "configuration-title" %>
+    </td>
+  </tr>
+  <tr>
+    <td class="field_label">Tag Line:</td>
+    <td>
+      <span id="configuration-tag-line-container"><span id="configuration-tag-line-display"><%= @settings.tag_line %></span> <a href="#" id="edit_configuration-tag-line">edit</a></span>
+      <%= text_field :name => "tag_line", :value => @settings.tag_line, :size => 30, :style => "display: none", :id => "configuration-tag-line" %>
+    </td>
+  </tr>
+  <tr>
+    <td class="field_label">About:</td>
+    <td>
+      <span id="configuration-about-container"><span id="configuration-about-display"><%= @settings.about_summary %></span> <a href="#" id="edit-configuration-about">edit</a></span>
+      <%= text_area @settings.about, :name => "about", :rows => 10, :cols => 50, :style => "display: none", :id => "configuration-about" %>
+    </td>
+  </tr>
+  <tr>
+	<td class="field_label">About Formatter:</td>
+	<td>
+	  <span id="configuration-about-formatter-container"><span id="configuration-about-formatter-display"><%= @settings.about_formatter %></span> <a href="#" id="edit-configuration-about-formatter">edit</a></span>
+ 	  <%= select :collection => Feather::Hooks::Formatters.available_formatters, :style => "display: none", :id => "configuration-about-formatter", :selected => @settings.about_formatter %> 
+	</td>
+  </tr>
+  <tr>
+    <td class="field_label">Permalink Format:</td>
+    <td>
+      <span id="configuration-permalink-format-container"><span id="configuration-permalink-format-display"><%= @settings.permalink_format %></span> <a href="#" id="edit-configuration-permalink-format">edit</a></span>
+      <%= text_field :name => "permalink_format", :value => @settings.permalink_format, :size => 30, :style => "display: none", :id => "configuration-permalink-format" %>
+    </td>
+  </tr>
+  <tr>
+	<td class="field_label">Clear Cache?</td>
+	<td>
+    <span id="configuration-clear-cache"></span>
+    <%= submit "Clear", :id => "configuration-clear-cache" %>
+	<td>
+  </tr>
+  </table>
+</div>

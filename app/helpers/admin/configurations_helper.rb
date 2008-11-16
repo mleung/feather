@@ -1,6 +1,8 @@
 module Merb
-  module Admin
-    module ConfigurationsHelper
+  module Feather
+    module Admin
+      module ConfigurationsHelper
+      end
     end
   end
 end

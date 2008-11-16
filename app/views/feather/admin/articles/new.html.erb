@@ -1,0 +1,13 @@
+<% throw_content :right do %>
+  <%= partial 'shared/formatting_help' %>
+<% end %>
+
+<%= error_messages_for @article %>
+<h1>New Article</h1>
+
+<%= form_for :article, :action => url(:admin_articles) do %>
+  <%= partial 'form' %>
+  <%= submit 'Save Article' %> or <%= link_to 'Cancel', url(:admin_articles) %>
+<% end =%>
+
+<%= link_to "Back to articles", url(:admin_articles) %>

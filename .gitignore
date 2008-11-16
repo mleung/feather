@@ -17,3 +17,4 @@ src/*
 .hg/*
 .svn/*
 config/database.yml
+pkg/*

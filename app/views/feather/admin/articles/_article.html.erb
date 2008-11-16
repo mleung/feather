@@ -1,0 +1,6 @@
+<tr>
+	<td><%= link_to article.title, url(:admin_article, article) %></td>
+	<td><%= render_relative_published_at(article) %></td>
+	<td><%= article.user.nil? ? "Unknown" : article.user.name %></td>
+	<td> <%= link_to "Edit", url(:edit_admin_article, article) %> | <%= link_to 'Delete', url(:delete_admin_article, article), {:method => :delete, :onclick => "return confirm('Are you sure?')"} %></td>
+</tr>

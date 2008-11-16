@@ -24,28 +24,27 @@ Merb::Router.prepare do
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   # This deferred route allows permalinks to be handled, without a separate rack handler
   match(/.*/).defer_to do |request, params|
-    unless (article = Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
-      {:controller => "articles", :action => "show", :id => article.id}
+    unless (article = Feather::Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
+      {:controller => "feather/articles", :action => "show", :id => article.id}
     end
   end
   
   # Admin namespace
-  namespace :admin do
+  namespace "feather/admin", :path => "admin", :name_prefix => "admin" do
     resource :configuration
-    resources :categories
     resources :plugins
     resources :articles
     resource :dashboard
   end
-  match("/admin").to(:action => "show", :controller => "admin/dashboards")
+  match("/admin").to(:action => "show", :controller => "feather/admin/dashboards")
 
   # Year/month/day routes
-  match("/:year").to(:controller => "articles", :action => "index").name(:year)
-  match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
-  match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
+  match("/:year").to(:controller => "feather/articles", :action => "index").name(:year)
+  match("/:year/:month").to(:controller => "feather/articles", :action => "index").name(:month)
+  match("/:year/:month/:day").to(:controller => "feather/articles", :action => "index").name(:day)
   
   # Default routes, and index
   default_routes  
-  match("/").to(:controller => 'articles', :action =>'index')
+  match("/").to(:controller => 'feather/articles', :action =>'index')
 end
 

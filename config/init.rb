@@ -26,48 +26,10 @@ end
 require "dm-core"
 use_orm :datamapper
 
-### Uncomment for ActiveRecord ORM
-# use_orm :activerecord
-
-### Uncomment for Sequel ORM
-# use_orm :sequel
-
-
-### This defines which test framework the generators will use
-### rspec is turned on by default
-###
-### Note that you need to install the merb_rspec if you want to ue
-### rspec and merb_test_unit if you want to use test_unit. 
-### merb_rspec is installed by default if you did gem install
-### merb.
-###
 use_test :test_unit
 # use_test :rspec
 
-### Add your other dependencies here
-
 require 'config/dependencies.rb'
-
-# These are some examples of how you might specify dependencies.
-# 
-gem "archive-tar-minitar"
-#dependency "merb-helpers"
-#dependency "merb-assets"
-#dependency "merb-action-args"
-#dependency "merb_has_flash"
-#dependency "merb-mailer"
-#dependency "merb-slices"
-#dependency "merb-auth"
-#dependency "merb-auth-slice-password"
-#dependency "merb-auth-core"
-#dependency "merb-auth-more"
-#dependency "dm-aggregates"
-#dependency "dm-validations"
-#dependency "dm-timestamps"
-
-# OR
-# OR
-# dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
 Merb::BootLoader.before_app_loads do
   Merb::Slices.config[:merb_auth] = {
@@ -106,18 +68,6 @@ Merb::BootLoader.after_app_loads do
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
 
-#  raise "You must specify a valid openid in Merb.root/config/openid to use this example app" unless File.exists?(Merb.root / "config" / "open_id")
-  DataMapper.auto_migrate! { 
-  Feather::User.create(:login => "admin", 
-              :name => "admin",
-              :email => "admin@example.com", 
-              :password => "password", :password_confirmation => "password", 
-              :time_zone => "Europe/London",
-#              :active => true,
-#             :identity_url => File.read(Merb.root / "config" / "open_id"),
-              :time_zone => "Europe/London")
-       }       
-
   Merb::Mailer.delivery_method = :sendmail
 end
 
@@ -129,4 +79,3 @@ end
 #   :cache_directory => Merb.root_path("tmp/cache"),
 #   :disable => "development"
 # }
-

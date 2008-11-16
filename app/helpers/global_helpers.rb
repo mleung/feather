@@ -1,5 +1,28 @@
 module Merb
   module GlobalHelpers
+    # Returns true if the app is running as a slice, false otherwise
+    def is_slice?
+      ::Feather.respond_to?(:public_path_for)
+    end
+    
+    # This wraps whether the app is a slice or not, and then will create the appropriate stylesheet include
+    def css_include(*args)
+      output = ""
+      args.each do |stylesheet|
+        output << (is_slice? ? "<link type=\"text/css\" href=\"#{File.join(::Feather.public_path_for(:stylesheet), stylesheet.to_s + ".css")}\" charset=\"utf-8\" rel=\"Stylesheet\" media=\"all\" />" : css_include_tag(stylesheet.to_s))
+      end
+      output
+    end
+    
+    # This wraps whether the app is a slice or not, and then will create the appropriate js include
+    def js_include(*args)
+      output = ""
+      args.each do |javascript|
+        output << (is_slice? ? "<script type=\"text/javascript\" src=\"#{File.join(::Feather.public_path_for(:javascript), javascript.to_s + ".js")}\"></script>" : js_include_tag(javascript.to_s))
+      end
+      output
+    end
+    
     def render_title
       @settings.title
     end

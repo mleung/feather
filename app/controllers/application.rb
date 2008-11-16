@@ -47,5 +47,7 @@ module Feather
     def self.include_plugin_views(plugin)
       self._template_roots << [File.join(Feather::Hooks::get_plugin_by_caller(plugin).path, "views"), :_template_location]
     end
+    
+    self._template_roots << [File.join(File.dirname(__FILE__), "..", "views"), :_template_location]
   end
 end

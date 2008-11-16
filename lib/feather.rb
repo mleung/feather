@@ -20,6 +20,8 @@ if defined?(Merb::Plugins)
   # :mirror - which path component types to use on copy operations; defaults to all
   Merb::Slices::config[:feather][:layout] ||= :application
   
+  require 'config/dependencies.rb'
+  
   # All Slice code is expected to be namespaced inside a module
   module Feather
     
@@ -40,14 +42,6 @@ if defined?(Merb::Plugins)
     
     # Activation hook - runs after AfterAppLoads BootLoader
     def self.activate
-      require "tzinfo"
-      require "net/http"
-      require "uri"
-      require "cgi"
-      require "erb"
-      require "zlib"
-      require "stringio"
-      require "archive/tar/minitar"
       require File.join(File.dirname(__FILE__), "feather", "padding")
       require File.join(File.dirname(__FILE__), "feather", "hooks")
       require File.join(File.dirname(__FILE__), "feather", "database")
@@ -55,7 +49,7 @@ if defined?(Merb::Plugins)
 
       # This loads the plugins
       begin
-        Plugin.all(:order => [:name]).each do |p|
+        Feather::Plugin.all(:order => [:name]).each do |p|
           begin
             p.load
             Merb.logger.info("\"#{p.name}\" loaded")
@@ -84,18 +78,17 @@ if defined?(Merb::Plugins)
     def self.setup_router(scope)
       # This deferred route allows permalinks to be handled, without a separate rack handler
       #scope.match(/.*/).defer_to do |request, params|
-      #  unless (article = Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
-      #    {:controller => "articles", :action => "show", :id => article.id}
+      #  unless (article = Feather::Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
+      #    {:controller => "feather/articles", :action => "show", :id => article.id}
       #  end
       #end
 
       # Admin namespace
-      scope.namespace :admin do
-        scope.resource :configuration
-        scope.resources :categories
-        scope.resources :plugins
-        scope.resources :articles
-        scope.resource :dashboard
+      scope.namespace "admin", :path => "admin", :name_prefix => "admin" do
+        scope.resource :configuration, :path => "admin/configuration", :name_prefix => "admin", :controller => "admin/configurations"
+        scope.resources :plugins, :path => "admin/plugins", :name_prefix => "admin", :controller => "admin/plugins"
+        scope.resources :articles, :path => "admin/articles", :name_prefix => "admin", :controller => "admin/articles"
+        scope.resource :dashboard, :path => "admin/dashboard", :name_prefix => "admin", :controller => "admin/dashboards"
       end
       scope.match("/admin").to(:action => "show", :controller => "admin/dashboards")
 
@@ -104,10 +97,9 @@ if defined?(Merb::Plugins)
       scope.match("/:year/:month").to(:controller => "articles", :action => "index").name(:month)
       scope.match("/:year/:month/:day").to(:controller => "articles", :action => "index").name(:day)
 
-      # Default routes, and index
+      # Default routes, and index 
       scope.match("/").to(:controller => 'articles', :action =>'index')
     end
-    
   end
   
   # Setup the slice layout for Feather

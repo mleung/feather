@@ -1,6 +1,6 @@
 # dependencies are generated using a strict version, don't forget to edit the dependency versions when upgrading.
 merb_gems_version = "1.0"
-dm_gems_version   = "0.9.6"
+dm_gems_version   = "0.9.7"
 
 # For more information about each component, please read http://wiki.merbivore.com/faqs/merb_components
 dependency "merb-action-args", merb_gems_version

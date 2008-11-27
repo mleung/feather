@@ -4,7 +4,7 @@
     <%= link_to(article.title, article.permalink) %>
   </h2>
   <div class="vcard">
-    Posted by <span class="fn"><%= article.user.name %></span>
+    Posted by <span class="fn"><%= article.user_name %></span>
   </div>
   <abbr class="published" title=""><%= article.published_at.strftime("on %b %d, %y") unless article.published_at.nil? %></abbr>
   <br class="clear" />

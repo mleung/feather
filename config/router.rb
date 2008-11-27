@@ -34,6 +34,7 @@ Merb::Router.prepare do
     resource :configuration
     resources :plugins
     resources :articles
+    resources :users
     resource :dashboard
   end
   match("/admin").to(:action => "show", :controller => "feather/admin/dashboards")

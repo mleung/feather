@@ -106,6 +106,10 @@ module Feather
     
       permalink
     end
+    
+    def user_name
+      self.user.nil? ? "unknown" : self.user.name
+    end
 
     class << self
       ##

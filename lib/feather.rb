@@ -88,6 +88,7 @@ if defined?(Merb::Plugins)
         scope.resource :configuration, :path => "admin/configuration", :name_prefix => "admin", :controller => "admin/configurations"
         scope.resources :plugins, :path => "admin/plugins", :name_prefix => "admin", :controller => "admin/plugins"
         scope.resources :articles, :path => "admin/articles", :name_prefix => "admin", :controller => "admin/articles"
+        scope.resources :users, :path => "admin/users", :name_prefix => "admin", :controller => "admin/users"
         scope.resource :dashboard, :path => "admin/dashboard", :name_prefix => "admin", :controller => "admin/dashboards"
       end
       scope.match("/admin").to(:action => "show", :controller => "admin/dashboards")

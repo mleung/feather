@@ -190,5 +190,10 @@ module Merb
     def link_to_author(author)
       link_to author["name"], author["homepage"]
     end
+    
+    # This returns true if the user is logged in, false otherwise
+    def logged_in?
+      !session.user.nil?
+    end
   end
 end

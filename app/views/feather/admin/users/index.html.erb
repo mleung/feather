@@ -1,0 +1,19 @@
+<div id="action">
+  <%= link_to "Create new user", url(:new_admin_user) %>
+</div>
+<h1>View Users</h1>
+
+<table class='tabular'>
+  <thead>
+  	<tr>
+  		<th>Login</th>
+      	<th>Name</th>
+  		<th>E-mail</th>
+  		<th>Timezone</th>
+  		<th></th>
+  	</tr>
+	</thead>
+	<tbody>
+    <%= partial('feather/admin/users/user', :with => @users) %>
+  </tbody>
+</table>

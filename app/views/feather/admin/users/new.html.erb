@@ -1,0 +1,24 @@
+<%= error_messages_for @user %>
+<%= form_for :user, :action => url(:admin_users) do %>
+  <p>
+    <%= text_field :login, :label => "Login" %>
+  </p>
+  <p>
+    <%= text_field :email, :label => "Email" %>
+  </p>
+  <p>
+    <%= password_field :password, :label => "Password" %>
+  </p>
+  <p>
+    <%= password_field :password_confirmation, :label => "Password Confirmation" %>
+  </p>
+  <p>
+	<%= select :time_zone, :label => "Timezone", :collection => get_timezones %>
+  </p>
+  <p>
+    <%= select :default_formatter, :label => "Default Formatter", :collection => ::Feather::Hooks::Formatters.available_formatters %>
+  </p>
+  <p>
+    <%= submit "Create" %> or <%= link_to('Cancel', url(:admin_users)) %>
+  </p>
+<% end =%>

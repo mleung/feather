@@ -21,17 +21,15 @@ module Feather
     
       def create(article)
         @article = Feather::Article.new(article)
-        @article.user_id = session[:user].id
+        @article.user_id = session.user.id
         if @article.save
           # Expire the article index to reflect the newly published article
           # expire_index if @article.published
-            render_then_call(redirect(url(:admin_articles))) do
-              @article.time_zone = session.user.time_zone
-            end
+          render_then_call(redirect(url(:admin_articles))) do
             # Call events after the redirect
             # Feather::Hooks::Events.after_publish_article_request(@article, request) if @article.published?
             # Feather::Hooks::Events.after_create_article_request(@article, request)
-          # end
+          end
         else
           render :new
         end
@@ -48,8 +46,8 @@ module Feather
           # expire_article(@article)
           render_then_call(redirect(url(:admin_article, @article))) do
             # Call events after the redirect
-            Feather::Hooks::Events.after_publish_article_request(@article, request) if @article.published?
-            Feather::Hooks::Events.after_update_article_request(@article, request)
+            # Feather::Hooks::Events.after_publish_article_request(@article, request) if @article.published?
+            # Feather::Hooks::Events.after_update_article_request(@article, request)
           end
         else
            display @article, :edit

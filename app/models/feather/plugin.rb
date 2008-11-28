@@ -28,26 +28,57 @@ module Feather
     # This grabs the plugin using its url, unpacks it, and loads the metadata for it
     def download
       if new_record?
-        # Load the manifest yaml
-        manifest = YAML::load(Net::HTTP.get(URI.parse(url)))
-        # Grab metadata from manifest
-        self.name = manifest["name"]
-        self.author = manifest["author"]
-        self.version = manifest["version"]
-        self.homepage = manifest["homepage"]
-        self.about = manifest["about"]
-        # Build the path
-        self.path = File.join(Merb.root, "app", "plugins", self.name)
-        # Remove any existing plugin at the path
-        FileUtils.rm_rf(self.path)
-        FileUtils.mkdir_p(self.path)
-        # Download the package and untgz
-        package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
-        package = Net::HTTP.get(URI.parse(package_url))
-        Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
-        # Unpack any gems downloaded
-        unpack_gems(Dir.glob(File.join(self.path, "gems", "*.gem")).collect { |p| p.split("/").last })
+        begin
+          # Load the manifest yaml
+          run_or_error("Unable to access manifest!") do
+            manifest = YAML::load(Net::HTTP.get(::URI.parse(url)))
+          end
+          # Grab metadata from manifest
+          run_or_error("Unable to parse manifest YAML!") do
+            self.name = manifest["name"]
+            self.author = manifest["author"]
+            self.version = manifest["version"]
+            self.homepage = manifest["homepage"]
+            self.about = manifest["about"]
+          end
+          # Build the path
+          run_or_error("Unable to build plugin path!") do
+            self.path = File.join(Merb.root, "app", "plugins", self.name)
+          end
+          # Remove any existing plugin at the path
+          run_or_error("Unable to remove existing plugin path!") do
+            FileUtils.rm_rf(self.path)
+          end
+          # Create new plugin path
+          run_or_error("Unable to create new plugin path!") do
+            FileUtils.mkdir_p(self.path)
+          end
+          # Download the package
+          run_or_error("Unable to retrieve package!") do
+            package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
+            package = Net::HTTP.get(URI.parse(package_url))
+          end
+          # Unzip the package
+          run_or_error("Unable to unpack zipped plugin package!") do
+            Archive::Tar::Minitar.unpack(Zlib::GzipReader.new(StringIO.new(package)), self.path)
+          end
+          # Unpack any gems downloaded
+          run_or_error("Unable to unpack gems provided by the plugin package!") do
+            unpack_gems(Dir.glob(File.join(self.path, "gems", "*.gem")).collect { |p| p.split("/").last })
+          end
+        rescue Exception => err
+          self.errors.add :general, "Error installing plugin: #{err.message}"
+        end
       end
+    end
+    
+    ##
+    # This method executes the block provided, and if an exception is thrown by that block, will re-raise
+    # it with the specified message - good for trapping lots of code with more friendly error messages
+    def run_or_error(message, &block)
+      yield
+    rescue
+      raise message
     end
 
     ##
@@ -94,7 +125,7 @@ module Feather
     ##
     # This removes the plugin, de-registers hooks, and adds an activity to show a plugin has been deleted
     def remove
-      FileUtils.rm_rf(self.path)
+      FileUtils.rm_rf(self.path) unless self.path.nil?
       Feather::Hooks.remove_plugin_hooks(self.id)
       a = Feather::Activity.new
       a.message = "Plugin \"#{self.name}\" deleted"

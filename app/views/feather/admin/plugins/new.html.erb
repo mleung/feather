@@ -5,7 +5,7 @@
 <%= error_messages_for @plugin %>
 <h1>Install Plugin</h1>
 
-<%= form_for :plugin, :action => url(:admin_plugin, @plugin) do %>
+<%= form_for :plugin, :action => url(:admin_plugins) do %>
   <%= text_field :url, :size => 65, :label => 'URL:' %>
   <br /><br />
   <%= submit 'Install Plugin' %> or <%= link_to 'Cancel', url(:admin_plugins) %>

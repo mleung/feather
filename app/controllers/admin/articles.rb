@@ -40,7 +40,9 @@ module Feather
       end
     
       def update(article)
-        if @article.update_attributes(article)
+        article.keys.each { |key| @article.send("#{key}=", article[key]) }
+        @article.published = article["published"]
+        if @article.save
           # Expire the index and article to reflect the updated article
           # expire_index
           # expire_article(@article)

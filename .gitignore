@@ -18,3 +18,5 @@ src/*
 .svn/*
 config/database.yml
 pkg/*
+app/plugins
+public/plugins

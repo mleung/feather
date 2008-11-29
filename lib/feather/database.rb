@@ -2,7 +2,6 @@ module Feather
   module Database
     class << self
       CORE = [Feather::Activity, Feather::Article, Feather::Configuration, Feather::Plugin, Feather::PluginSetting, Feather::User]
-      #CORE = Dir.glob("app/models/*/*.rb").collect { |s| Class.const_get(s.split("/").last.gsub(".rb", "").split("_").collect { |w| "Feather::#{w.capitalize}" }.join("")) }
     
       # This provides a helper method for data migration for plugins - we can then update this to use non-destructive migrations at a later date and existing plugins won't need to change
       def migrate(klass)

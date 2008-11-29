@@ -20,7 +20,24 @@
 # See merb/specs/merb/routerb for a fairly complete usage sample.
 
 Merb.logger.info("Compiling routes...")
-Merb::Router.prepare do 
+Merb::Router.prepare do |router|
+  # Load all plugins
+  begin
+    Feather::Plugin.all(:order => [:name]).each do |p|
+      begin
+        p.load
+        Merb.logger.info("\"#{p.name}\" loaded")
+      rescue Exception => e
+        Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
+      end
+    end
+  rescue Exception => e
+    Merb.logger.info("Error loading plugins: #{e.message}")
+  end
+  
+  # Load all plugin routes
+  Feather::Hooks::Routing.load_routes(router)
+  
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   # This deferred route allows permalinks to be handled, without a separate rack handler
   match(/.*/).defer_to do |request, params|

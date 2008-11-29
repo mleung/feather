@@ -30,13 +30,15 @@ module Feather
       if new_record?
         begin
           # Load the manifest yaml
-          run_or_error("Unable to access manifest!") do
-            manifest = YAML::load(Net::HTTP.get(::URI.parse(url)))
+          manifest = run_or_error("Unable to access manifest!") do
+            YAML::load(Net::HTTP.get(::URI.parse(url)))
           end
           # Grab metadata from manifest
           run_or_error("Unable to parse manifest YAML!") do
             self.name = manifest["name"]
-            self.author = manifest["author"]
+            self.author_name = manifest["author"]["name"]
+            self.author_email = manifest["author"]["email"]
+            self.author_homepage = manifest["author"]["homepage"]
             self.version = manifest["version"]
             self.homepage = manifest["homepage"]
             self.about = manifest["about"]
@@ -54,9 +56,9 @@ module Feather
             FileUtils.mkdir_p(self.path)
           end
           # Download the package
-          run_or_error("Unable to retrieve package!") do
+          package = run_or_error("Unable to retrieve package!") do
             package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest["package"])
-            package = Net::HTTP.get(URI.parse(package_url))
+            Net::HTTP.get(::URI.parse(package_url))
           end
           # Unzip the package
           run_or_error("Unable to unpack zipped plugin package!") do
@@ -67,7 +69,7 @@ module Feather
             unpack_gems(Dir.glob(File.join(self.path, "gems", "*.gem")).collect { |p| p.split("/").last })
           end
         rescue Exception => err
-          self.errors.add :general, "Error installing plugin: #{err.message}"
+          self.errors.add :general, "Error downloading plugin: #{err.message}"
         end
       end
     end

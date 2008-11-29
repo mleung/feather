@@ -1,7 +1,8 @@
-require File.join(File.join(File.dirname(__FILE__), "hooks"), "menu")
-require File.join(File.join(File.dirname(__FILE__), "hooks"), "view")
-require File.join(File.join(File.dirname(__FILE__), "hooks"), "events")
-require File.join(File.join(File.dirname(__FILE__), "hooks"), "formatters")
+require File.join(File.dirname(__FILE__), "hooks", "menu")
+require File.join(File.dirname(__FILE__), "hooks", "view")
+require File.join(File.dirname(__FILE__), "hooks", "events")
+require File.join(File.dirname(__FILE__), "hooks", "formatters")
+require File.join(File.dirname(__FILE__), "hooks", "routing")
 
 module Feather
   module Hooks

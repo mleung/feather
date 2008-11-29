@@ -32,14 +32,14 @@ use_test :test_unit
 require 'config/dependencies.rb'
 
 Merb::BootLoader.before_app_loads do
+  Dir.glob("app/models/*/*.rb").each { |f| require f }
+  Merb::Authentication.user_class = Feather::User
+  
   Merb::Slices.config[:merb_auth] = {
     :layout => :admin,
     :login_field => :login
   }
-end
-
-Merb::BootLoader.after_app_loads do
-  Merb::Authentication.user_class = Feather::User
+  
   require "tzinfo"
   require "net/http"
   require "uri"
@@ -53,21 +53,9 @@ Merb::BootLoader.after_app_loads do
   require File.join("lib", "feather", "database")
   require File.join("lib", "feather", "plugin_dependencies")
   require File.join("lib", "merb_auth_setup")
+end
 
-  # This loads the plugins
-  begin
-    Feather::Plugin.all(:order => [:name]).each do |p|
-      begin
-        p.load
-        Merb.logger.info("\"#{p.name}\" loaded")
-      rescue Exception => e
-        Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
-      end
-    end
-  rescue Exception => e
-    Merb.logger.info("Error loading plugins: #{e.message}")
-  end
-
+Merb::BootLoader.after_app_loads do
   Merb::Mailer.delivery_method = :sendmail
 end
 

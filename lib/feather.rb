@@ -5,7 +5,7 @@ if defined?(Merb::Plugins)
   $:.unshift File.join(File.dirname(__FILE__), "..", "app", "controllers")
   $:.unshift File.join(File.dirname(__FILE__), "..", "app", "helpers")
 
-  load_dependency 'merb-slices'
+  dependency 'merb-slices'
   Merb::Plugins.add_rakefiles "feather/merbtasks", "feather/slicetasks", "feather/spectasks"
 
   # Register the Slice for the current host application

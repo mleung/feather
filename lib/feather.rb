@@ -77,9 +77,9 @@ if defined?(Merb::Plugins)
     #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
       # This deferred route allows permalinks to be handled, without a separate rack handler
-      #scope.match(/.*/).defer_to do |request, params|
+      #scope.match("/:controller", :controller => '.*').defer_to do |request, params|
       #  unless (article = Feather::Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
-      #    {:controller => "feather/articles", :action => "show", :id => article.id}
+      #    params.merge!({:controller => "feather/articles", :action => "show", :id => article.id})
       #  end
       #end
 

@@ -138,6 +138,7 @@ module Merb
       #  items << {:text => "Logout", :url => url(:logout)}
       # end
       ::Feather::Hooks::Menu.menu_items.each { |item| items << item }
+      items << {:text => "Logout", :url => url(:logout)}
       items
     end
 

@@ -23,4 +23,6 @@ dependency "dm-types", dm_gems_version
 dependency "dm-validations", dm_gems_version  
 dependency "dm-is-paginated", "0.0.1" # DM pagination
 
+dependency "tzinfo"
+
 gem "archive-tar-minitar"

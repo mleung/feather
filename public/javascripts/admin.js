@@ -110,13 +110,13 @@ var FormHelper = {
 
 Event.observe(window, 'load', function() {
 	//Set up the events for the configuration page
-	FormHelper.inPlaceEditEvents("configuration-title", "/admin/configuration?title=");
-	FormHelper.inPlaceEditEvents("configuration-tag-line", "/admin/configuration?tag_line=");
-	FormHelper.inPlaceEditEvents("configuration-permalink-format", "/admin/configuration?permalink_format=");
-	FormHelper.inPlaceEditEvents("configuration-about", "/admin/configuration?about=", true);
-	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", "/admin/configuration?about_formatter=");
+	FormHelper.inPlaceEditEvents("configuration-title", ADMIN_ROOT + "/configuration?title=");
+	FormHelper.inPlaceEditEvents("configuration-tag-line", ADMIN_ROOT + "/configuration?tag_line=");
+	FormHelper.inPlaceEditEvents("configuration-permalink-format", ADMIN_ROOT + "/configuration?permalink_format=");
+	FormHelper.inPlaceEditEvents("configuration-about", ADMIN_ROOT + "/configuration?about=", true);
+	FormHelper.inPlaceDropDownEvents("configuration-about-formatter", ADMIN_ROOT + "/configuration?about_formatter=");
 	Event.observe("configuration-clear-cache", "click", function() {
-		new Ajax.Request("/admin/configuration", {
+		new Ajax.Request(ADMIN_ROOT + "/configuration", {
 			asynchronous:'true',
 			evalScripts:'true',
 			method:'put',
@@ -131,7 +131,7 @@ Event.observe(window, 'load', function() {
 
 var Plugins = {
 	activate: function(id) {
-		new Ajax.Request("/admin/plugins/" + id + "?active=true", {
+		new Ajax.Request(ADMIN_ROOT + "/plugins/" + id + "?active=true", {
           asynchronous:'true', 
           evalScripts:'true',
           method:'put',
@@ -144,7 +144,7 @@ var Plugins = {
 	},
 
 	deactivate: function(id) {
-		new Ajax.Request("/admin/plugins/" + id + "?active=false", {
+		new Ajax.Request(ADMIN_ROOT + "/plugins/" + id + "?active=false", {
           asynchronous:'true', 
           evalScripts:'true',
           method:'put',

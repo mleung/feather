@@ -5,6 +5,9 @@
   <title>Feather - Admin</title>
   <%= css_include :admin %>
   <%= js_include :prototype, :effects, :admin, :application %>
+  <script type="text/javascript">
+    var ADMIN_ROOT = "<%= url(:admin_dashboard).gsub('/dashboard', '') %>";
+  </script>
 </head>
 <body>
   <div id="header">

@@ -131,13 +131,8 @@ module Merb
       items << {:text => "Plugins", :url => url(:admin_plugins)}
       items << {:text => "Users", :url => url(:admin_users)}
       items << {:text => "Settings", :url => url(:admin_configuration)}
-    #  items << {:text => "Users", :url => url(:users)}
-      # if self.current_user == :false
-      #  items << {:text => "Login", :url => url(:login)}
-      # else
-      #  items << {:text => "Logout", :url => url(:logout)}
-      # end
-      ::Feather::Hooks::Menu.menu_items.each { |item| items << item }
+      root_url = url(:admin_dashboard).gsub("/admin/dashboard", "")
+      ::Feather::Hooks::Menu.menu_items.each { |item| items << item.merge(:url => "#{root_url}#{item[:url]}") }
       items << {:text => "Logout", :url => url(:logout)}
       items
     end

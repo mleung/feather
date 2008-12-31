@@ -42,24 +42,6 @@ if defined?(Merb::Plugins)
     
     # Activation hook - runs after AfterAppLoads BootLoader
     def self.activate
-      require File.join(File.dirname(__FILE__), "feather", "padding")
-      require File.join(File.dirname(__FILE__), "feather", "hooks")
-      require File.join(File.dirname(__FILE__), "feather", "database")
-      require File.join(File.dirname(__FILE__), "feather", "plugin_dependencies")
-
-      # This loads the plugins
-      begin
-        Feather::Plugin.all(:order => [:name]).each do |p|
-          begin
-            p.load
-            Merb.logger.info("\"#{p.name}\" loaded")
-          rescue Exception => e
-            Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
-          end
-        end
-      rescue Exception => e
-        Merb.logger.info("Error loading plugins: #{e.message}")
-      end
     end
     
     # Deactivation hook - triggered by Merb::Slices.deactivate(Feather)
@@ -76,6 +58,28 @@ if defined?(Merb::Plugins)
     # @note prefix your named routes with :feather_slice_
     #   to avoid potential conflicts with global named routes.
     def self.setup_router(scope)
+      require File.join(File.dirname(__FILE__), "feather", "padding")
+      require File.join(File.dirname(__FILE__), "feather", "hooks")
+      require File.join(File.dirname(__FILE__), "feather", "database")
+      require File.join(File.dirname(__FILE__), "feather", "plugin_dependencies")
+
+      # This loads the plugins
+      begin
+       Feather::Plugin.all(:order => [:name]).each do |p|
+         begin
+           p.load
+           Merb.logger.info("\"#{p.name}\" loaded")
+         rescue Exception => e
+           Merb.logger.info("\"#{p.name}\" failed to load : #{e.message}")
+         end
+       end
+      rescue Exception => e
+       Merb.logger.info("Error loading plugins: #{e.message}")
+      end
+       
+      # Load all plugin routes
+      Feather::Hooks::Routing.load_routes(scope)
+      
       # This deferred route allows permalinks to be handled, without a separate rack handler
       scope.match("/:controller", :controller => '.*').defer_to do |request, params|
         unless (article = Feather::Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?

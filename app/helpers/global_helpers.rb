@@ -153,6 +153,8 @@ module Merb
             # Set the template root, create the template method and call the partial
             _template_root = File.join(view[:plugin].path, "views")
             template_location = _template_root / _template_location("#{view[:partial]}", content_type, view[:name])
+            # Make the location relative to the root
+            template_location = "../../" / template_location
             output << partial(template_location, { :with => options[:with], :as => options[:with].class.to_s.downcase.singular.split("::").last })
           else
             # Render the specified text using ERB and the options

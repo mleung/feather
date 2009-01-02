@@ -33,6 +33,10 @@ module Feather
       end
       
       def update(user)
+        if user[:password] && user[:password_confirmation]
+          @user.salt = nil
+          @user.crypted_password = nil
+        end
         if @user.update_attributes(user)
           redirect(url(:admin_user, @user))
         else

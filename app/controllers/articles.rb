@@ -20,6 +20,7 @@ module Feather
     end
 
     def show(id)
+      @archives = Feather::Article.get_archive_hash
       @article = Feather::Article[id]
       # Can't use this with caching at the minute, meaning post-process events are tricky...
       #render_then_call(display(@article)) { Feather::Hooks::Events.after_show_article_request(@article, request) }

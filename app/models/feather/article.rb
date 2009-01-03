@@ -140,7 +140,7 @@ module Feather
       end
 
       def get_archive_hash
-        counts = repository.adapter.query("SELECT COUNT(*) as count, #{specific_date_function} FROM feather_articles WHERE published_at IS NOT NULL AND published = 1 GROUP BY year, month ORDER BY year DESC, month DESC")
+        counts = repository.adapter.query("SELECT COUNT(*) as count, #{specific_date_function} FROM feather_articles WHERE published_at IS NOT NULL AND (published = 'true' OR published = 't' OR published = 1) GROUP BY year, month ORDER BY year DESC, month DESC")
         archives = counts.map do |entry|
           {
             :name => "#{Date::MONTHNAMES[entry.month.to_i]} #{entry.year}",

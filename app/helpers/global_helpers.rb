@@ -181,7 +181,7 @@ module Merb
     ##
     # This returns true if the specified plugin is active, false if it isn't or is unavailable
     def is_plugin_active(name)
-      plugin = ::Feather::Plugin.first(:name => name)
+      plugin = ::Feather::Plugin.get(name)
       plugin && plugin.active
     end
     

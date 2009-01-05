@@ -16,7 +16,7 @@ module Feather
         def menu_items
           menu_items = []
           unless @menu_item_hooks.nil?
-            Feather::Plugin.all(:active => true).each do |plugin|
+            Feather::Plugin.active.each do |plugin|
               @menu_item_hooks[plugin.id].each { |item| menu_items << item } unless @menu_item_hooks[plugin.id].nil? || @menu_item_hooks[plugin.id].empty?
             end
           end

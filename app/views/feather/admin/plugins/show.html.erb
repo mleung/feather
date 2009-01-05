@@ -24,11 +24,11 @@
 <p>
 	<div id="plugin_activated" style="display: <%= @plugin.active ? 'block' : 'none' %>;">
 		Activated
-		<a href="#" id="plugin_deactivate" onclick="Plugins.deactivate(<%= @plugin.id %>);">Click to de-activate</a>
+		<a href="#" id="plugin_deactivate" onclick="Plugins.deactivate('<%= @plugin.id %>');">Click to de-activate</a>
 	</div>
 	<div id="plugin_deactivated" style="display:  <%= @plugin.active ? 'none' : 'block' %>;">
 		Isn't activated
-		<a href="#" id="plugin_activate" onclick="Plugins.activate(<%= @plugin.id %>);">Click to activate</a>
+		<a href="#" id="plugin_activate" onclick="Plugins.activate('<%= @plugin.id %>');">Click to activate</a>
 	</div>
 	<div id="plugin_display"></div>
 </p>

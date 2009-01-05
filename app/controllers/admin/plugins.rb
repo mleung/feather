@@ -32,10 +32,8 @@ module Feather
       end
 
       def update(id)
-        #merb-action-args doesn't appear to play nice with ajax calls, so we're using params for the plugin active flag
-        @plugin = Feather::Plugin[id]
-        @plugin.active = params[:active] == "true" if params[:active]
-        @plugin.save
+        # Set the plugin to be active (this writes to plugin settings)
+        @plugin.active = params[:active] == "true" unless params[:active].blank?
         # Check to see if the plugin has any views registered, if so we'll need to expire all pages to be safe
         # expire_all_pages if Feather::Hooks::View.has_views_registered?(@plugin)
         render_js
@@ -48,7 +46,7 @@ module Feather
 
       private
         def find_plugin
-          @plugin = Feather::Plugin[params[:id]]
+          @plugin = Feather::Plugin.get(params[:id])
         end
     end
   end

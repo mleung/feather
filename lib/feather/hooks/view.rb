@@ -52,7 +52,7 @@ module Feather
         def plugin_views
           plugin_views = []
           unless @view_hooks.nil? || @view_hooks.values.nil?
-            Plugin.all(:active => true).each do |plugin|
+            Feather::Plugin.active.each do |plugin|
               @view_hooks[plugin.id].each { |view| plugin_views << view.merge({:plugin => plugin}) } unless @view_hooks[plugin.id].nil? || @view_hooks[plugin.id].empty?
             end
           end

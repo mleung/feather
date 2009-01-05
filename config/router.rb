@@ -23,7 +23,7 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |router|
   # Load all plugins
   begin
-    Feather::Plugin.all(:order => [:name]).each do |p|
+    Feather::Plugin.all.each do |p|
       begin
         p.load
         Merb.logger.info("\"#{p.name}\" loaded")

@@ -5,7 +5,7 @@ module Feather
     property :id, Integer, :key => true, :serial => true
     property :handle, String
     property :value, String
-    property :plugin_id, Integer
+    property :plugin_id, String
 
     class << self
     
@@ -13,14 +13,12 @@ module Feather
         first(:conditions => ['handle = ? AND plugin_id = ?', handle, plugin.id])
       end
 
-      def read(handle)
-        plugin = Feather::Hooks.get_plugin_by_caller(Feather::Hooks.get_caller)
+      def read(handle, plugin = Feather::Hooks.get_plugin_by_caller(Feather::Hooks.get_caller))
         setting = find_by_handle_and_plugin(handle, plugin)
         setting.value if setting
       end
     
-      def write(handle, value)
-        plugin = Feather::Hooks.get_plugin_by_caller(Feather::Hooks.get_caller)
+      def write(handle, value, plugin = Feather::Hooks.get_plugin_by_caller(Feather::Hooks.get_caller))
         if setting = find_by_handle_and_plugin(handle, plugin)
           setting.value = value
         else
@@ -28,8 +26,6 @@ module Feather
         end
         setting.save
       end
-
     end
-
   end
 end

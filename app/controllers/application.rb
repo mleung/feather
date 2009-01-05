@@ -24,7 +24,7 @@ module Feather
     # This ensures all plugins are loaded before any requests are dealt with - if one of the other server processes in a cluster adds one, it needs to be picked up
     def load_plugins
       # Loop through all plugins by name
-      Feather::Plugin.all(:order => [:name]).each do |plugin|
+      Feather::Plugin.all.each do |plugin|
         # Load the plugin
         plugin.load unless plugin.loaded?
       end

@@ -20,9 +20,7 @@ module Feather
       end
 
       def create(plugin)
-        @plugin = Feather::Plugin.new
-        @plugin.url = plugin[:url]
-        if @plugin.save && @plugin.errors.empty?
+        if (@plugin = Feather::Plugin.install(plugin[:url]))
           # Check to see if the plugin has any views registered, if so we'll expire the cache
           # expire_all_pages if Feather::Hooks::View.has_views_registered?(@plugin)
           redirect url(:admin_plugin, @plugin)

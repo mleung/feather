@@ -2,7 +2,7 @@ require "fileutils"
 
 module Feather
   class Plugin
-    attr_accessor :name, :version, :author, :author_name, :author_email, :author_homepage, :homepage, :about
+    attr_accessor :url, :name, :version, :author, :author_name, :author_email, :author_homepage, :homepage, :about
     
     attr_reader :path
     
@@ -82,7 +82,7 @@ module Feather
           # Grab all plugin folders
           @plugins = Dir.open(Merb.root / "app" / "plugins").
             reject { |file| ['.', '..'].include?(file) }.
-            select { |file| File.directory?(File.join(Merb.root / "app" / "plugins", file)) }.
+            select { |file| File.directory?(File.join(Merb.root / "app" / "plugins", file)) && File.exists?(Merb.root / "app" / "plugins" / file / "manifest.yml") }.
             collect { |file| Feather::Plugin.new(file) }
           @plugins.sort { |a, b| a.name <=> b.name }
         else
@@ -118,11 +118,11 @@ module Feather
       def install(manifest_url)
         # Load the manifest yaml
         manifest = run_or_error("Unable to access manifest!") do
-          YAML::load(Net::HTTP.get(::URI.parse(url)))
+          YAML::load(Net::HTTP.get(::URI.parse(manifest_url)))
         end
         # Build the path
         path = run_or_error("Unable to build plugin path!") do
-          File.join(Merb.root, "app", "plugins", manifest[:name])
+          File.join(Merb.root, "app", "plugins", manifest["name"])
         end
         # Remove any existing plugin at the path
         run_or_error("Unable to remove existing plugin path!") do
@@ -134,7 +134,7 @@ module Feather
         end
         # Download the package
         package = run_or_error("Unable to retrieve package!") do
-          package_url = File.join(url.split('/').slice(0..-2).join('/'), manifest[:package])
+          package_url = File.join(manifest_url.split('/').slice(0..-2).join('/'), manifest["package"])
           Net::HTTP.get(::URI.parse(package_url))
         end
         # Unzip the package
@@ -148,7 +148,7 @@ module Feather
         
         # Grab the plugin
         plugin = run_or_error("Cannot instantiate the plugin!") do
-          Feather::Plugin.new(manifest[:name])
+          Feather::Plugin.new(manifest["name"])
         end
         
         # Load the plugin

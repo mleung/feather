@@ -161,6 +161,11 @@ module Feather
           load File.join(path, "install.rb") if File.exists?(File.join(path, "install.rb"))
         end
         
+        # Reload the routes
+        run_or_error("Cannot reload the routes!") do
+          load Merb.root / "config" / "router.rb"
+        end
+        
         # Return the plugin
         plugin
       end

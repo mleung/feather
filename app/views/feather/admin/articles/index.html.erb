@@ -31,7 +31,7 @@
 <div id="pagination">
   <% if @page_count > 1 %>
     <% 1.upto(@page_count) do |page| %>
-      <% if (params[:page] || 1) == 1 %>
+      <% if (params[:page].to_i || 1) == page %>
         <%= page %>
       <% else %>
         <%= link_to page, url(:admin_articles, :page => page) %>

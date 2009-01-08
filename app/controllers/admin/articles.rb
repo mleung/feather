@@ -5,7 +5,7 @@ module Feather
     class Articles < Base
       before :find_article, :only => %w(edit update delete show)
       def index
-        @page_count, @articles = Feather::Article.paginated(:page => params[:page], :per_page => 10, :order => [:created_at.desc])
+        @page_count, @articles = Feather::Article.paginated(:page => params[:page].to_i, :per_page => 10, :order => [:created_at.desc])
         display @articles
       end
     

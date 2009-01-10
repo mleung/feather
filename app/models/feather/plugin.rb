@@ -109,8 +109,8 @@ module Feather
       # it with the specified message - good for trapping lots of code with more friendly error messages
       def run_or_error(message, &block)
         yield
-      rescue
-        raise message
+      rescue Exception => ex
+        raise "#{message} (#{ex.message})"
       end
 
       ##

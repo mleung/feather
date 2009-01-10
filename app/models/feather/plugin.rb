@@ -143,7 +143,7 @@ module Feather
         end
         # Unpack any gems downloaded
         run_or_error("Unable to unpack gems provided by the plugin package!") do
-          unpack_gems(Dir.glob(File.join(path, "gems", "*.gem")).collect { |p| p.split("/").last })
+          unpack_gems(Dir.glob(File.join(path, "gems", "*.gem")).collect { |p| p.split("/").last }, path)
         end
         
         # Grab the plugin
@@ -172,10 +172,10 @@ module Feather
 
       ##
       # This recursively unpacks the gems used by the plugin
-      def unpack_gems(gems)
+      def unpack_gems(gems, path)
         gems.each do |gem|
           # Unpack the gem
-          `cd #{File.join(self.path, "gems")}; gem unpack #{File.join(File.join(self.path, "gems"), gem)}`
+          `cd #{File.join(path, "gems")}; gem unpack #{File.join(File.join(path, "gems"), gem)}`
         end
       end
     end

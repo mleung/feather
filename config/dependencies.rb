@@ -1,27 +1,23 @@
-# dependencies are generated using a strict version, don't forget to edit the dependency versions when upgrading.
-merb_gems_version = "1.0.7"
-dm_gems_version   = "0.9.8"
-
 # For more information about each component, please read http://wiki.merbivore.com/faqs/merb_components
-dependency "merb-action-args", merb_gems_version
-dependency "merb-assets", merb_gems_version  
-dependency "merb-cache", merb_gems_version   
-dependency "merb-helpers", merb_gems_version 
-dependency "merb-mailer", merb_gems_version  
-dependency "merb-slices", merb_gems_version  
-dependency "merb-auth-core", merb_gems_version
-dependency "merb-auth-more", merb_gems_version
-dependency "merb-auth-slice-password", merb_gems_version
-dependency "merb-param-protection", merb_gems_version
-dependency "merb-exceptions", merb_gems_version
+dependency "merb-action-args"
+dependency "merb-assets"
+dependency "merb-cache"
+dependency "merb-helpers"
+dependency "merb-mailer"
+dependency "merb-slices"
+dependency "merb-auth-core"
+dependency "merb-auth-more"
+dependency "merb-auth-slice-password"
+dependency "merb-param-protection"
+dependency "merb-exceptions"
  
-dependency "dm-core", dm_gems_version         
-dependency "dm-aggregates", dm_gems_version   
-dependency "dm-migrations", dm_gems_version   
-dependency "dm-timestamps", dm_gems_version   
-dependency "dm-types", dm_gems_version        
-dependency "dm-validations", dm_gems_version  
-dependency "dm-is-paginated", "0.0.1" # DM pagination
+dependency "dm-core"
+dependency "dm-aggregates"
+dependency "dm-migrations"
+dependency "dm-timestamps"
+dependency "dm-types"
+dependency "dm-validations"
+dependency "dm-is-paginated"
 
 dependency "tzinfo"
 

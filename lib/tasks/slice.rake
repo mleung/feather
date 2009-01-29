@@ -6,8 +6,8 @@ require 'merb-core/tasks/merb'
 
 GEM_NAME = "feather"
 AUTHOR = "El Draper"
-EMAIL = "el@eldiablo.co.uk"
-HOMEPAGE = "http://crazycool.co.uk/"
+EMAIL = "el@ejdraper.com"
+HOMEPAGE = "http://ejdraper.com"
 SUMMARY = "Merb slice for Feather"
 GEM_VERSION = "0.5"
 
@@ -23,7 +23,6 @@ spec = Gem::Specification.new do |s|
   s.author = AUTHOR
   s.email = EMAIL
   s.homepage = HOMEPAGE
-  #s.add_dependency('merb-slices', '>= 0.9.12')
   s.require_path = 'lib'
   s.files = %w(license.txt Rakefile) + Dir.glob("{lib,spec,app,public,stubs}/**/*")
 end

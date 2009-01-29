@@ -1,7 +1,7 @@
 module Feather
   module Database
     class << self
-      CORE = [Feather::Activity, Feather::Article, Feather::Configuration, Feather::Plugin, Feather::PluginSetting, Feather::User]
+      CORE = [Feather::Activity, Feather::Article, Feather::Configuration, Feather::PluginSetting, Feather::User]
     
       # This provides a helper method for data migration for plugins - we can then update this to use non-destructive migrations at a later date and existing plugins won't need to change
       def migrate(klass)
@@ -16,7 +16,6 @@ module Feather
       # This does the initial auto migration of all core classes, as well as the session table
       def initial_setup
         CORE.each { |c| c.auto_migrate! }
-        Merb::DataMapperSession.auto_migrate!
       end
     end
   end

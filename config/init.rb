@@ -59,7 +59,7 @@ Merb::BootLoader.after_app_loads do
   Merb::Mailer.delivery_method = :sendmail
   
   Merb::Cache.setup do
-    register(:feather, Merb::Cache::MemcachedStore)
+    register(:feather, Merb::Cache::MemcachedStore, :namespace => "feather")
   end
 end
 

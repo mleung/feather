@@ -21,9 +21,11 @@ module Feather
 
       def create(plugin)
         if (@plugin = Feather::Plugin.install(plugin[:url]))
-          # Check to see if the plugin has any views registered, if so we'll expire the cache
-          # expire_all_pages if Feather::Hooks::View.has_views_registered?(@plugin)
-          redirect url(:admin_plugin, @plugin)
+          # Expire cached pages
+          Feather::Article.expire_article_index_page
+          Feather::Article.expire_article_pages
+          # Redirect to the plugin view
+          redirect url(:admin_plugin, @plugin.name)
         else
           render :new
         end
@@ -32,8 +34,10 @@ module Feather
       def update(id)
         # Set the plugin to be active (this writes to plugin settings)
         @plugin.active = params[:active] == "true" unless params[:active].blank?
-        # Check to see if the plugin has any views registered, if so we'll need to expire all pages to be safe
-        # expire_all_pages if Feather::Hooks::View.has_views_registered?(@plugin)
+        # Expire cached pages
+        Feather::Article.expire_article_index_page
+        Feather::Article.expire_article_pages
+        # Respond with JS
         render_js
       end
 

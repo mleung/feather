@@ -12,6 +12,14 @@ module Feather
 
     after :save, :set_activity
     before :save, :prepend_slash_on_permalink
+    after :save, :reload_cache
+    
+    def reload_cache
+      Feather::Configuration.expire_current
+      Feather::Configuration.current
+      Feather::Article.expire_article_index_page
+      Feather::Article.expire_article_pages
+    end
 
     def set_activity
       a = Feather::Activity.new
@@ -35,12 +43,21 @@ module Feather
       summary
     end
 
-    ##
-    # This returns the current configuration, creating the record if it isn't found
-    def self.current
-      configuration = Feather::Configuration.first
-      configuration = Feather::Configuration.create(:title => "My new Feather blog", :tag_line => "Feather rocks!", :about => "I rock, and so does my Feather blog", :about_formatter => "default", :permalink_format => "/:year/:month/:day/:title") if configuration.nil?
-      configuration    
+    class << self
+      # This expires the current configuration
+      def expire_current
+        Merb::Cache[:feather].delete Feather::Configuration.name
+      end
+      
+      ##
+      # This returns the current configuration, creating the record if it isn't found
+      def current
+        Merb::Cache[:feather].fetch Feather::Configuration.name do
+          configuration = Feather::Configuration.first
+          configuration = Feather::Configuration.create(:title => "My new Feather blog", :tag_line => "Feather rocks!", :about => "I rock, and so does my Feather blog", :about_formatter => "default", :permalink_format => "/:year/:month/:day/:title") if configuration.nil?
+          configuration
+        end
+      end
     end
   end
 end

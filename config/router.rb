@@ -41,8 +41,8 @@ Merb::Router.prepare do |router|
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   # This deferred route allows permalinks to be handled, without a separate rack handler
   match(/.*/).defer_to do |request, params|
-    unless (article = Feather::Article.find_by_permalink(request.uri.to_s.chomp("/"))).nil?
-      {:controller => "feather/articles", :action => "show", :id => article.id}
+    unless (id = Feather::Article.routing[request.uri.to_s.chomp("/")]).nil?
+      {:controller => "feather/articles", :action => "show", :id => id}
     end
   end
   

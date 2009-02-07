@@ -33,6 +33,14 @@ module Feather
     after :create, :fire_after_create_event
     after :update, :fire_after_update_event
     after :save, :fire_after_save_event
+    after :save, :reload_cache
+    
+    def reload_cache
+      Feather::Article.expire_routing
+      Feather::Article.routing
+      Feather::Article.expire_article_index_page
+      Feather::Article.expire_article_page(self.id)
+    end
   
     ##
     # This sets the published date and permalink when an article is published
@@ -112,6 +120,35 @@ module Feather
     end
 
     class << self
+      # This expires the pages for all of the individual article pages, along with the index
+      def expire_article_index_page
+        Merb::Cache[:feather].delete Feather::Articles.name
+      end
+      
+      # Expire this specific article page
+      def expire_article_page(id)
+        Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{id}"
+      end
+      
+      # Expire all of the article pages
+      def expire_article_pages
+        Feather::Article.all.each { |article| expire_article_page(article.id) }
+      end
+      
+      # This expires the routing mappings
+      def expire_routing
+        Merb::Cache[:feather].delete "#{Feather::Article.name}::Routing"
+      end
+      
+      # A mapping of ID's to permalinks for the router
+      def routing
+        Merb::Cache[:feather].fetch "#{Feather::Article.name}::Routing" do
+          routing = {}
+          Feather::Article.all.each { |a| routing[a.permalink] = a.id }
+          routing
+        end
+      end
+      
       ##
       # Custom finders
 

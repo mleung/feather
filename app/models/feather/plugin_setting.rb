@@ -11,14 +11,13 @@ module Feather
     after(:save, :reload_cache)
     after(:destroy, :reload_cache)
     def reload_cache
-      @@cache = nil
-      Feather::PluginSetting.cache
+      Feather::PluginSetting.reload_cache
     end
 
     class << self
       # This keeps a cache of the plugin settings
       def cache
-        @@cache ||= begin
+        Merb::Cache[:feather].fetch Feather::PluginSetting.name do
           cached_settings = {}
           Feather::PluginSetting.all.each do |s|
             cached_settings[s.plugin_id] = {} if cached_settings[s.plugin_id].nil?
@@ -26,7 +25,12 @@ module Feather
           end
           cached_settings
         end
-        @@cache
+      end
+      
+      # This clears and reloads the cache
+      def reload_cache
+        Merb::Cache[:feather].delete Feather::PluginSetting.name
+        self.cache
       end
     
       # This retrieves a value from the cache using the handle and plugin

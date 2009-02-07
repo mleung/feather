@@ -57,6 +57,10 @@ end
 
 Merb::BootLoader.after_app_loads do
   Merb::Mailer.delivery_method = :sendmail
+  
+  Merb::Cache.setup do
+    register(:feather, Merb::Cache::MemcachedStore)
+  end
 end
 
 # require File.join(File.join(Merb.root_path, "lib"), "cache_helper")

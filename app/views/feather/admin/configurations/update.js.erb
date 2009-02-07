@@ -1,6 +1,6 @@
-$('configuration-title-display').innerHTML = "<%= @configuration.title %>";
-$('configuration-tag-line-display').innerHTML = "<%= @configuration.tag_line %>";
-$('configuration-about-display').innerHTML = "<%= @configuration.about_summary %>";
-$('configuration-about-formatter-display').innerHTML = "<%= @configuration.about_formatter %>";
-$('configuration-permalink-format-display').innerHTML = "<%= @configuration.permalink_format %>";
-$('blog_title').innerHTML = "<%= @configuration.title %>";
+$('configuration-title-display').innerHTML = "<%= @configuration[:title] %>";
+$('configuration-tag-line-display').innerHTML = "<%= @configuration[:tag_line] %>";
+$('configuration-about-display').innerHTML = "<%= @configuration[:about_summary] %>";
+$('configuration-about-formatter-display').innerHTML = "<%= @configuration[:about_formatter] %>";
+$('configuration-permalink-format-display').innerHTML = "<%= @configuration[:permalink_format] %>";
+$('blog_title').innerHTML = "<%= @configuration[:title] %>";

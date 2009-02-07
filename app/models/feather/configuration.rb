@@ -55,7 +55,7 @@ module Feather
         Merb::Cache[:feather].fetch Feather::Configuration.name do
           configuration = Feather::Configuration.first
           configuration = Feather::Configuration.create(:title => "My new Feather blog", :tag_line => "Feather rocks!", :about => "I rock, and so does my Feather blog", :about_formatter => "default", :permalink_format => "/:year/:month/:day/:title") if configuration.nil?
-          configuration
+          configuration.attributes.merge({:about_summary => configuration.about_summary})
         end
       end
     end

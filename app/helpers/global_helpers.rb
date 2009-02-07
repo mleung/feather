@@ -24,11 +24,11 @@ module Merb
     end
     
     def render_title
-      @settings.title
+      @settings[:title]
     end
 
     def render_tag_line
-      @settings.tag_line
+      @settings[:tag_line]
     end
 
     ##
@@ -93,11 +93,11 @@ module Merb
     ##
     # This returns the markup for the about text in the sidebar
     def render_about_text
-      unless @settings.nil? || @settings.about.blank?
+      unless @settings.nil? || @settings[:about].blank?
         markup = <<-MARKUP
         <div class="sidebar-node">
           <h3>About</h3>
-          <p>#{render_text(@settings.about_formatter, @settings.about)}</p>
+          <p>#{render_text(@settings[:about_formatter], @settings[:about])}</p>
         </div>
         MARKUP
       end

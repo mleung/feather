@@ -34,12 +34,14 @@ module Feather
     after :update, :fire_after_update_event
     after :save, :fire_after_save_event
     after :save, :reload_cache
+    after :destroy, :reload_cache
     
     def reload_cache
       Feather::Article.expire_routing
       Feather::Article.routing
       Feather::Article.expire_article_index_page
       Feather::Article.expire_article_page(self.id)
+      Feather::Article.expire_article_archive(self)
     end
   
     ##
@@ -102,7 +104,7 @@ module Feather
     end
   
     def create_permalink
-      permalink = Feather::Configuration.current.permalink_format.gsub(/:year/,self.published_at.year.to_s)
+      permalink = Feather::Configuration.current[:permalink_format].gsub(/:year/,self.published_at.year.to_s)
       permalink.gsub!(/:month/, Feather::Padding::pad_single_digit(self.published_at.month))
       permalink.gsub!(/:day/, Feather::Padding::pad_single_digit(self.published_at.day))
     
@@ -133,6 +135,17 @@ module Feather
       # Expire all of the article pages
       def expire_article_pages
         Feather::Article.all.each { |article| expire_article_page(article.id) }
+      end
+      
+      # This expires the archives for an article
+      def expire_article_archive(article)
+        unless article.published_at.nil?
+          Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{article.published_at.year}"
+          Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{article.published_at.year}/#{article.published_at.month}"
+          Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{article.published_at.year}/#{Feather::Padding.pad_single_digit(article.published_at.month)}"
+          Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{article.published_at.year}/#{article.published_at.month}/#{article.published_at.day}"
+          Merb::Cache[:feather].delete "#{Feather::Articles.name}/#{article.published_at.year}/#{Feather::Padding.pad_single_digit(article.published_at.month)}/#{Feather::Padding.pad_single_digit(article.published_at.day)}"
+        end
       end
       
       # This expires the routing mappings

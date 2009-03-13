@@ -10,7 +10,7 @@
 #
 #   match("/books/:book_id/:action").
 #     to(:controller => "books")
-#   
+#
 # Or, use placeholders in the "to" results for more complicated routing, e.g.:
 #
 #   match("/admin/:module/:controller/:action/:id").
@@ -34,10 +34,10 @@ Merb::Router.prepare do |router|
   rescue Exception => e
     Merb.logger.info("Error loading plugins: #{e.message}")
   end
-  
+
   # Load all plugin routes
   Feather::Hooks::Routing.load_routes(router)
-  
+
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   # This deferred route allows permalinks to be handled, without a separate rack handler
   match(/.*/).defer_to do |request, params|
@@ -45,7 +45,7 @@ Merb::Router.prepare do |router|
       {:controller => "feather/articles", :action => "show", :id => id}
     end
   end
-  
+
   # Admin namespace
   namespace "feather/admin", :path => "admin", :name_prefix => "admin" do
     resource :configuration
@@ -60,9 +60,9 @@ Merb::Router.prepare do |router|
   match("/:year").to(:controller => "feather/articles", :action => "index").name(:year)
   match("/:year/:month").to(:controller => "feather/articles", :action => "index").name(:month)
   match("/:year/:month/:day").to(:controller => "feather/articles", :action => "index").name(:day)
-  
+
   # Default routes, and index
-  default_routes  
+  default_routes
   match("/").to(:controller => 'feather/articles', :action =>'index')
 end
 

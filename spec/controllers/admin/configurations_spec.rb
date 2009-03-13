@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), "../..", 'spec_helper.rb')
 
-module Admin
+module Feather::Admin
   describe Configurations do
     before(:each) do
       @configuration = mock(:configuration)
@@ -8,7 +8,7 @@ module Admin
 
     describe "/admin/configurations" do
       it "should get current configuration" do
-        Configuration.stub!(:current).and_return(@configuration)
+        ::Feather::Configuration.stub!(:current).and_return(@configuration)
         controller = dispatch_to(Configurations, :show) do |controller|
           controller.should_receive(:login_required).and_return(true)
           controller.should_receive(:display).with(@configuration)

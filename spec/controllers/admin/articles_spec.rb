@@ -1,15 +1,15 @@
 require File.join(File.dirname(__FILE__), "../..", 'spec_helper.rb')
 
-module Admin
+module Feather::Admin
   describe Articles do
     before(:each) do
       @article = mock(:article)
       @articles = [@article]
     end
-    
+
     describe "/admin/articles" do
       it "should get all articles in descending created order" do
-        Article.should_receive(:all).with(:order => [:created_at.desc], :offset => 0, :limit => 10).and_return(@articles)
+        ::Feather::Article.should_receive(:all).with(:order => [:created_at.desc], :offset => 0, :limit => 10).and_return(@articles)
         controller = dispatch_to(Articles, :index) do |controller|
           controller.should_receive(:login_required).and_return(true)
           controller.should_receive(:display).with(@articles)
@@ -21,7 +21,7 @@ module Admin
 
     describe "/admin/articles/1" do
       it "should display the article matching the id" do
-        Article.should_receive("[]").with("1").and_return(@article)
+        ::Feather::Article.should_receive("[]").with("1").and_return(@article)
         controller = dispatch_to(Articles, :show, :id => "1") do |controller|
           controller.should_receive(:login_required).and_return(true)
           controller.should_receive(:display).with(@article)

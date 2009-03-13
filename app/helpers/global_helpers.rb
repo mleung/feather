@@ -184,7 +184,15 @@ module Merb
       plugin = ::Feather::Plugin.get(name)
       plugin && plugin.active
     end
-    
+
+    def link_to_article(text, article)
+      if is_slice? && !::Feather.config[:path_prefix].empty?
+        link_to(text, '/' + ::Feather.config[:path_prefix] + article.permalink)
+      else
+        link_to(text, article.permalink)
+      end
+    end
+
     def link_to_author(author)
       link_to author["name"], author["homepage"]
     end

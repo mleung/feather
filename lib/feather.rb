@@ -82,7 +82,11 @@ if defined?(Merb::Plugins)
       
       # This deferred route allows permalinks to be handled, without a separate rack handler
       scope.match("/:controller", :controller => '.*').defer_to do |request, params|
-        unless (id = Feather::Article.routing[request.uri.to_s.chomp("/")]).nil?
+        # Permalinks are relative to the slice mount point, so we'll need to remove that from the request before we look up the article
+        permalink = request.uri.to_s.chomp("/")
+        permalink.gsub!("/#{::Feather.config[:path_prefix]}", "") unless ::Feather.config[:path_prefix].blank?
+        # Attempt to find the article
+        unless (id = Feather::Article.routing[permalink]).nil?
           params.merge!({:controller => "feather/articles", :action => "show", :id => id})
         end
       end

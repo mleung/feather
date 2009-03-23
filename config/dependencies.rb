@@ -1,5 +1,5 @@
 # dependencies are generated using a strict version, don't forget to edit the dependency versions when upgrading.
-merb_gems_version = "1.0.9"
+merb_gems_version = "1.0.10"
 dm_gems_version   = "0.9.10"
 do_gems_version   = "0.9.11"
 
